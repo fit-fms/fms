@@ -1,7 +1,9 @@
 package fms.business.service;
 
 import fms.business.archetype.Archetype;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.jcr.Session;
 import java.util.Map;
 
 /**
@@ -13,6 +15,8 @@ import java.util.Map;
  */
 public class ArchetypeService {
 
+    @Autowired
+    private Session session;
 
     public ArchetypeService() {
 

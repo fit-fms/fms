@@ -130,7 +130,7 @@ public class Field {
     public boolean validate(String data) {
         boolean status = true;
 
-        for (Map.Entry<String, Validator> entry: validators.entrySet()) {
+        for (Map.Entry<String, Validator> entry : validators.entrySet()) {
             if (!entry.getValue().validate(data)) {
                 status = false;
             }

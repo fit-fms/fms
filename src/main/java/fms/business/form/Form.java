@@ -52,7 +52,7 @@ public class Form {
         boolean status = true;
 
 
-        for (Map.Entry<String, FilledField> entry: filleFields.entrySet()) {
+        for (Map.Entry<String, FilledField> entry : filleFields.entrySet()) {
             if (!entry.getValue().validate()) {
                 status = false;
             }

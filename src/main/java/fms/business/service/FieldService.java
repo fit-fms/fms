@@ -1,7 +1,9 @@
 package fms.business.service;
 
 import fms.business.archetype.Field;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.jcr.Session;
 import java.util.Map;
 
 /**
@@ -12,6 +14,9 @@ import java.util.Map;
  * @created 15-Apr-2015 12:39:48 PM
  */
 public class FieldService {
+
+    @Autowired
+    private Session session;
 
     public FieldService() {
 

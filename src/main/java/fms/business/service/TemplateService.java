@@ -1,7 +1,9 @@
 package fms.business.service;
 
 import fms.business.archetype.Template;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.jcr.Session;
 import java.util.List;
 
 /**
@@ -13,6 +15,8 @@ import java.util.List;
  */
 public class TemplateService {
 
+    @Autowired
+    private Session session;
 
     public TemplateService() {
 

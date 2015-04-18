@@ -2,7 +2,9 @@ package fms.business.service;
 
 import fms.business.archetype.Validator;
 import fms.business.fieldtype.FieldType;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.jcr.Session;
 import java.util.List;
 
 /**
@@ -13,6 +15,9 @@ import java.util.List;
  * @created 15-Apr-2015 12:39:49 PM
  */
 public class ValidatorService {
+
+    @Autowired
+    private Session session;
 
     public ValidatorService() {
 
