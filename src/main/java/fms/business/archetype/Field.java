@@ -2,6 +2,7 @@ package fms.business.archetype;
 
 import fms.business.fieldtype.FieldType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -44,7 +45,8 @@ public class Field {
     private Map<String, Archetype> archetypes;
 
     public Field() {
-
+        this.validators = new HashMap<String, Validator>();
+        this.archetypes = new HashMap<String, Archetype>();
     }
 
 
@@ -53,6 +55,14 @@ public class Field {
      */
     public Map<String, Archetype> getArchetypes() {
         return archetypes;
+    }
+
+    public void removeArchetype(Archetype archetype) {
+        archetypes.remove(archetype.getName());
+    }
+
+    public void addArchetype(Archetype archetype) {
+        archetypes.put(archetype.getName(), archetype);
     }
 
     /**
@@ -118,7 +128,14 @@ public class Field {
      * @param data
      */
     public boolean validate(String data) {
-        //@TODO implement
+        boolean status = true;
+
+        for (Map.Entry<String, Validator> entry: validators.entrySet()) {
+            if (!entry.getValue().validate(data)) {
+                status = false;
+            }
+        }
+
         return false;
     }
 
