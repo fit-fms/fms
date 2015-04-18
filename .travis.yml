@@ -1,0 +1,7 @@
+language: java
+
+jdk:
+  - openjdk7
+  - oraclejdk7
+  #- openjdk8 #not supported by TravisCI
+  - oraclejdk8
