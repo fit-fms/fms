@@ -1,6 +1,7 @@
 package fms.business.form;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class PaperForm extends Form {
     private Person Person;
 
     public PaperForm() {
-
+        scans = new ArrayList<Scan>();
     }
 
     /**
