@@ -27,7 +27,6 @@ public class PaperForm extends Form {
      * Seznam skenu formul�ru.
      */
     private List<Scan> scans;
-    private Person Person;
 
     public PaperForm() {
         scans = new ArrayList<Scan>();
@@ -87,6 +86,16 @@ public class PaperForm extends Form {
      * @param person
      */
     public void setPerson(Person person) {
+
+        if (this.person == null) {
+            this.person = person;
+            return;
+        }
+
+        if (this.person.equals(person)) return;
+
+        if (this.person != null) this.person.removePaperForm(this);
+
         this.person = person;
     }
 

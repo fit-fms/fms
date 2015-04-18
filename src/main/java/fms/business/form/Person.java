@@ -1,6 +1,7 @@
 package fms.business.form;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,7 +35,7 @@ public class Person {
     private Map<Integer, PaperForm> forms;
 
     public Person() {
-
+        forms = new HashMap<Integer, PaperForm>();
     }
 
 
@@ -51,6 +52,7 @@ public class Person {
      * @param form
      */
     public void addPaperForm(PaperForm form) {
+        form.setPerson(this);
         forms.put(form.getId(), form);
     }
 
@@ -60,7 +62,12 @@ public class Person {
      * @param form
      */
     public void removePaperForm(PaperForm form) {
-        forms.remove(form.getId());
+        PaperForm form1 = forms.remove(form.getId());
+
+        //Form nebyl v invenatri uzivatele
+        if (form1 == null) return;
+
+        form.setPerson(null);
     }
 
     /**
