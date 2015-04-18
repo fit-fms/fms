@@ -136,7 +136,7 @@ public class Field {
             }
         }
 
-        return false;
+        return status;
     }
 
     /**

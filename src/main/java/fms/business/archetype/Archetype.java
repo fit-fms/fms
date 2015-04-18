@@ -1,6 +1,7 @@
 package fms.business.archetype;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,10 +34,11 @@ public class Archetype {
      */
     private Map<String, Field> optionalFields;
     private Map<String, Field> requiredFields;
-    private Map<String, Template> Templates;
 
     public Archetype() {
-
+        optionalFields = new HashMap<String, Field>();
+        requiredFields = new HashMap<String, Field>();
+        templates = new HashMap<String, Template>();
     }
 
     /**
