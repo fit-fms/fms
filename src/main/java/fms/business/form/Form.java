@@ -3,6 +3,7 @@ package fms.business.form;
 import fms.business.archetype.Archetype;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,14 +41,24 @@ public class Form {
     private Map<String, FilledField> filleFields;
 
     public Form() {
-
+        this.filleFields = new HashMap<String, FilledField>();
     }
 
     /**
      * Zvaliduje vsechny FilledFields.
      */
     public boolean validate() {
-        return false;
+
+        boolean status = true;
+
+
+        for (Map.Entry<String, FilledField> entry: filleFields.entrySet()) {
+            if (!entry.getValue().validate()) {
+                status = false;
+            }
+        }
+
+        return status;
     }
 
     /**
@@ -62,7 +73,7 @@ public class Form {
      *
      * @param field
      */
-    public void addFilledFIeld(FilledField field) {
+    public void addfilledfield(FilledField field) {
         filleFields.put(field.getField().getName(), field);
     }
 
@@ -123,6 +134,10 @@ public class Form {
         this.filledAt = filledAt;
     }
 
+    public boolean isFilled() {
+        return filledAt != null;
+    }
+
     /**
      * Datum kdy byl formul�r schv�len spr�vcem
      */
@@ -137,6 +152,10 @@ public class Form {
      */
     public void setApprovedAt(Date approvedAt) {
         this.approvedAt = approvedAt;
+    }
+
+    public boolean isApproved() {
+        return approvedAt != null;
     }
 
     /**
