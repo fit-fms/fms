@@ -120,6 +120,7 @@ public class Archetype {
      * @param field
      */
     public void addOptionalField(Field field) {
+        field.addArchetype(this);
         optionalFields.put(field.getName(), field);
     }
 
@@ -147,6 +148,7 @@ public class Archetype {
      * @param field
      */
     public void removeOptionalField(Field field) {
+        field.removeArchetype(this);
         optionalFields.remove(field.getName());
     }
 

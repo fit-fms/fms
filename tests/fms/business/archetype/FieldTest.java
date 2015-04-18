@@ -105,6 +105,20 @@ public class FieldTest {
     }
 
     @Test
+    public void testArchetypeFieldCommunication() {
+        Field field = new Field();
+        Archetype archetype = new Archetype();
+
+        archetype.addOptionalField(field);
+
+        Map<String, Archetype>  archetypes = field.getArchetypes();
+        assertEquals(1, archetypes.size());
+
+        archetype.removeOptionalField(field);
+        assertEquals(0, archetypes.size());
+    }
+
+    @Test
     public void testValidate() {
         Field field = new Field();
 
