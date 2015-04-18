@@ -52,14 +52,14 @@ public class FilledField {
      * @param data
      */
     public void setData(String data) {
-
+        this.data = data;
     }
 
     /**
      * Zvaliduje data ulo�en� v objektu vuci Fieldu
      */
     public boolean validate() {
-        return false;
+        return this.field.validate(data);
     }
 
 }
