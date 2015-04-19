@@ -1,4 +1,4 @@
-package fms.modeshape;
+package fms.jcr;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;

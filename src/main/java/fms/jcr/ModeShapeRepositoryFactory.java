@@ -1,4 +1,4 @@
-package fms.modeshape;
+package fms.jcr;
 
 
 import org.modeshape.jcr.ModeShapeEngine;

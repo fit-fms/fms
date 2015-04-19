@@ -10,7 +10,6 @@
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
         <sourceRoots>
-          <root url="file://$MODULE_DIR$/src/main/conf" />
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
         </sourceRoots>
@@ -86,5 +85,6 @@
     <orderEntry type="library" name="Maven: org.jgroups:jgroups:3.4.3.Final" level="project" />
     <orderEntry type="library" name="Maven: org.mapdb:mapdb:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.jcrom:jcrom:2.2.0" level="project" />
   </component>
 </module>
