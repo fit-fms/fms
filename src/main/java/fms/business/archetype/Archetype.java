@@ -4,9 +4,7 @@ package fms.business.archetype;
 import fms.jcr.JcrObject;
 import org.jcrom.annotations.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Archetyp formul�re je kostra pro data. Udr�uje informace o jednotliv�ch pol�ck�ch pro s�mantick� zpracov�n� dat.
@@ -50,16 +48,16 @@ public class Archetype implements JcrObject {
     private Map<String, Field> optionalFields;
 
     @JcrReference(byPath=true)  //Protoze umi ulozit jen <String, Object>
-    private Map<String, Object> jcrOptionalFields;
+    private List<Field> jcrOptionalFields;
 
     private Map<String, Field> requiredFields;
 
     @JcrReference(byPath=true)
-    private Map<String, Object> jcrRequiredFields;
+    private List<Field> jcrRequiredFields;
 
     public Archetype() {
-        jcrOptionalFields = new HashMap<String, Object>();
-        jcrRequiredFields = new HashMap<String, Object>();
+        jcrOptionalFields = new ArrayList<Field>();
+        jcrRequiredFields = new ArrayList<Field>();
         templates = new HashMap<String, Template>();
     }
 
@@ -71,13 +69,12 @@ public class Archetype implements JcrObject {
             optionalFields = new HashMap<String, Field>();
             requiredFields = new HashMap<String, Field>();
 
-            for ( Map.Entry<String, Object> entry: jcrOptionalFields.entrySet() ) {
-                Field f = (Field)entry.getValue();
+
+            for ( Field f: jcrOptionalFields ) {
                 optionalFields.put(f.getName(), f);
             }
 
-            for ( Map.Entry<String, Object> entry: jcrRequiredFields.entrySet() ) {
-                Field f = (Field)entry.getValue();
+            for ( Field f: jcrRequiredFields ) {
                 requiredFields.put(f.getName(), f);
             }
         }
@@ -165,7 +162,7 @@ public class Archetype implements JcrObject {
         createFields();
         field.addArchetype(this);
         optionalFields.put(field.getName(), field);
-        jcrOptionalFields.put(field.getName(), field);
+        jcrOptionalFields.add(field);
     }
 
     /**
@@ -175,7 +172,7 @@ public class Archetype implements JcrObject {
         createFields();
         field.addArchetype(this);
         requiredFields.put(field.getName(), field);
-        jcrRequiredFields.put(field.getName(), field);
+        jcrRequiredFields.add(field);
     }
 
     /**
@@ -185,7 +182,7 @@ public class Archetype implements JcrObject {
         createFields();
         field.removeArchetype(this);
         requiredFields.remove(field.getName());
-        jcrRequiredFields.remove(field.getName());
+        jcrRequiredFields.remove(field);
     }
 
     public Map<String, Field> getRequiredFields() {
@@ -202,7 +199,7 @@ public class Archetype implements JcrObject {
         createFields();
         field.removeArchetype(this);
         optionalFields.remove(field.getName());
-        jcrOptionalFields.remove(field.getName());
+        jcrOptionalFields.remove(field);
     }
 
     /**

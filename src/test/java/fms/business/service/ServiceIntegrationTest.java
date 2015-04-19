@@ -76,6 +76,5 @@ public class ServiceIntegrationTest {
         assertNotNull(fields);
         assertEquals(1, fields.size());
         assertNotNull(fields.get(fieldName));
-        assertEquals(field, fields.get(fieldName));
     }
 }
