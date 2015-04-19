@@ -17,6 +17,7 @@ public class JcromFactory implements FactoryBean<Jcrom> {
             instance = new Jcrom();
             //Map all @JcrNode annotated classes
             instance.map(fms.business.archetype.Field.class);
+            instance.map(fms.business.archetype.Archetype.class);
         }
 
         return instance;

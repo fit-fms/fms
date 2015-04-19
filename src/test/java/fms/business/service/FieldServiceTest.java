@@ -18,21 +18,6 @@ public class FieldServiceTest extends ServiceTest {
     @Autowired
     private FieldService fieldService;
 
-    @Autowired
-    private Session session;
-
-    @Before
-    public void resetWorkspace() throws Exception {
-        try {
-            Node n = session.getNode("/fields");
-            n.remove();
-        }
-        catch (Exception e) {}
-
-        session.getRootNode().addNode("/fields");
-        session.save();
-    }
-
 
     @Test
     public void testCreateField() throws Exception {

@@ -1,9 +1,15 @@
 package fms.business.service;
 
 import fms.business.archetype.Archetype;
+import fms.business.archetype.Field;
+import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.Session;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,13 +19,22 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
  */
+@Service
 public class ArchetypeService {
 
-    @Autowired
     private Session session;
 
-    public ArchetypeService() {
+    private FieldService fieldService;
 
+    private Jcrom jcrom;
+
+    Map<String, Archetype> archetypes;
+
+    @Autowired
+    public ArchetypeService(FieldService fieldService, Session session, Jcrom jcrom) {
+        this.fieldService = fieldService;
+        this.session = session;
+        this.jcrom = jcrom;
     }
 
 
@@ -28,8 +43,11 @@ public class ArchetypeService {
      *
      * @param name
      */
-    public Archetype findByName(String name) {
-        return null;
+    public Archetype findByName(String name) throws Exception {
+        Node archerypeNode = session.getNode("/archetypes/"+name);
+        Archetype archetype = jcrom.fromNode(Archetype.class, archerypeNode);
+
+        return archetype;
     }
 
     /**
@@ -37,8 +55,10 @@ public class ArchetypeService {
      *
      * @param archetype
      */
-    public void removeArchetype(Archetype archetype) {
-
+    public void removeArchetype(Archetype archetype) throws Exception {
+        Node archetypeNode = session.getNode(archetype.getJcrPath());
+        archetypeNode.remove();
+        session.save();
     }
 
     /**
@@ -46,8 +66,11 @@ public class ArchetypeService {
      *
      * @param archetype
      */
-    public void createArchetype(Archetype archetype) {
+    public void createArchetype(Archetype archetype) throws Exception {
+        Node archetypesNode = session.getNode("/archetypes");
 
+        jcrom.addNode(archetypesNode, archetype);
+        session.save();
     }
 
     /**
@@ -55,15 +78,31 @@ public class ArchetypeService {
      *
      * @param archetype
      */
-    public void updateArchetype(Archetype archetype) {
-
+    public void updateArchetype(Archetype archetype) throws Exception {
+        removeArchetype(archetype);
+        createArchetype(archetype);
     }
 
     /**
      * Z�sk� v�echny formul�re.
      */
-    public Map<String, Archetype> getAllArchetypes() {
-        return null;
+    public Map<String, Archetype> getAllArchetypes() throws Exception {
+
+        if (archetypes == null) {
+            archetypes = new HashMap<String, Archetype>();
+        }
+        else  {
+            archetypes.clear();
+        }
+
+        NodeIterator it = session.getNode("/archetypes").getNodes();
+        while (it.hasNext()) {
+            Node n = it.nextNode();
+            Archetype a = jcrom.fromNode(Archetype.class, n);
+            archetypes.put(a.getName(), a);
+        }
+
+        return archetypes;
     }
 
 }
