@@ -1,7 +1,7 @@
 package fms.business.service;
 
-import fms.business.archetype.Field;
 import fms.business.archetype.Validator;
+import fms.business.fieldtype.FieldType;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,9 @@ public class ValidatorServiceTest extends ServiceTest {
     @Autowired
     private ValidatorService validatorService;
 
+    @Autowired
+    private FieldTypeService fieldTypeService;
+
     @Test
     public void testCreate() throws Exception {
         String name = "my_field_sname";
@@ -37,7 +40,21 @@ public class ValidatorServiceTest extends ServiceTest {
         assertEquals(validator.getName(), validatorA.getName());
     }
 
-    @Test(expected = javax.jcr.PathNotFoundException.class)
+    @Test
+    public void testRemove() throws Exception {
+        String name = "my_field_sname";
+
+        Validator validator = new Validator();
+        validator.setName(name);
+
+        validatorService.createValidator(validator);
+        validatorService.removeValidator(validator);
+
+        Validator validatorB = validatorService.getValidatorByName(name);
+        assertNull(validatorB);
+    }
+
+    @Test
     public void testUpdate() throws Exception {
         String name = "my_field_name";
         String newName = "my_new_field_name";
@@ -53,8 +70,8 @@ public class ValidatorServiceTest extends ServiceTest {
         assertNotNull(validatorB);
         assertEquals(newName, validatorB.getName());
 
-        validatorService.getValidatorByName(name);
-        assertFalse("Stary uzel byl nalezen.", true);
+        Validator validatorNo = validatorService.getValidatorByName(name);
+        assertNull(validatorNo);
     }
 
     @Test
@@ -65,27 +82,33 @@ public class ValidatorServiceTest extends ServiceTest {
         String nameB = "B";
         String nameC = "C";
 
+        FieldType f = new FieldType();
+        f.setName("f_names");
+        fieldTypeService.createFieldType(f);
+
         Validator validatorA = new Validator();
         validatorA.setName(nameA);
+        validatorA.setFieldType(f);
 
         Validator validatorB = new Validator();
         validatorB.setName(nameB);
+        validatorB.setFieldType(f);
 
         Validator validatorC = new Validator();
         validatorC.setName(nameC);
+        validatorC.setFieldType(f);
 
         validatorService.createValidator(validatorA);
         validatorService.createValidator(validatorB);
         validatorService.createValidator(validatorC);
 
 
-        List<Validator> validators = validatorService.getValidatorsByFieldType(null);
+        List<Validator> validators = validatorService.getValidatorsByFieldType(f);
         assertEquals(numOFValidators, validators.size());
 
 
         validatorService.removeValidator(validatorB);
-        List<Validator> validatorsB = validatorService.getValidatorsByFieldType(null);
-        assertSame(validators, validatorsB);
-        assertEquals(--numOFValidators, validators.size());
+        List<Validator> validatorsB = validatorService.getValidatorsByFieldType(f);
+        assertEquals(--numOFValidators, validatorsB.size());
     }
 }

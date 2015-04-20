@@ -5,11 +5,7 @@ import org.jcrom.annotations.*;
 
 /**
  * Valid�tor kontroluje data podle typu pol�cka a predem dan�ch specifikac�. To umo�nuje udr�ovat validn� datab�zi dat. Napr�klad umo�n� nad libovoln�m typed dat vytvorit v�cet mo�n�ch hodnot(enum) se zachov�n�m vlastnost� typu pro vyhled�v�n�,  filtrov�n� a statistiky.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
- */
+*/
 @JcrNode
 public class Validator {
 
@@ -17,10 +13,13 @@ public class Validator {
      * N�zev valid�toru
      */
     @JcrName
-    private String name;
+    private String jcrName = "fms_validator";
 
     @JcrPath
     private String jcrPath;
+
+    @JcrProperty
+    private String name;
 
     /**
      * Popis valid�toru
