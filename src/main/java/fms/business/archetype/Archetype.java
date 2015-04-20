@@ -1,7 +1,6 @@
 package fms.business.archetype;
 
 
-import fms.jcr.JcrObject;
 import org.jcrom.annotations.*;
 
 import java.util.*;
@@ -14,7 +13,7 @@ import java.util.*;
  * @created 15-Apr-2015 12:39:48 PM
  */
 @JcrNode
-public class Archetype implements JcrObject {
+public class Archetype {
 
     /**
      * Jm�no formul�re
@@ -208,25 +207,5 @@ public class Archetype implements JcrObject {
     public Map<String, Field> getOptionalFields() {
         createFields();
         return optionalFields;
-    }
-
-    @Override
-    public String getJcrName() {
-        return getName();
-    }
-
-    @Override
-    public void setJcrName(String jcrName) {
-        setName(jcrName);
-    }
-
-    @Override
-    public String getJcrPath() {
-        return jcrPath;
-    }
-
-    @Override
-    public void setJcrPath(String jcrPath) {
-        this.jcrPath = jcrPath;
     }
 }

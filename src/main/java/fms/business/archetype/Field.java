@@ -1,7 +1,6 @@
 package fms.business.archetype;
 
 import fms.business.fieldtype.FieldType;
-import fms.jcr.JcrObject;
 import org.jcrom.annotations.JcrName;
 import org.jcrom.annotations.JcrNode;
 import org.jcrom.annotations.JcrPath;
@@ -18,7 +17,7 @@ import java.util.Map;
  * @created 15-Apr-2015 12:39:48 PM
  */
 @JcrNode
-public class Field implements JcrObject {
+public class Field {
 
     /**
      * Jm�no pol�cka pro statistiky a filtrov�n�
@@ -188,25 +187,5 @@ public class Field implements JcrObject {
      */
     public void setType(FieldType newVal) {
         type = newVal;
-    }
-
-    @Override
-    public String getJcrName() {
-        return getName();
-    }
-
-    @Override
-    public void setJcrName(String jcrName) {
-        setName(jcrName);
-    }
-
-    @Override
-    public String getJcrPath() {
-        return this.jcrPath;
-    }
-
-    @Override
-    public void setJcrPath(String jcrPath) {
-        this.jcrPath = jcrPath;
     }
 }

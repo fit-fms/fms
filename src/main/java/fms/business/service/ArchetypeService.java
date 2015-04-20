@@ -56,7 +56,7 @@ public class ArchetypeService {
      * @param archetype
      */
     public void removeArchetype(Archetype archetype) throws Exception {
-        Node archetypeNode = session.getNode(archetype.getJcrPath());
+        Node archetypeNode = session.getNode(jcrom.getPath(archetype));
         archetypeNode.remove();
         session.save();
     }

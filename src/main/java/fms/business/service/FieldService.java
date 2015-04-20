@@ -78,7 +78,7 @@ public class FieldService {
      * @param field
      */
     public void removeField(Field field) throws Exception {
-        Node fieldNode = session.getNode(field.getJcrPath());
+        Node fieldNode = session.getNode(jcrom.getPath(field));
         fieldNode.remove();
         session.save();
     }
