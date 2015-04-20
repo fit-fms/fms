@@ -1,6 +1,10 @@
 package fms.business.fieldtype;
 
 import fms.business.archetype.Field;
+import org.jcrom.annotations.JcrName;
+import org.jcrom.annotations.JcrNode;
+import org.jcrom.annotations.JcrPath;
+import org.jcrom.annotations.JcrProperty;
 
 import java.util.Map;
 
@@ -11,16 +15,25 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
  */
+@JcrNode
 public class FieldType {
 
     /**
      * N�zev typu
      */
+    @JcrName
     private String name;
+
+    @JcrPath
+    private String jcrPath;
+
     /**
      * Popis typu
      */
+    @JcrProperty
     private String description;
+
+    //@TODO
     private Map<String, Field> fields;
 
     public FieldType() {

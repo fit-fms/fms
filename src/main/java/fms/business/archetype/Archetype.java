@@ -1,8 +1,10 @@
 package fms.business.archetype;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import fms.jcr.JcrObject;
+import org.jcrom.annotations.*;
+
+import java.util.*;
 
 /**
  * Archetyp formul�re je kostra pro data. Udr�uje informace o jednotliv�ch pol�ck�ch pro s�mantick� zpracov�n� dat.
@@ -11,34 +13,71 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
  */
-public class Archetype {
+@JcrNode
+public class Archetype implements JcrObject {
 
     /**
      * Jm�no formul�re
      */
+    @JcrName
     private String name;
+
+    @JcrPath
+    private String jcrPath;
+
     /**
      * Intern� popis urcen� pro spr�vce
      */
+    @JcrProperty
     private String privateDescription;
+
     /**
      * Verejn� popis pou�it jako n�poveda
      */
+    @JcrProperty
     private String publicDescription;
+
     /**
      * Templaty pomoci kterych jde archetyp zobrazit
      */
     private Map<String, Template> templates;
+
     /**
      * Policka archetypu.
      */
     private Map<String, Field> optionalFields;
+
+    @JcrReference(byPath=true)  //Protoze umi ulozit jen <String, Object>
+    private List<Field> jcrOptionalFields;
+
     private Map<String, Field> requiredFields;
 
+    @JcrReference(byPath=true)
+    private List<Field> jcrRequiredFields;
+
     public Archetype() {
-        optionalFields = new HashMap<String, Field>();
-        requiredFields = new HashMap<String, Field>();
+        jcrOptionalFields = new ArrayList<Field>();
+        jcrRequiredFields = new ArrayList<Field>();
         templates = new HashMap<String, Template>();
+    }
+
+    /**
+     * Protoze Jcrom umi jen Map<String, Object>
+     */
+    private void createFields() {
+        if (optionalFields == null) {
+            optionalFields = new HashMap<String, Field>();
+            requiredFields = new HashMap<String, Field>();
+
+
+            for ( Field f: jcrOptionalFields ) {
+                optionalFields.put(f.getName(), f);
+            }
+
+            for ( Field f: jcrRequiredFields ) {
+                requiredFields.put(f.getName(), f);
+            }
+        }
     }
 
     /**
@@ -120,25 +159,34 @@ public class Archetype {
      * @param field
      */
     public void addOptionalField(Field field) {
+        createFields();
         field.addArchetype(this);
         optionalFields.put(field.getName(), field);
+        jcrOptionalFields.add(field);
     }
 
     /**
      * @param field
      */
     public void addRequiredField(Field field) {
+        createFields();
+        field.addArchetype(this);
         requiredFields.put(field.getName(), field);
+        jcrRequiredFields.add(field);
     }
 
     /**
      * @param field
      */
     public void removeRequiredField(Field field) {
+        createFields();
+        field.removeArchetype(this);
         requiredFields.remove(field.getName());
+        jcrRequiredFields.remove(field);
     }
 
     public Map<String, Field> getRequiredFields() {
+        createFields();
         return requiredFields;
     }
 
@@ -148,15 +196,37 @@ public class Archetype {
      * @param field
      */
     public void removeOptionalField(Field field) {
+        createFields();
         field.removeArchetype(this);
         optionalFields.remove(field.getName());
+        jcrOptionalFields.remove(field);
     }
 
     /**
      * Vrati vsechny fieldy
      */
     public Map<String, Field> getOptionalFields() {
+        createFields();
         return optionalFields;
     }
 
+    @Override
+    public String getJcrName() {
+        return getName();
+    }
+
+    @Override
+    public void setJcrName(String jcrName) {
+        setName(jcrName);
+    }
+
+    @Override
+    public String getJcrPath() {
+        return jcrPath;
+    }
+
+    @Override
+    public void setJcrPath(String jcrPath) {
+        this.jcrPath = jcrPath;
+    }
 }

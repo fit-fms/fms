@@ -1,6 +1,11 @@
 package fms.business.archetype;
 
 import fms.business.fieldtype.FieldType;
+import fms.jcr.JcrObject;
+import org.jcrom.annotations.JcrName;
+import org.jcrom.annotations.JcrNode;
+import org.jcrom.annotations.JcrPath;
+import org.jcrom.annotations.JcrProperty;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,28 +17,42 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
  */
-public class Field {
+@JcrNode
+public class Field implements JcrObject {
 
     /**
      * Jm�no pol�cka pro statistiky a filtrov�n�
      */
+    @JcrName
     private String name;
+
+    @JcrPath
+    private String jcrPath;
+
     /**
      * Intern� popis pro spr�vce, vhodn� pro vyhled�v�n�
      */
+    @JcrProperty
     private String privateDescription;
+
     /**
      * Popis pou�it� pro verejnou n�povedu.
      */
+    @JcrProperty
     private String publicDescription;
+
     /**
      * Popisek k zobrazeni ve formulari (HTML label)
      */
+    @JcrProperty
     private String label;
+
     /**
      * Typ policka
      */
+
     private FieldType type;
+
     /**
      * Validatory policka
      */
@@ -42,6 +61,7 @@ public class Field {
     /**
      * Archetypy ktere pouzivaji toto policko
      */
+
     private Map<String, Archetype> archetypes;
 
     public Field() {
@@ -130,7 +150,7 @@ public class Field {
     public boolean validate(String data) {
         boolean status = true;
 
-        for (Map.Entry<String, Validator> entry: validators.entrySet()) {
+        for (Map.Entry<String, Validator> entry : validators.entrySet()) {
             if (!entry.getValue().validate(data)) {
                 status = false;
             }
@@ -170,4 +190,23 @@ public class Field {
         type = newVal;
     }
 
+    @Override
+    public String getJcrName() {
+        return getName();
+    }
+
+    @Override
+    public void setJcrName(String jcrName) {
+        setName(jcrName);
+    }
+
+    @Override
+    public String getJcrPath() {
+        return this.jcrPath;
+    }
+
+    @Override
+    public void setJcrPath(String jcrPath) {
+        this.jcrPath = jcrPath;
+    }
 }

@@ -36,6 +36,7 @@ public class SearchCondition {
      * Odsazen� v�sledku kter� se maj� vr�tit.
      */
     private int offset;
+
     public SearchCondition() {
 
     }
@@ -78,12 +79,8 @@ public class SearchCondition {
         return this;
     }
 
-    /**
-     * @param offset offset
-     */
-    public SearchCondition setOffset(int offset) {
-        this.offset = offset;
-        return this;
+    public int getLimit() {
+        return limit;
     }
 
     /**
@@ -94,23 +91,16 @@ public class SearchCondition {
         return this;
     }
 
-    public enum Order {
-        /**
-         * Vzestupn� porad�.
-         */
-        ASC,
-        /**
-         * Sestupn� porad�.
-         */
-        DESC
-    }
-
-    public int getLimit() {
-        return  limit;
-    }
-
     public int getOffset() {
         return offset;
+    }
+
+    /**
+     * @param offset offset
+     */
+    public SearchCondition setOffset(int offset) {
+        this.offset = offset;
+        return this;
     }
 
     public Map<Field, Order> getOrder() {
@@ -123,5 +113,16 @@ public class SearchCondition {
 
     public List<Archetype> getArchetypes() {
         return archetypes;
+    }
+
+    public enum Order {
+        /**
+         * Vzestupn� porad�.
+         */
+        ASC,
+        /**
+         * Sestupn� porad�.
+         */
+        DESC
     }
 }

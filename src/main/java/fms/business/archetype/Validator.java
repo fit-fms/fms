@@ -1,6 +1,7 @@
 package fms.business.archetype;
 
 import fms.business.fieldtype.FieldType;
+import org.jcrom.annotations.*;
 
 /**
  * Valid�tor kontroluje data podle typu pol�cka a predem dan�ch specifikac�. To umo�nuje udr�ovat validn� datab�zi dat. Napr�klad umo�n� nad libovoln�m typed dat vytvorit v�cet mo�n�ch hodnot(enum) se zachov�n�m vlastnost� typu pro vyhled�v�n�,  filtrov�n� a statistiky.
@@ -9,16 +10,25 @@ import fms.business.fieldtype.FieldType;
  * @version 1.0
  * @created 15-Apr-2015 12:39:49 PM
  */
+@JcrNode
 public class Validator {
 
     /**
      * N�zev valid�toru
      */
+    @JcrName
     private String name;
+
+    @JcrPath
+    private String jcrPath;
+
     /**
      * Popis valid�toru
      */
+    @JcrProperty
     private String description;
+
+    @JcrReference(byPath = true)
     private FieldType fieldType;
 
     public Validator() {
