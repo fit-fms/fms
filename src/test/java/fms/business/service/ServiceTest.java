@@ -30,6 +30,9 @@ public abstract class ServiceTest {
             Node t = session.getNode("/templates");
             t.remove();
 
+            Node v = session.getNode("/validators");
+            v.remove();
+
             session.save();
         }
         catch (Exception e) {}
@@ -38,6 +41,7 @@ public abstract class ServiceTest {
         session.getRootNode().addNode("/archetypes");
         session.getRootNode().addNode("/forms");
         session.getRootNode().addNode("/templates");
+        session.getRootNode().addNode("/validators");
         session.save();
     }
 
