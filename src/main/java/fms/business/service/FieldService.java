@@ -8,25 +8,25 @@ import javax.jcr.NodeIterator;
 
 import javax.jcr.Node;
 import javax.jcr.Session;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryManager;
+import javax.jcr.query.QueryResult;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Slu�ba pro uchov�v�n� archetypu v datab�zi.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
- */
+*/
 @Service
 public class FieldService {
 
+    private static final String FIELDS_ROOT = "/fields";
 
     private Session session;
 
     private Jcrom jcrom;
 
-    Map<String, Field> fields;
+    Map<String, Field> fields = new HashMap<String, Field>();;
 
     @Autowired
     public FieldService(Session session, Jcrom jcrom) {
@@ -41,8 +41,17 @@ public class FieldService {
      * @param name
      */
     public Field getFieldByName(String name) throws Exception {
-        Node fieldNode = session.getNode("/fields/" + name);
-        return jcrom.fromNode(Field.class, fieldNode);
+        QueryManager queryManager = session.getWorkspace().getQueryManager();
+        String queryStr = "/jcr:root" + FIELDS_ROOT + "/*[@name='"+ name +"']";
+        Query query = queryManager.createQuery(queryStr, Query.XPATH);
+        QueryResult queryResult = query.execute();
+
+        NodeIterator it =  queryResult.getNodes();
+        if (!it.hasNext()) {
+            return null;
+        }
+
+        return jcrom.fromNode(Field.class, it.nextNode());
     }
 
     /**
@@ -51,10 +60,7 @@ public class FieldService {
      * @param field
      */
     public Field createField(Field field) throws Exception {
-
-        Node root = session.getRootNode();
-        root.addNode("fields");
-        Node fieldsNode = session.getNode("/fields");
+        Node fieldsNode = session.getNode(FIELDS_ROOT);
 
         jcrom.addNode(fieldsNode, field);
         session.save();
@@ -68,8 +74,9 @@ public class FieldService {
      * @param field
      */
     public void updateField(Field field) throws Exception {
-        removeField(field);
-        createField(field);
+        Node fieldNode = session.getNode(jcrom.getPath(field));
+        jcrom.updateNode(fieldNode, field);
+        session.save();
     }
 
     /**
@@ -87,20 +94,11 @@ public class FieldService {
      * Z�sk� v�echna pol�cka z datab�ze.
      */
     public Map<String, Field> getAllFields() throws Exception {
+        fields.clear();
 
-        if (fields == null) {
-            fields = new HashMap<String, Field>();
-        }
-        else {
-            fields.clear();
-        }
-
-        Node fieldsNode = session.getNode("/fields");
-        NodeIterator it = fieldsNode.getNodes();
-
+        NodeIterator it = session.getNode(FIELDS_ROOT).getNodes();
         while (it.hasNext()) {
-            Node n = it.nextNode();
-            Field f = jcrom.fromNode(Field.class, n);
+            Field f = jcrom.fromNode(Field.class, it.nextNode());
             fields.put(f.getName(), f);
         }
 

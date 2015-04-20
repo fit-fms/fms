@@ -1,35 +1,31 @@
 package fms.business.archetype;
 
 import fms.business.fieldtype.FieldType;
-import org.jcrom.annotations.JcrName;
-import org.jcrom.annotations.JcrNode;
-import org.jcrom.annotations.JcrPath;
-import org.jcrom.annotations.JcrProperty;
+import org.jcrom.annotations.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Pol�cko formul�re kter� u�ivatel vypln�.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
- */
+ * Policko formulare ktere uzivatel vyplni.
+*/
 @JcrNode
 public class Field {
 
-    /**
-     * Jm�no pol�cka pro statistiky a filtrov�n�
-     */
     @JcrName
-    private String name;
+    private String jcrName = "fms_field";
 
     @JcrPath
     private String jcrPath;
 
     /**
-     * Intern� popis pro spr�vce, vhodn� pro vyhled�v�n�
+     * Jmeno policka pro statistiky a filtrovani
+     */
+    @JcrProperty
+    private String name;
+
+    /**
+     * Interni popis pro spr�vce, vhodn� pro vyhled�v�n�
      */
     @JcrProperty
     private String privateDescription;
@@ -49,7 +45,7 @@ public class Field {
     /**
      * Typ policka
      */
-
+    @JcrReference(byPath = true)
     private FieldType type;
 
     /**
