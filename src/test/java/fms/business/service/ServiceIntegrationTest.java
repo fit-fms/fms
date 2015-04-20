@@ -16,9 +16,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/component.xml" })
-public class ServiceIntegrationTest {
+public class ServiceIntegrationTest extends ServiceTest {
     @Autowired
     private ArchetypeService archetypeService;
 

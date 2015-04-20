@@ -18,6 +18,11 @@ public class FieldServiceTest extends ServiceTest {
     @Autowired
     private FieldService fieldService;
 
+    @Before
+    public void setUp() throws Exception {
+        resetWorkspace();
+    }
+
 
     @Test
     public void testCreateField() throws Exception {

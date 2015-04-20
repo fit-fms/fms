@@ -16,7 +16,6 @@ public abstract class ServiceTest {
     @Autowired
     private Session session;
 
-    @Before
     public void resetWorkspace() throws Exception {
         try {
             Node n = session.getNode("/fields");
@@ -25,12 +24,16 @@ public abstract class ServiceTest {
             Node a = session.getNode("/archetypes");
             a.remove();
 
+            Node f = session.getNode("/forms");
+            f.remove();
+
             session.save();
         }
         catch (Exception e) {}
 
         session.getRootNode().addNode("/fields");
         session.getRootNode().addNode("/archetypes");
+        session.getRootNode().addNode("/forms");
         session.save();
     }
 

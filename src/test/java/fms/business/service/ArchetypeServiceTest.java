@@ -16,6 +16,11 @@ public class ArchetypeServiceTest extends ServiceTest {
     @Autowired
     private ArchetypeService archetypeService;
 
+    @Before
+    public void setUp() throws Exception {
+        resetWorkspace();
+    }
+
     @Test
     public void testCreate() throws Exception {
         String name = "my_field_sname";

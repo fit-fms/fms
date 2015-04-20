@@ -1,6 +1,7 @@
 package fms.business.form;
 
 import fms.business.archetype.Archetype;
+import org.jcrom.annotations.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,35 +14,52 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
  */
+@JcrNode
 public class Form {
 
     /**
      * Identifikacn� c�slo
      */
+    @JcrProperty
     private int id;
+
+    @JcrName
+    private String name;
+
+    @JcrPath
+    private String jcrPath;
+
     /**
      * Datum kdy byl formul�r vyplnen
      */
+    @JcrProperty
     private Date filledAt;
+
     /**
      * Datum kdy byl formul�r schv�len spr�vcem
      */
+    @JcrProperty()
     private Date approvedAt;
+
     /**
      * Admin kter� formul�r schv�lil
      */
+    @JcrReference(byPath = true)
     private Admin admin;
+
     /**
      * Archetyp kter� popisuje data formul�re.
      */
+    @JcrReference(byPath = true)
     private Archetype archetype;
+
     /**
      * Vyplnen� pol�cka
      */
-    private Map<String, FilledField> filleFields;
+    private Map<String, FilledField> filledFields;
 
     public Form() {
-        this.filleFields = new HashMap<String, FilledField>();
+        this.filledFields = new HashMap<String, FilledField>();
     }
 
     /**
@@ -52,7 +70,7 @@ public class Form {
         boolean status = true;
 
 
-        for (Map.Entry<String, FilledField> entry : filleFields.entrySet()) {
+        for (Map.Entry<String, FilledField> entry : filledFields.entrySet()) {
             if (!entry.getValue().validate()) {
                 status = false;
             }
@@ -65,7 +83,7 @@ public class Form {
      * Z�sk� v�echny filled fields.
      */
     public Map<String, FilledField> getFilledFields() {
-        return filleFields;
+        return filledFields;
     }
 
     /**
@@ -74,7 +92,7 @@ public class Form {
      * @param field
      */
     public void addfilledfield(FilledField field) {
-        filleFields.put(field.getField().getName(), field);
+        filledFields.put(field.getField().getName(), field);
     }
 
     /**
@@ -83,7 +101,7 @@ public class Form {
      * @param field
      */
     public void removeFilledFIeld(FilledField field) {
-        filleFields.remove(field.getField().getName());
+        filledFields.remove(field.getField().getName());
     }
 
     /**
@@ -115,6 +133,7 @@ public class Form {
      * @param id
      */
     public void setId(int id) {
+        this.name = ((Integer)id).toString();
         this.id = id;
     }
 
