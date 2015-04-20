@@ -8,10 +8,6 @@ import org.jcrom.annotations.JcrProperty;
 
 /**
  * �ablona obsahuje informace pro zobrazen� ci tisk archetypu formul�re.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
  */
 @JcrNode
 public class Template {
@@ -20,11 +16,13 @@ public class Template {
      * N�zev �ablony
      */
     @JcrName
-    private String name;
+    private String jcrName = "fms_template";
 
     @JcrPath
     private String jcrPath;
-    
+
+    @JcrProperty
+    private String name;
     /**
      * Popis �ablony
      */

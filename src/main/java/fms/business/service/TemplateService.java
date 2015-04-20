@@ -1,5 +1,6 @@
 package fms.business.service;
 
+import fms.business.archetype.Field;
 import fms.business.archetype.Template;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,24 +9,25 @@ import org.springframework.stereotype.Service;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.Session;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryManager;
+import javax.jcr.query.QueryResult;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Slu�ba pro uchov�v�n� formul�ru v datab�zi.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
  */
 @Service
 public class TemplateService {
+
+    private static final String TEMPLATES_ROOT = "/templates";
 
     private Session session;
 
     private Jcrom jcrom;
 
-    private List<Template> templates;
+    private List<Template> templates = new ArrayList<Template>();
 
     @Autowired
     public TemplateService(Session session, Jcrom jcrom) {
@@ -40,16 +42,23 @@ public class TemplateService {
      * @param template
      */
     public void createTemplate(Template template) throws Exception {
-        Node templatesNode = session.getNode("/templates");
+        Node templatesNode = session.getNode(TEMPLATES_ROOT);
         jcrom.addNode(templatesNode, template);
         session.save();
     }
 
     public Template getTemplateByName(String name) throws Exception {
-        Node templateNode = session.getNode("/templates/" + name);
-        Template template = jcrom.fromNode(Template.class, templateNode);
+        QueryManager queryManager = session.getWorkspace().getQueryManager();
+        String queryStr = "/jcr:root" + TEMPLATES_ROOT + "/*[@name='"+ name +"']";
+        Query query = queryManager.createQuery(queryStr, Query.XPATH);
+        QueryResult queryResult = query.execute();
 
-        return template;
+        NodeIterator it =  queryResult.getNodes();
+        if (!it.hasNext()) {
+            return null;
+        }
+
+        return jcrom.fromNode(Template.class, it.nextNode());
     }
     /**
      * Aktualizuje templatu v datab�zi.
@@ -57,8 +66,9 @@ public class TemplateService {
      * @param template
      */
     public void updateTemplate(Template template) throws Exception {
-        removeTemplate(template);
-        createTemplate(template);
+        Node templateNode = session.getNode(jcrom.getPath(template));
+        jcrom.updateNode(templateNode, template);
+        session.save();
     }
 
     /**
@@ -67,8 +77,9 @@ public class TemplateService {
      * @param template
      */
     public void removeTemplate(Template template) throws Exception {
-        Node templateNode = session.getNode("/templates/" + template.getName());
+        Node templateNode = session.getNode(jcrom.getPath(template));
         templateNode.remove();
+        session.save();
     }
 
     /**
@@ -77,18 +88,11 @@ public class TemplateService {
      * @param archwetypName
      */
     public List<Template> getAllTemplates(String archwetypName) throws Exception {
+        templates.clear();
 
-        if (templates == null) {
-            templates = new ArrayList<Template>();
-        }
-        else {
-            templates.clear();
-        }
-
-        NodeIterator it = session.getNode("/templates").getNodes();
+        NodeIterator it = session.getNode(TEMPLATES_ROOT).getNodes();
         while (it.hasNext()) {
-            Node tn = it.nextNode();
-            Template t = jcrom.fromNode(Template.class, tn);
+            Template t = jcrom.fromNode(Template.class, it.nextNode());
             templates.add(t);
         }
 
