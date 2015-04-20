@@ -36,7 +36,21 @@ public class ArchetypeServiceTest extends ServiceTest {
         assertEquals(archetype.getName(), archetypeA.getName());
     }
 
-    @Test(expected = javax.jcr.PathNotFoundException.class)
+    @Test
+    public void testRemove() throws Exception {
+        String name = "my_field_sname";
+
+        Archetype archetype = new Archetype();
+        archetype.setName(name);
+
+        archetypeService.createArchetype(archetype);
+        archetypeService.removeArchetype(archetype);
+
+        Archetype archetypeA = archetypeService.findByName(name);
+        assertNull(archetypeA);
+    }
+
+    @Test
     public void testUpdate() throws Exception {
         String name = "my_field_name";
         String newName = "my_new_field_name";
@@ -52,8 +66,8 @@ public class ArchetypeServiceTest extends ServiceTest {
         assertNotNull(archetypeA);
         assertEquals(newName, archetypeA.getName());
 
-        archetypeService.findByName(name);
-        fail("Stary uzel byl nalezen.");
+        Archetype archetypeNo = archetypeService.findByName(name);
+        assertNull(archetypeNo);
     }
 
     @Test

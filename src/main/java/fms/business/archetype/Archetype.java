@@ -15,14 +15,17 @@ import java.util.*;
 @JcrNode
 public class Archetype {
 
-    /**
-     * Jm�no formul�re
-     */
     @JcrName
-    private String name;
+    private String jcrName = "fms_archetype";
 
     @JcrPath
     private String jcrPath;
+
+    /**
+     * Jmeno formulare
+     */
+    @JcrProperty
+    private String name;
 
     /**
      * Intern� popis urcen� pro spr�vce
@@ -80,14 +83,14 @@ public class Archetype {
     }
 
     /**
-     * Jm�no formul�re
+     * Jmeno formulare
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Jm�no formul�re
+     * Jmeno formulare
      *
      * @param name
      */
@@ -96,14 +99,14 @@ public class Archetype {
     }
 
     /**
-     * Verejn� popis pou�it jako n�poveda
+     * Verejny popis pouzit jako napoveda
      */
     public String getPublicDescription() {
         return publicDescription;
     }
 
     /**
-     * Verejn� popis pou�it jako n�poveda
+     * Verejny popis pouzit jako napoveda
      *
      * @param description
      */
@@ -112,14 +115,14 @@ public class Archetype {
     }
 
     /**
-     * Intern� popis urcen� pro spr�vce
+     * Interni popis urceny pro spravce
      */
     public String getPrivateDescription() {
         return privateDescription;
     }
 
     /**
-     * Intern� popis urcen� pro spr�vce
+     * Interni popis urceny pro spravce
      *
      * @param description
      */
