@@ -27,6 +27,9 @@ public abstract class ServiceTest {
             Node f = session.getNode("/forms");
             f.remove();
 
+            Node t = session.getNode("/templates");
+            t.remove();
+
             session.save();
         }
         catch (Exception e) {}
@@ -34,6 +37,7 @@ public abstract class ServiceTest {
         session.getRootNode().addNode("/fields");
         session.getRootNode().addNode("/archetypes");
         session.getRootNode().addNode("/forms");
+        session.getRootNode().addNode("/templates");
         session.save();
     }
 
