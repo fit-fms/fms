@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class ArchetypeService {
 
-    private static final String ARCHETYPES_ROOT = "/archetypes";
+    public static final String ARCHETYPES_ROOT = "/archetypes";
 
     private Session session;
 
@@ -42,6 +42,13 @@ public class ArchetypeService {
      * @param name
      */
     public Archetype findByName(String name) throws Exception {
+        Node n = this.findNodeByName(name);
+        if (n == null) return null;
+
+        return jcrom.fromNode(Archetype.class, n);
+    }
+
+    protected Node findNodeByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
         String queryStr = "/jcr:root" + ARCHETYPES_ROOT + "/*[@name='"+ name +"']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
@@ -52,7 +59,7 @@ public class ArchetypeService {
             return null;
         }
 
-        return jcrom.fromNode(Archetype.class, it.nextNode());
+        return it.nextNode();
     }
 
     /**

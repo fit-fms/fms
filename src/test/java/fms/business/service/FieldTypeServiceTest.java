@@ -35,7 +35,21 @@ public class FieldTypeServiceTest extends ServiceTest {
         assertEquals(fieldType.getName(), fieldTypeB.getName());
     }
 
-    @Test(expected = javax.jcr.PathNotFoundException.class)
+    @Test
+    public void testRemove() throws Exception {
+        String name = "my_field_sname";
+
+        FieldType fieldType = new FieldType();
+        fieldType.setName(name);
+
+        fieldTypeService.createFieldType(fieldType);
+        fieldTypeService.removeFieldType(fieldType);
+
+        FieldType fieldTypeB = fieldTypeService.getByName(name);
+        assertNull(fieldTypeB);
+    }
+
+    @Test
     public void testUpdateField() throws Exception {
         String name = "my_field_name";
         String newName = "my_new_field_name";
@@ -51,8 +65,8 @@ public class FieldTypeServiceTest extends ServiceTest {
         assertNotNull(fieldTypeB);
         assertEquals(newName, fieldTypeB.getName());
 
-        fieldTypeService.getByName(name);
-        fail("Stary uzel byl nalezen.");
+        FieldType fieldTypeNo = fieldTypeService.getByName(name);
+        assertNull(fieldTypeNo);
     }
 
     @Test

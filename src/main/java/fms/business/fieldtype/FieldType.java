@@ -10,10 +10,6 @@ import java.util.Map;
 
 /**
  * Z�kladn� informace o pol�cku pro budouc� zpracov�n�.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
 @JcrNode
 public class FieldType {
@@ -22,10 +18,13 @@ public class FieldType {
      * N�zev typu
      */
     @JcrName
-    private String name;
+    private String jcrName = "fms_field_type";
 
     @JcrPath
     private String jcrPath;
+
+    @JcrProperty
+    private String name;
 
     /**
      * Popis typu

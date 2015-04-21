@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class ValidatorService {
 
-    private static final String VALIDATOR_ROOT = "/validators";
+    public static final String VALIDATOR_ROOT = "/validators";
 
     private Session session;
 

@@ -1,5 +1,7 @@
 package fms.business.service;
 
+import fms.business.archetype.Archetype;
+import fms.business.archetype.Template;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -17,35 +20,22 @@ public abstract class ServiceTest {
     private Session session;
 
     public void resetWorkspace() throws Exception {
+
+        Node rootN = session.getRootNode();
+
         try {
-            Node n = session.getNode("/fields");
-            n.remove();
+            session.getNode(ArchetypeService.ARCHETYPES_ROOT).remove();
+            session.getNode(FieldService.FIELDS_ROOT).remove();
+            session.getNode(TemplateService.TEMPLATES_ROOT).remove();
+            session.getNode(ValidatorService.VALIDATOR_ROOT).remove();
+            session.getNode(FieldTypeService.FIELD_TYPE_ROOT).remove();
+        } catch (Exception e) {}
 
-            Node a = session.getNode("/archetypes");
-            a.remove();
-
-            Node f = session.getNode("/forms");
-            f.remove();
-
-            Node t = session.getNode("/templates");
-            t.remove();
-
-            Node v = session.getNode("/validators");
-            v.remove();
-
-            Node ft = session.getNode("/fieldTypes");
-            ft.remove();
-
-            session.save();
-        }
-        catch (Exception e) {}
-
-        session.getRootNode().addNode("/fields");
-        session.getRootNode().addNode("/archetypes");
-        session.getRootNode().addNode("/forms");
-        session.getRootNode().addNode("/templates");
-        session.getRootNode().addNode("/validators");
-        session.getRootNode().addNode("/fieldTypes");
+        rootN.addNode(FieldService.FIELDS_ROOT);
+        rootN.addNode(ArchetypeService.ARCHETYPES_ROOT);
+        rootN.addNode(TemplateService.TEMPLATES_ROOT);
+        rootN.addNode(ValidatorService.VALIDATOR_ROOT);
+        rootN.addNode(FieldTypeService.FIELD_TYPE_ROOT);
         session.save();
     }
 

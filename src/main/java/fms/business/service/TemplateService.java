@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class TemplateService {
 
-    private static final String TEMPLATES_ROOT = "/templates";
+    public static final String TEMPLATES_ROOT = "/templates";
 
     private Session session;
 

@@ -17,17 +17,17 @@ import java.util.Map;
 @JcrNode
 public class Form {
 
+    @JcrName
+    private String jrcName = "fms_form";
+
+    @JcrPath
+    private String jcrPath;
+
     /**
      * Identifikacn� c�slo
      */
     @JcrProperty
     private int id;
-
-    @JcrName
-    private String name;
-
-    @JcrPath
-    private String jcrPath;
 
     /**
      * Datum kdy byl formul�r vyplnen
@@ -133,7 +133,6 @@ public class Form {
      * @param id
      */
     public void setId(int id) {
-        this.name = ((Integer)id).toString();
         this.id = id;
     }
 

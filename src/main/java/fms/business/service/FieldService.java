@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class FieldService {
 
-    private static final String FIELDS_ROOT = "/fields";
+    public static final String FIELDS_ROOT = "/fields";
 
     private Session session;
 

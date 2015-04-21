@@ -1,5 +1,6 @@
 package fms.business.service;
 
+import fms.business.archetype.Archetype;
 import fms.business.form.Form;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,11 @@ import java.util.Map;
 @Service
 public class FormService {
 
+    private static final String ARCHETYPE_FORMS =  "forms";
+
     private Session session;
 
     private Jcrom jcrom;
-
-    private Map<Integer, Form> allForms;
 
     @Autowired
     public FormService(Session session, Jcrom jcrom) {
@@ -40,9 +41,18 @@ public class FormService {
      * @param form
      */
     public void createForm(Form form) throws Exception {
-        Node formsNode = session.getNode("/forms");
-        jcrom.addNode(formsNode, form);
+        Node archetypeNode = session.getNode(jcrom.getPath(form.getArchetype()));
+        if (archetypeNode == null) return;
 
+        Node formsNode;
+        if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
+            formsNode = archetypeNode.addNode(ARCHETYPE_FORMS);
+        }
+        else {
+            formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
+        }
+
+        jcrom.addNode(formsNode, form);
         session.save();
     }
 
@@ -52,7 +62,7 @@ public class FormService {
      * @param form
      */
     public void removeForm(Form form) throws Exception {
-        Node formNode = session.getNode("/forms/" + form.getId());
+        Node formNode = session.getNode(jcrom.getPath(form));
         formNode.remove();
         session.save();
     }
@@ -62,27 +72,52 @@ public class FormService {
      *
      * @param id
      */
-    public Form getFormById(int id) throws Exception {
-        Node formNode = session.getNode("/forms/" + id);
-        Form form = jcrom.fromNode(Form.class, formNode);
-        return form;
+    public Form getFormById(Archetype archetype, int id) throws Exception {
+        Node archetypeNode = session.getNode(jcrom.getPath(archetype));
+
+        Node formsNode;
+        if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
+            formsNode = archetypeNode.addNode(ARCHETYPE_FORMS);
+        }
+        else {
+            formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
+        }
+
+        Node formNode = null;
+        NodeIterator it = formsNode.getNodes();
+        while (it.hasNext()) {
+            Node n = it.nextNode();
+            if (n.hasProperty("id") && n.getProperty("id").getLong() == id) {
+                formNode = n;
+                break;
+            }
+        }
+
+        if (formNode == null) {
+            return null;
+        }
+
+        return jcrom.fromNode(Form.class, formNode);
     }
 
     /**
      * Z�sk� v�echny formul�re z datab�ze.
      */
-    public Map<Integer, Form> getAllForms() throws Exception {
-        if (allForms == null) {
-            allForms = new HashMap<Integer, Form>();
+    public Map<Integer, Form> getAllForms(Archetype archetype) throws Exception {
+        Map<Integer, Form> allForms = new HashMap<Integer, Form>();
+
+        Node archetypeNode = session.getNode(jcrom.getPath(archetype));
+        Node formsNode;
+        if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
+            formsNode = archetypeNode.addNode(ARCHETYPE_FORMS);
         }
         else {
-            allForms.clear();
+            formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
         }
 
-        NodeIterator it = session.getNode("/forms").getNodes();
+        NodeIterator it = formsNode.getNodes();
         while (it.hasNext()) {
-            Node fn = it.nextNode();
-            Form f = jcrom.fromNode(Form.class, fn);
+            Form f = jcrom.fromNode(Form.class, it.nextNode());
             allForms.put(f.getId(), f);
         }
 
@@ -95,8 +130,9 @@ public class FormService {
      * @param form
      */
     public void updateForm(Form form) throws Exception {
-        removeForm(form);
-        createForm(form);
+        Node formNode = session.getNode(jcrom.getPath(form));
+        if (formNode == null) return;
+        jcrom.updateNode(formNode, form);
     }
 
 }
