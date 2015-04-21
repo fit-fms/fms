@@ -3,9 +3,7 @@ package fms.business.form;
 import fms.business.archetype.Archetype;
 import org.jcrom.annotations.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Formul�r je vyplnen� instance Archetypu fomul�re.
@@ -53,13 +51,11 @@ public class Form {
     @JcrReference(byPath = true)
     private Archetype archetype;
 
-    /**
-     * Vyplnen� pol�cka
-     */
-    private Map<String, FilledField> filledFields;
+    @JcrChildNode
+    private List<FilledField> filledFields;
 
     public Form() {
-        this.filledFields = new HashMap<String, FilledField>();
+        this.filledFields = new ArrayList<FilledField>();
     }
 
     /**
@@ -69,9 +65,8 @@ public class Form {
 
         boolean status = true;
 
-
-        for (Map.Entry<String, FilledField> entry : filledFields.entrySet()) {
-            if (!entry.getValue().validate()) {
+        for (FilledField filledField : filledFields) {
+            if (!filledField.validate()) {
                 status = false;
             }
         }
@@ -82,7 +77,7 @@ public class Form {
     /**
      * Z�sk� v�echny filled fields.
      */
-    public Map<String, FilledField> getFilledFields() {
+    public List<FilledField> getFilledFields() {
         return filledFields;
     }
 
@@ -92,7 +87,9 @@ public class Form {
      * @param field
      */
     public void addfilledfield(FilledField field) {
-        filledFields.put(field.getField().getName(), field);
+        Set<FilledField> foo = new HashSet<FilledField>(filledFields);
+        if (foo.contains(field)) return;
+        filledFields.add(field);
     }
 
     /**
@@ -101,7 +98,7 @@ public class Form {
      * @param field
      */
     public void removeFilledFIeld(FilledField field) {
-        filledFields.remove(field.getField().getName());
+        filledFields.remove(field);
     }
 
     /**

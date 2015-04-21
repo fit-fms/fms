@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -38,7 +39,7 @@ public class FormTest {
         form.addfilledfield(ffieldC);
         form.addfilledfield(ffieldD);
 
-        Map<String, FilledField> fields = form.getFilledFields();
+        List<FilledField> fields = form.getFilledFields();
         assertEquals(numOfFields, fields.size());
 
 
@@ -71,7 +72,7 @@ public class FormTest {
         Form form = new Form();
         form.addfilledfield(ffieldA);
 
-        Map<String, FilledField> fields = form.getFilledFields();
+        List<FilledField> fields = form.getFilledFields();
         assertEquals(1, fields.size());
 
         form.addfilledfield(ffieldA);
@@ -85,7 +86,7 @@ public class FormTest {
     public void testInitialFields() {
         Form form = new Form();
 
-        Map<String, FilledField> fields = form.getFilledFields();
+        List<FilledField> fields = form.getFilledFields();
         assertEquals(0, fields.size());
     }
 
