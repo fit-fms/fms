@@ -10,6 +10,7 @@ import fms.business.fieldtype.FieldType;
 import fms.business.fieldtype.TextField;
 import fms.business.form.FilledField;
 import fms.business.form.Form;
+import fms.business.form.PaperForm;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -124,7 +125,7 @@ public class ServiceIntegrationTest extends ServiceTest {
         assertNotNull(fields);
         assertEquals(1, fields.size());
 
-        Form form = new Form();
+        Form form = new PaperForm();
         form.setId(formId);
         form.setArchetype(archetype);
 

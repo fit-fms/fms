@@ -3,6 +3,7 @@ package fms.business.service;
 import fms.business.archetype.Archetype;
 import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.form.Form;
+import fms.business.form.PaperForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class FormServiceTest extends ServiceTest {
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
-        Form form = new Form();
+        Form form = new PaperForm();
         form.setId(id);
         form.setArchetype(archetype);
 
@@ -42,6 +43,7 @@ public class FormServiceTest extends ServiceTest {
         Form formA = formService.getFormById(archetype, id);
 
         assertNotNull(formA);
+        assertTrue(formA instanceof PaperForm);
         assertEquals(form.getId(), formA.getId());
     }
 
@@ -54,7 +56,7 @@ public class FormServiceTest extends ServiceTest {
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
-        Form form = new Form();
+        Form form = new PaperForm();
         form.setId(id);
         form.setArchetype(archetype);
 
@@ -82,15 +84,15 @@ public class FormServiceTest extends ServiceTest {
         int idB = idA*5;
         int idC = idB*2;
 
-        Form formA = new Form();
+        Form formA = new PaperForm();
         formA.setId(idA);
         formA.setArchetype(archetype);
 
-        Form formB = new Form();
+        Form formB = new PaperForm();
         formB.setId(idB);
         formB.setArchetype(archetype);
 
-        Form formC = new Form();
+        Form formC = new PaperForm();
         formC.setId(idC);
         formC.setArchetype(archetype);
 

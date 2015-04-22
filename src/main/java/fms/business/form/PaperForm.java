@@ -8,10 +8,6 @@ import java.util.List;
 /**
  * Formul�r vyplnen� na pap�re. Vy�aduje preps�n� informac� do syst�mu. Umo�nuje evidovat podpis.
  * V pr�pade �e evidujeme pap�rovou formu, pova�uje se za smerodatnou i kdy� byl formul�r predem odesl�n online.  Online odesl�n� jen odstran� prepisov�n� dat z pap�ru do IS. Po potvrzen� podpisu "Digi�ln� forma" zan�k� a nad�le existuje jen "Pap�rov� forma"
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
  */
 public class PaperForm extends Form {
 

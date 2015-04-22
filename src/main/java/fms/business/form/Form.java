@@ -1,25 +1,42 @@
 package fms.business.form;
 
 import fms.business.archetype.Archetype;
+import org.jcrom.JcrEntity;
 import org.jcrom.annotations.*;
 
 import java.util.*;
 
 /**
  * Formul�r je vyplnen� instance Archetypu fomul�re.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
-@JcrNode
-public class Form {
+@JcrNode(classNameProperty = "className")
+abstract public class Form implements JcrEntity {
 
     @JcrName
-    private String jrcName = "fms_form";
+    private String jcrName = "fms_form";
 
     @JcrPath
     private String jcrPath;
+
+    @Override
+    public void setName(String s) {
+        jcrName = s;
+    }
+
+    @Override
+    public String getName() {
+        return jcrName;
+    }
+
+    @Override
+    public void setPath(String s) {
+        jcrPath = s;
+    }
+
+    @Override
+    public String getPath() {
+        return jcrPath;
+    }
 
     /**
      * Identifikacn� c�slo

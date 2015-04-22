@@ -33,7 +33,7 @@ public class FormTest {
         FilledField ffieldD = makeFilledField("D");
 
 
-        Form form = new Form();
+        Form form = new PaperForm();
         form.addfilledfield(ffieldA);
         form.addfilledfield(ffieldB);
         form.addfilledfield(ffieldC);
@@ -69,7 +69,7 @@ public class FormTest {
         FilledField ffieldA = makeFilledField("A");
         FilledField ffieldAA = makeFilledField("A");
 
-        Form form = new Form();
+        Form form = new PaperForm();
         form.addfilledfield(ffieldA);
 
         List<FilledField> fields = form.getFilledFields();
@@ -84,7 +84,7 @@ public class FormTest {
 
     @Test
     public void testInitialFields() {
-        Form form = new Form();
+        Form form = new PaperForm();
 
         List<FilledField> fields = form.getFilledFields();
         assertEquals(0, fields.size());
@@ -92,7 +92,7 @@ public class FormTest {
 
     @Test
     public void testIsApproved() {
-        Form form = new Form();
+        Form form = new PaperForm();
         assertFalse(form.isApproved());
 
         Date approvedAt = new Date();
@@ -104,7 +104,7 @@ public class FormTest {
 
     @Test
     public void testIsFilled() {
-        Form form = new Form();
+        Form form = new PaperForm();
         assertFalse(form.isFilled());
 
         Date filledAt = new Date();
@@ -117,7 +117,7 @@ public class FormTest {
     @Test
     public void testValidate() {
         //@TODO validation messages, test validation fail
-        Form form = new Form();
+        Form form = new PaperForm();
 
         FilledField fieldA = Mockito.spy(makeFilledField("A"));
         FilledField fieldB = Mockito.spy(makeFilledField("B"));

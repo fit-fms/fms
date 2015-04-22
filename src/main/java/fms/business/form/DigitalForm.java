@@ -6,10 +6,6 @@ import java.net.InetAddress;
 /**
  * U�ivatelem na PC vyplnen� formul�r, nevy�aduje predzpracov�n� pred schv�len�m.
  * Neumo�nuje evidovat podpis.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
 public class DigitalForm extends Form {
 
