@@ -20,8 +20,8 @@ public class FilledFieldTest {
         String data = "data";
         filledField.setData(data);
 
-        filledField.validate();
+        filledField.validate(null);
 
-        Mockito.verify(field).validate(data);
+        Mockito.verify(field).validate(data, null);
     }
 }

@@ -1,9 +1,12 @@
 package fms.business.archetype;
 
+import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
 import org.jcrom.annotations.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,7 +54,8 @@ public class Field {
     /**
      * Validatory policka
      */
-    private Map<String, Validator> validators;
+    @JcrReference(byPath = true)
+    private List<Validator> validators;
 
     /**
      * Archetypy ktere pouzivaji toto policko
@@ -60,7 +64,7 @@ public class Field {
     private Map<String, Archetype> archetypes;
 
     public Field() {
-        this.validators = new HashMap<String, Validator>();
+        this.validators = new ArrayList<Validator>();
         this.archetypes = new HashMap<String, Archetype>();
     }
 
@@ -142,11 +146,11 @@ public class Field {
     /**
      * @param data
      */
-    public boolean validate(String data) {
+    public boolean validate(String data, List<String> errors) {
         boolean status = true;
 
-        for (Map.Entry<String, Validator> entry : validators.entrySet()) {
-            if (!entry.getValue().validate(data)) {
+        for (Validator validator : validators) {
+            if (!validator.validate(data, errors)) {
                 status = false;
             }
         }
@@ -160,17 +164,17 @@ public class Field {
      * @param validator
      */
     public void addValidator(Validator validator) {
-        this.validators.put(validator.getName(), validator);
+        this.validators.add(validator);
     }
 
     /**
      * @param validator
      */
     public void removeValidator(Validator validator) {
-        this.validators.remove(validator.getName());
+        this.validators.remove(validator);
     }
 
-    public Map<String, Validator> getValidators() {
+    public List<Validator> getValidators() {
         return validators;
     }
 

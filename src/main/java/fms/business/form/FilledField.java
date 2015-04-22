@@ -3,6 +3,8 @@ package fms.business.form;
 import fms.business.archetype.Field;
 import org.jcrom.annotations.*;
 
+import java.util.List;
+
 /**
  * @author jinora
  * @version 1.0
@@ -68,8 +70,8 @@ public class FilledField {
     /**
      * Zvaliduje data ulo�en� v objektu vuci Fieldu
      */
-    public boolean validate() {
-        return this.field.validate(data);
+    public boolean validate(List<String> errors) {
+        return this.field.validate(data, errors);
     }
 
 

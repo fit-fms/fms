@@ -14,11 +14,11 @@ public class JcromFactory implements FactoryBean<Jcrom> {
     public Jcrom getObject() throws Exception {
 
         if (instance == null) {
-            instance = new Jcrom();
+            instance = new Jcrom(true, true);
             //Map all @JcrNode annotated classes
             instance.map(fms.business.archetype.Field.class);
             instance.map(fms.business.archetype.Template.class);
-            instance.map(fms.business.archetype.Validator.class);
+            instance.map(fms.business.archetype.validator.EmailValidator.class);
             instance.map(fms.business.archetype.Archetype.class);
             instance.map(fms.business.fieldtype.FieldType.class);
             instance.map(fms.business.form.Admin.class);

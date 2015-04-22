@@ -125,9 +125,9 @@ public class FormTest {
         form.addfilledfield(fieldA);
         form.addfilledfield(fieldB);
 
-        form.validate();
+        form.validate(null);
 
-        Mockito.verify(fieldA).validate();
-        Mockito.verify(fieldB).validate();
+        Mockito.verify(fieldA).validate(null);
+        Mockito.verify(fieldB).validate(null);
     }
 }

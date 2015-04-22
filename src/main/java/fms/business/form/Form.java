@@ -61,12 +61,12 @@ public class Form {
     /**
      * Zvaliduje vsechny FilledFields.
      */
-    public boolean validate() {
+    public boolean validate(List<String> errors) {
 
         boolean status = true;
 
         for (FilledField filledField : filledFields) {
-            if (!filledField.validate()) {
+            if (!filledField.validate(errors)) {
                 status = false;
             }
         }

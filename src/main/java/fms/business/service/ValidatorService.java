@@ -1,6 +1,6 @@
 package fms.business.service;
 
-import fms.business.archetype.Validator;
+import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;

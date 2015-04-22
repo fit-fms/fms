@@ -1,13 +1,13 @@
 package fms.business.service;
 
-import fms.business.archetype.Validator;
+import fms.business.archetype.validator.EmailValidator;
+import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -29,7 +29,7 @@ public class ValidatorServiceTest extends ServiceTest {
     public void testCreate() throws Exception {
         String name = "my_field_sname";
 
-        Validator validator = new Validator();
+        Validator validator = new EmailValidator();
         validator.setName(name);
 
         validatorService.createValidator(validator);
@@ -44,7 +44,7 @@ public class ValidatorServiceTest extends ServiceTest {
     public void testRemove() throws Exception {
         String name = "my_field_sname";
 
-        Validator validator = new Validator();
+        Validator validator = new EmailValidator();
         validator.setName(name);
 
         validatorService.createValidator(validator);
@@ -59,7 +59,7 @@ public class ValidatorServiceTest extends ServiceTest {
         String name = "my_field_name";
         String newName = "my_new_field_name";
 
-        Validator validator = new Validator();
+        Validator validator = new EmailValidator();
         validator.setName(name);
 
         validatorService.createValidator(validator);
@@ -69,6 +69,7 @@ public class ValidatorServiceTest extends ServiceTest {
         Validator validatorB = validatorService.getValidatorByName(newName);
         assertNotNull(validatorB);
         assertEquals(newName, validatorB.getName());
+        assertTrue(validatorB instanceof EmailValidator);
 
         Validator validatorNo = validatorService.getValidatorByName(name);
         assertNull(validatorNo);
@@ -86,15 +87,15 @@ public class ValidatorServiceTest extends ServiceTest {
         f.setName("f_names");
         fieldTypeService.createFieldType(f);
 
-        Validator validatorA = new Validator();
+        Validator validatorA = new EmailValidator();
         validatorA.setName(nameA);
         validatorA.setFieldType(f);
 
-        Validator validatorB = new Validator();
+        Validator validatorB = new EmailValidator();
         validatorB.setName(nameB);
         validatorB.setFieldType(f);
 
-        Validator validatorC = new Validator();
+        Validator validatorC = new EmailValidator();
         validatorC.setName(nameC);
         validatorC.setFieldType(f);
 

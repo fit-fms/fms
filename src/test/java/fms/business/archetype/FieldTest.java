@@ -1,8 +1,11 @@
 package fms.business.archetype;
 
+import fms.business.archetype.validator.EmailValidator;
+import fms.business.archetype.validator.Validator;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -18,7 +21,7 @@ public class FieldTest {
     }
 
     protected Validator makeValidator(String name) {
-        Validator validator = new Validator();
+        Validator validator = new EmailValidator();
         validator.setName(name);
 
         return validator;
@@ -79,7 +82,7 @@ public class FieldTest {
         field.addValidator(validatorC);
         field.addValidator(validatorD);
 
-        Map<String, Validator> validators = field.getValidators();
+        List<Validator> validators = field.getValidators();
         assertEquals(numOfValidators, validators.size());
 
 
@@ -130,10 +133,10 @@ public class FieldTest {
         }
 
         String data = "data";
-        field.validate(data);
+        field.validate(data, null);
 
         for (int i = 0; i < numOfValidators; ++i) {
-            Mockito.verify(validators[i]).validate(data);
+            Mockito.verify(validators[i]).validate(data, null);
         }
     }
 }
