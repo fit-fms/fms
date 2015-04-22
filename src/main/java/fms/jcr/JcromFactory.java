@@ -20,7 +20,12 @@ public class JcromFactory implements FactoryBean<Jcrom> {
             instance.map(fms.business.archetype.Template.class);
             instance.map(fms.business.archetype.validator.EmailValidator.class);
             instance.map(fms.business.archetype.Archetype.class);
-            instance.map(fms.business.fieldtype.FieldType.class);
+            instance.map(fms.business.fieldtype.DateField.class);
+            instance.map(fms.business.fieldtype.DateTimeField.class);
+            instance.map(fms.business.fieldtype.DecimalField.class);
+            instance.map(fms.business.fieldtype.IntegerField.class);
+            instance.map(fms.business.fieldtype.TextField.class);
+            instance.map(fms.business.fieldtype.TimeField.class);
             instance.map(fms.business.form.Admin.class);
             instance.map(fms.business.form.Form.class);
         }

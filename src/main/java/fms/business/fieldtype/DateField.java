@@ -2,6 +2,7 @@ package fms.business.fieldtype;
 
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Souradnice dne, vhodn� pro informace u kter�ch nen� potreba velk� presnost, napr�klad datum narozen�. (rok, mesic, den)
@@ -23,4 +24,8 @@ public class DateField extends FieldType {
         return null;
     }
 
+    @Override
+    public boolean validate(String data, List<String> errors) {
+        return false;
+    }
 }

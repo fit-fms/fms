@@ -3,6 +3,7 @@ package fms.business.service;
 import fms.business.archetype.validator.EmailValidator;
 import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
+import fms.business.fieldtype.TextField;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class ValidatorServiceTest extends ServiceTest {
         String nameB = "B";
         String nameC = "C";
 
-        FieldType f = new FieldType();
+        FieldType f = new TextField();
         f.setName("f_names");
         fieldTypeService.createFieldType(f);
 

@@ -149,6 +149,10 @@ public class Field {
     public boolean validate(String data, List<String> errors) {
         boolean status = true;
 
+        if (type != null && !type.validate(data, errors)) {
+            return false;
+        }
+
         for (Validator validator : validators) {
             if (!validator.validate(data, errors)) {
                 status = false;

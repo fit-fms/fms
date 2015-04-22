@@ -1,6 +1,7 @@
 package fms.business.service;
 
 import fms.business.fieldtype.FieldType;
+import fms.business.fieldtype.TextField;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class FieldTypeServiceTest extends ServiceTest {
     public void testCreateField() throws Exception {
         String name = "my_field_sname";
 
-        FieldType fieldType = new FieldType();
+        FieldType fieldType = new TextField();
         fieldType.setName(name);
 
         fieldTypeService.createFieldType(fieldType);
@@ -32,6 +33,7 @@ public class FieldTypeServiceTest extends ServiceTest {
         FieldType fieldTypeB = fieldTypeService.getByName(name);
 
         assertNotNull(fieldTypeB);
+        assertTrue(fieldTypeB instanceof TextField);
         assertEquals(fieldType.getName(), fieldTypeB.getName());
     }
 
@@ -39,7 +41,7 @@ public class FieldTypeServiceTest extends ServiceTest {
     public void testRemove() throws Exception {
         String name = "my_field_sname";
 
-        FieldType fieldType = new FieldType();
+        FieldType fieldType = new TextField();
         fieldType.setName(name);
 
         fieldTypeService.createFieldType(fieldType);
@@ -54,7 +56,7 @@ public class FieldTypeServiceTest extends ServiceTest {
         String name = "my_field_name";
         String newName = "my_new_field_name";
 
-        FieldType fieldType = new FieldType();
+        FieldType fieldType = new TextField();
         fieldType.setName(name);
 
         fieldTypeService.createFieldType(fieldType);
@@ -77,13 +79,13 @@ public class FieldTypeServiceTest extends ServiceTest {
         String nameB = "B";
         String nameC = "C";
 
-        FieldType fieldTypeA = new FieldType();
+        FieldType fieldTypeA = new TextField();
         fieldTypeA.setName(nameA);
 
-        FieldType fieldTypeB = new FieldType();
+        FieldType fieldTypeB = new TextField();
         fieldTypeB.setName(nameB);
 
-        FieldType fieldTypeC = new FieldType();
+        FieldType fieldTypeC = new TextField();
         fieldTypeC.setName(nameC);
 
         fieldTypeService.createFieldType(fieldTypeA);

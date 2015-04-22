@@ -1,18 +1,17 @@
 package fms.business.fieldtype;
 
 import fms.business.archetype.Field;
-import org.jcrom.annotations.JcrName;
-import org.jcrom.annotations.JcrNode;
-import org.jcrom.annotations.JcrPath;
-import org.jcrom.annotations.JcrProperty;
+import org.jcrom.JcrEntity;
+import org.jcrom.annotations.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Z�kladn� informace o pol�cku pro budouc� zpracov�n�.
  */
-@JcrNode
-public class FieldType {
+@JcrNode(classNameProperty = "className")
+abstract public class FieldType implements JcrEntity {
 
     /**
      * N�zev typu
@@ -32,15 +31,16 @@ public class FieldType {
     @JcrProperty
     private String description;
 
-    //@TODO
-    private Map<String, Field> fields;
+    @JcrReference(byPath = true)
+    //@TODO implement
+    private List<Field> fields;
 
     public FieldType() {
 
     }
 
 
-    public Map<String, Field> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
@@ -76,9 +76,7 @@ public class FieldType {
         this.description = description;
     }
 
-    public boolean validate() {
-        return false;
-    }
+    abstract public boolean validate(String data, List<String> errors);
 
     @Override
     public boolean equals(Object o) {
@@ -94,5 +92,15 @@ public class FieldType {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public void setPath(String s) {
+        jcrPath = s;
+    }
+
+    @Override
+    public String getPath() {
+        return jcrPath;
     }
 }

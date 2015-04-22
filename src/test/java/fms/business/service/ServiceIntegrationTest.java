@@ -6,6 +6,7 @@ import fms.business.archetype.Field;
 import fms.business.archetype.validator.EmailValidator;
 import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
+import fms.business.fieldtype.TextField;
 import fms.business.form.FilledField;
 import fms.business.form.Form;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class ServiceIntegrationTest extends ServiceTest {
     @Test
     public void createFieldType() throws Exception{
         resetWorkspace();
-        FieldType fieldType = new FieldType();
+        FieldType fieldType = new TextField();
         fieldType.setName(fieldTypeName);
         fieldTypeService.createFieldType(fieldType);
 

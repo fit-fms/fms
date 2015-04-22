@@ -1,6 +1,8 @@
 package fms.business.fieldtype;
 
 
+import java.util.List;
+
 /**
  * Nestrukturovan� text, kter� se bere jako celek. Napr�klad "Jm�no" a "Prijmen�" by byla dve samostatn� pol�cka typu text.
  *
@@ -22,4 +24,8 @@ public class TextField extends FieldType {
         return data.trim();
     }
 
+    @Override
+    public boolean validate(String data, List<String> errors) {
+        return true;
+    }
 }
