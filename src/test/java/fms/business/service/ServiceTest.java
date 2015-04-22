@@ -29,6 +29,7 @@ public abstract class ServiceTest {
             session.getNode(TemplateService.TEMPLATES_ROOT).remove();
             session.getNode(ValidatorService.VALIDATOR_ROOT).remove();
             session.getNode(FieldTypeService.FIELD_TYPE_ROOT).remove();
+            session.getNode(PersonService.PERSON_ROOT).remove();
         } catch (Exception e) {}
 
         rootN.addNode(FieldService.FIELDS_ROOT);
@@ -36,6 +37,7 @@ public abstract class ServiceTest {
         rootN.addNode(TemplateService.TEMPLATES_ROOT);
         rootN.addNode(ValidatorService.VALIDATOR_ROOT);
         rootN.addNode(FieldTypeService.FIELD_TYPE_ROOT);
+        rootN.addNode(PersonService.PERSON_ROOT);
         session.save();
     }
 

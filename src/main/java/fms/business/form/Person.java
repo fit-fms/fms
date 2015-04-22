@@ -13,14 +13,25 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:49 PM
  */
-@JcrNode
+@JcrNode(classNameProperty = "className")
 public class Person {
 
     @JcrName
-    private String jcrName;
+    private String jcrName = "fms_person";
 
     @JcrPath
     private String jcrPath;
+
+    @JcrProperty
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      * Adresa bydl�te osoby
