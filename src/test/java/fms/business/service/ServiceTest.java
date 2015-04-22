@@ -1,15 +1,11 @@
 package fms.business.service;
 
-import fms.business.archetype.Archetype;
-import fms.business.archetype.Template;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 
 @RunWith(SpringJUnit4ClassRunner.class)

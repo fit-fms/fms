@@ -1,6 +1,7 @@
 package fms.business.archetype;
 
 
+import fms.business.archetype.template.Template;
 import org.jcrom.annotations.*;
 
 import java.util.ArrayList;

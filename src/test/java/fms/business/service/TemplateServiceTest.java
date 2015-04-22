@@ -2,7 +2,8 @@ package fms.business.service;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
-import fms.business.archetype.Template;
+import fms.business.archetype.template.A4Landscape;
+import fms.business.archetype.template.Template;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class TemplateServiceTest extends ServiceTest {
     public void testCreate() throws Exception {
         String name = "my_field_sname";
 
-        Template template = new Template();
+        Template template = new A4Landscape();
         template.setName(name);
 
         templateService.createTemplate(template);
@@ -42,7 +43,7 @@ public class TemplateServiceTest extends ServiceTest {
     public void testRemove() throws Exception {
         String name = "my_field_sname";
 
-        Template template = new Template();
+        Template template = new A4Landscape();
         template.setName(name);
 
         templateService.createTemplate(template);
@@ -57,7 +58,7 @@ public class TemplateServiceTest extends ServiceTest {
         String name = "my_field_name";
         String newName = "my_new_field_name";
 
-        Template template = new Template();
+        Template template = new A4Landscape();
         template.setName(name);
 
         templateService.createTemplate(template);
@@ -80,13 +81,13 @@ public class TemplateServiceTest extends ServiceTest {
         String nameB = "B";
         String nameC = "C";
 
-        Template templateA = new Template();
+        Template templateA = new A4Landscape();
         templateA.setName(nameA);
 
-        Template templateB = new Template();
+        Template templateB = new A4Landscape();
         templateB.setName(nameB);
 
-        Template templateC = new Template();
+        Template templateC = new A4Landscape();
         templateC.setName(nameC);
 
         templateService.createTemplate(templateA);

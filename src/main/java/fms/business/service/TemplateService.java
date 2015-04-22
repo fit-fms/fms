@@ -1,6 +1,6 @@
 package fms.business.service;
 
-import fms.business.archetype.Template;
+import fms.business.archetype.template.Template;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

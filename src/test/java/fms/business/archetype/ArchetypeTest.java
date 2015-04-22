@@ -1,5 +1,7 @@
 package fms.business.archetype;
 
+import fms.business.archetype.template.A4Landscape;
+import fms.business.archetype.template.Template;
 import org.junit.Test;
 
 import java.util.Map;
@@ -17,7 +19,7 @@ public class ArchetypeTest {
     }
 
     protected Template makeTemplate (String name) {
-        Template template = new Template();
+        Template template = new A4Landscape();
         template.setName(name);
 
         return template;
