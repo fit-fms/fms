@@ -4,10 +4,12 @@ import fms.business.archetype.Archetype;
 import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.form.Form;
 import fms.business.form.PaperForm;
+import fms.business.form.Scan;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -108,5 +110,50 @@ public class FormServiceTest extends ServiceTest {
         formService.removeForm(formB);
         Map<Integer, Form> formsB = formService.getAllForms(archetype);
         assertEquals(--numOfForms, formsB.size());
+    }
+
+//    TODO implement
+//    @Test
+    public void testScans() throws Exception {
+        Archetype archetype = new UnpublisdedArchertype();
+        archetype.setName("arname");
+        archetypeService.createArchetype(archetype);
+
+
+        int id = 3;
+        PaperForm form = new PaperForm();
+        form.setId(id);
+        form.setArchetype(archetype);
+
+        int numberOfScans = 4;
+        Scan scanA = new Scan();
+        scanA.setId(1);
+        Scan scanB = new Scan();
+        scanB.setId(2);
+        Scan scanC = new Scan();
+        scanC.setId(3);
+        Scan scanD = new Scan();
+        scanD.setId(4);
+
+        form.addScan(scanA);
+        form.addScan(scanB);
+        form.addScan(scanC);
+        form.addScan(scanD);
+
+        formService.createForm(form);
+        PaperForm formA = (PaperForm)formService.getFormById(archetype, id);
+        assertNotNull(formA);
+        List<Scan> fieldsA = formA.getScans();
+        assertEquals(numberOfScans, fieldsA.size());
+
+        //Remove and add
+        form.removeScan(scanB);
+        assertEquals(--numberOfScans, fieldsA.size());
+        formService.updateForm(formA);
+
+        PaperForm formB = (PaperForm)formService.getFormById(archetype, id);
+        assertNotNull(formB);
+        List<Scan> fieldsB = formB.getScans();
+        assertEquals(numberOfScans, fieldsB.size());
     }
 }

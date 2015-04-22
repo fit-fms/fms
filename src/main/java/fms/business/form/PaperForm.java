@@ -1,6 +1,10 @@
 package fms.business.form;
 
 
+import org.jcrom.annotations.JcrChildNode;
+import org.jcrom.annotations.JcrProperty;
+import org.jcrom.annotations.JcrReference;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +18,19 @@ public class PaperForm extends Form {
     /**
      * Datum kdy byl formul�r odes�latelem podeps�n
      */
+    @JcrProperty
     private Date signedAt;
+
     /**
      * Osoba uchovavaj�c� fyzick� formul�r.
      */
+    @JcrReference(byPath = true)
     private Person person;
+
     /**
      * Seznam skenu formul�ru.
      */
+    @JcrChildNode
     private List<Scan> scans;
 
     public PaperForm() {

@@ -31,6 +31,7 @@ public class JcromFactory implements FactoryBean<Jcrom> {
             instance.map(fms.business.form.Admin.class);
             instance.map(fms.business.form.DigitalForm.class);
             instance.map(fms.business.form.PaperForm.class);
+            instance.map(fms.business.form.Scan.class);
         }
 
         return instance;

@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class ArchetypeService {
 
-    public static final String ARCHETYPES_ROOT = "/archetypes";
+    public static final String ARCHETYPES_ROOT = "//archetypes";
 
     private Session session;
 

@@ -73,6 +73,16 @@ public class FormService {
      * @param id
      */
     public Form getFormById(Archetype archetype, int id) throws Exception {
+        Node formNode = getFormNodeById(archetype, id);
+
+        if (formNode == null) {
+            return null;
+        }
+
+        return jcrom.fromNode(Form.class, formNode);
+    }
+
+    public Node getFormNodeById(Archetype archetype, int id) throws Exception {
         Node archetypeNode = session.getNode(jcrom.getPath(archetype));
 
         Node formsNode;
@@ -93,11 +103,7 @@ public class FormService {
             }
         }
 
-        if (formNode == null) {
-            return null;
-        }
-
-        return jcrom.fromNode(Form.class, formNode);
+        return formNode;
     }
 
     /**
@@ -130,9 +136,8 @@ public class FormService {
      * @param form
      */
     public void updateForm(Form form) throws Exception {
-        Node formNode = session.getNode(jcrom.getPath(form));
-        if (formNode == null) return;
-        jcrom.updateNode(formNode, form);
+        removeForm(form);
+        createForm(form);
     }
 
 }
