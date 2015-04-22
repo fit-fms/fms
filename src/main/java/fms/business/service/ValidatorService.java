@@ -48,11 +48,11 @@ public class ValidatorService {
 
     public Validator getValidatorByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
-        String queryStr = "/jcr:root" + VALIDATOR_ROOT + "/*[@name='"+ name +"']";
+        String queryStr = "/jcr:root" + VALIDATOR_ROOT + "/*[@name='" + name + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
         QueryResult queryResult = query.execute();
 
-        NodeIterator it =  queryResult.getNodes();
+        NodeIterator it = queryResult.getNodes();
         if (!it.hasNext()) {
             return null;
         }
@@ -90,7 +90,7 @@ public class ValidatorService {
     public List<Validator> getValidatorsByFieldType(FieldType fieldType) throws Exception {
         List<Validator> validators = new ArrayList<Validator>();
 
-        if (fieldType == null) return  validators;
+        if (fieldType == null) return validators;
 
         NodeIterator it = session.getNode(VALIDATOR_ROOT).getNodes();
         while (it.hasNext()) {

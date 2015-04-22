@@ -1,17 +1,15 @@
 package fms.business.fieldtype;
 
 import fms.business.archetype.Field;
-import org.jcrom.JcrEntity;
 import org.jcrom.annotations.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Z�kladn� informace o pol�cku pro budouc� zpracov�n�.
  */
 @JcrNode(classNameProperty = "className")
-abstract public class FieldType implements JcrEntity {
+abstract public class FieldType {
 
     /**
      * N�zev typu
@@ -94,13 +92,4 @@ abstract public class FieldType implements JcrEntity {
         return name.hashCode();
     }
 
-    @Override
-    public void setPath(String s) {
-        jcrPath = s;
-    }
-
-    @Override
-    public String getPath() {
-        return jcrPath;
-    }
 }

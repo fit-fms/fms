@@ -22,7 +22,7 @@ import java.util.Map;
 @Service
 public class FormService {
 
-    private static final String ARCHETYPE_FORMS =  "forms";
+    private static final String ARCHETYPE_FORMS = "forms";
 
     private Session session;
 
@@ -47,8 +47,7 @@ public class FormService {
         Node formsNode;
         if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
             formsNode = archetypeNode.addNode(ARCHETYPE_FORMS);
-        }
-        else {
+        } else {
             formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
         }
 
@@ -88,8 +87,7 @@ public class FormService {
         Node formsNode;
         if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
             formsNode = archetypeNode.addNode(ARCHETYPE_FORMS);
-        }
-        else {
+        } else {
             formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
         }
 
@@ -116,8 +114,7 @@ public class FormService {
         Node formsNode;
         if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
             formsNode = archetypeNode.addNode(ARCHETYPE_FORMS);
-        }
-        else {
+        } else {
             formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
         }
 

@@ -1,7 +1,6 @@
 package fms.business.form;
 
 import fms.business.archetype.Archetype;
-import org.jcrom.JcrEntity;
 import org.jcrom.annotations.*;
 
 import java.util.*;
@@ -10,33 +9,13 @@ import java.util.*;
  * Formul�r je vyplnen� instance Archetypu fomul�re.
  */
 @JcrNode(classNameProperty = "className")
-abstract public class Form implements JcrEntity {
+abstract public class Form {
 
     @JcrName
     private String jcrName = "fms_form";
 
     @JcrPath
     private String jcrPath;
-
-    @Override
-    public void setName(String s) {
-        jcrName = s;
-    }
-
-    @Override
-    public String getName() {
-        return jcrName;
-    }
-
-    @Override
-    public void setPath(String s) {
-        jcrPath = s;
-    }
-
-    @Override
-    public String getPath() {
-        return jcrPath;
-    }
 
     /**
      * Identifikacn� c�slo

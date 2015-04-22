@@ -9,7 +9,7 @@ import org.jcrom.annotations.JcrProperty;
 /**
  * �ablona obsahuje informace pro zobrazen� ci tisk archetypu formul�re.
  */
-@JcrNode
+@JcrNode(classNameProperty = "className")
 public class Template {
 
     /**

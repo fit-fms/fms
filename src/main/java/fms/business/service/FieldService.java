@@ -4,9 +4,9 @@ import fms.business.archetype.Field;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.jcr.NodeIterator;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
@@ -16,17 +16,15 @@ import java.util.Map;
 
 /**
  * Slu�ba pro uchov�v�n� archetypu v datab�zi.
-*/
+ */
 @Service
 public class FieldService {
 
     public static final String FIELDS_ROOT = "/fields";
-
+    Map<String, Field> fields = new HashMap<String, Field>();
     private Session session;
-
     private Jcrom jcrom;
-
-    Map<String, Field> fields = new HashMap<String, Field>();;
+    ;
 
     @Autowired
     public FieldService(Session session, Jcrom jcrom) {
@@ -42,11 +40,11 @@ public class FieldService {
      */
     public Field getFieldByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
-        String queryStr = "/jcr:root" + FIELDS_ROOT + "/*[@name='"+ name +"']";
+        String queryStr = "/jcr:root" + FIELDS_ROOT + "/*[@name='" + name + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
         QueryResult queryResult = query.execute();
 
-        NodeIterator it =  queryResult.getNodes();
+        NodeIterator it = queryResult.getNodes();
         if (!it.hasNext()) {
             return null;
         }

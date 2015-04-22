@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Valid�tor kontroluje data podle typu pol�cka a predem dan�ch specifikac�. To umo�nuje udr�ovat validn� datab�zi dat. Napr�klad umo�n� nad libovoln�m typed dat vytvorit v�cet mo�n�ch hodnot(enum) se zachov�n�m vlastnost� typu pro vyhled�v�n�,  filtrov�n� a statistiky.
-*/
+ */
 @JcrNode(classNameProperty = "className")
 abstract public class Validator implements JcrEntity {
 
@@ -20,10 +20,18 @@ abstract public class Validator implements JcrEntity {
 
     @JcrPath
     private String jcrPath;
+    @JcrProperty
+    private String name;
+    /**
+     * Popis valid�toru
+     */
+    @JcrProperty
+    private String description;
+    @JcrReference(byPath = true)
+    private FieldType fieldType;
 
-    @Override
-    public void setPath(String s) {
-        jcrPath = s;
+    public Validator() {
+
     }
 
     @Override
@@ -31,20 +39,9 @@ abstract public class Validator implements JcrEntity {
         return jcrPath;
     }
 
-    @JcrProperty
-    private String name;
-
-    /**
-     * Popis valid�toru
-     */
-    @JcrProperty
-    private String description;
-
-    @JcrReference(byPath = true)
-    private FieldType fieldType;
-
-    public Validator() {
-
+    @Override
+    public void setPath(String s) {
+        jcrPath = s;
     }
 
     public FieldType getFieldType() {

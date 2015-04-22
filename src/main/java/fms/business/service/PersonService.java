@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class PersonService {
 
-    public static final String PERSON_ROOT =  "/persons";
+    public static final String PERSON_ROOT = "/persons";
 
     private Session session;
 
@@ -39,11 +39,11 @@ public class PersonService {
 
     public Node findPersonNodeById(int id) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
-        String queryStr = "/jcr:root" + PERSON_ROOT + "/*[@id='"+ id +"']";
+        String queryStr = "/jcr:root" + PERSON_ROOT + "/*[@id='" + id + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
         QueryResult queryResult = query.execute();
 
-        NodeIterator it =  queryResult.getNodes();
+        NodeIterator it = queryResult.getNodes();
         if (!it.hasNext()) {
             return null;
         }
@@ -60,7 +60,7 @@ public class PersonService {
     public Admin findAdminById(int id) throws Exception {
         Person p = findPersonById(id);
         if (p instanceof Admin) {
-            return (Admin)p;
+            return (Admin) p;
         }
         return null;
     }
@@ -94,7 +94,7 @@ public class PersonService {
         NodeIterator it = session.getNode(PERSON_ROOT).getNodes();
         while (it.hasNext()) {
             Person p = jcrom.fromNode(Person.class, it.nextNode());
-            if (p instanceof Admin) persons.add((Admin)p);
+            if (p instanceof Admin) persons.add((Admin) p);
         }
 
         return persons;

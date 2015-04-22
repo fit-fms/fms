@@ -1,6 +1,5 @@
 package fms.business.service;
 
-import fms.business.archetype.Field;
 import fms.business.archetype.Template;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,17 +48,18 @@ public class TemplateService {
 
     public Template getTemplateByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
-        String queryStr = "/jcr:root" + TEMPLATES_ROOT + "/*[@name='"+ name +"']";
+        String queryStr = "/jcr:root" + TEMPLATES_ROOT + "/*[@name='" + name + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
         QueryResult queryResult = query.execute();
 
-        NodeIterator it =  queryResult.getNodes();
+        NodeIterator it = queryResult.getNodes();
         if (!it.hasNext()) {
             return null;
         }
 
         return jcrom.fromNode(Template.class, it.nextNode());
     }
+
     /**
      * Aktualizuje templatu v datab�zi.
      *

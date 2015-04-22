@@ -11,8 +11,8 @@ import java.util.Map;
 
 /**
  * Policko formulare ktere uzivatel vyplni.
-*/
-@JcrNode
+ */
+@JcrNode(classNameProperty = "className")
 public class Field {
 
     @JcrName

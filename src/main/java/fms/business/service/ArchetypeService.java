@@ -16,18 +16,14 @@ import java.util.Map;
 
 /**
  * Sluuba pro uchovavani archetypu v databazi.
- *
  */
 @Service
 public class ArchetypeService {
 
     public static final String ARCHETYPES_ROOT = "//archetypes";
-
-    private Session session;
-
-    private Jcrom jcrom;
-
     Map<String, Archetype> archetypes = new HashMap<String, Archetype>();
+    private Session session;
+    private Jcrom jcrom;
 
     @Autowired
     public ArchetypeService(Session session, Jcrom jcrom) {
@@ -50,11 +46,11 @@ public class ArchetypeService {
 
     protected Node findNodeByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
-        String queryStr = "/jcr:root" + ARCHETYPES_ROOT + "/*[@name='"+ name +"']";
+        String queryStr = "/jcr:root" + ARCHETYPES_ROOT + "/*[@name='" + name + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
         QueryResult queryResult = query.execute();
 
-        NodeIterator it =  queryResult.getNodes();
+        NodeIterator it = queryResult.getNodes();
         if (!it.hasNext()) {
             return null;
         }

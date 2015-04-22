@@ -43,13 +43,13 @@ public class FieldTypeService {
         session.save();
     }
 
-    public FieldType getByName(String name) throws Exception{
+    public FieldType getByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
-        String queryStr = "/jcr:root" + FIELD_TYPE_ROOT + "/*[@name='"+ name +"']";
+        String queryStr = "/jcr:root" + FIELD_TYPE_ROOT + "/*[@name='" + name + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
         QueryResult queryResult = query.execute();
 
-        NodeIterator it =  queryResult.getNodes();
+        NodeIterator it = queryResult.getNodes();
         if (!it.hasNext()) {
             return null;
         }
@@ -67,7 +67,7 @@ public class FieldTypeService {
         fieldTypes.clear();
 
         NodeIterator it = session.getNode(FIELD_TYPE_ROOT).getNodes();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             FieldType f = jcrom.fromNode(FieldType.class, it.nextNode());
             fieldTypes.add(f);
         }

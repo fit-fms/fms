@@ -1,32 +1,24 @@
 package fms.business.archetype;
 
 
-import org.jcrom.JcrEntity;
 import org.jcrom.annotations.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Archetyp formul�re je kostra pro data. Udr�uje informace o jednotliv�ch pol�ck�ch pro s�mantick� zpracov�n� dat.
  */
 @JcrNode(classNameProperty = "className")
-abstract public class Archetype implements JcrEntity {
+abstract public class Archetype {
 
     @JcrName
     private String jcrName = "fms_archetype";
 
     @JcrPath
     private String jcrPath;
-
-    @Override
-    public void setPath(String s) {
-        jcrPath = s;
-    }
-
-    @Override
-    public String getPath() {
-        return jcrPath;
-    }
 
     /**
      * Jmeno formulare
@@ -56,12 +48,12 @@ abstract public class Archetype implements JcrEntity {
      */
     private Map<String, Field> optionalFields;
 
-    @JcrReference(byPath=true)  //Protoze umi ulozit jen <String, Object>
+    @JcrReference(byPath = true)  //Protoze umi ulozit jen <String, Object>
     private List<Field> jcrOptionalFields;
 
     private Map<String, Field> requiredFields;
 
-    @JcrReference(byPath=true)
+    @JcrReference(byPath = true)
     private List<Field> jcrRequiredFields;
 
     public Archetype() {
@@ -79,11 +71,11 @@ abstract public class Archetype implements JcrEntity {
             requiredFields = new HashMap<String, Field>();
 
 
-            for ( Field f: jcrOptionalFields ) {
+            for (Field f : jcrOptionalFields) {
                 optionalFields.put(f.getName(), f);
             }
 
-            for ( Field f: jcrRequiredFields ) {
+            for (Field f : jcrRequiredFields) {
                 requiredFields.put(f.getName(), f);
             }
         }

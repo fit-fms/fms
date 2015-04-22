@@ -1,7 +1,10 @@
 package fms.business.form;
 
 
-import org.jcrom.annotations.*;
+import org.jcrom.annotations.JcrName;
+import org.jcrom.annotations.JcrNode;
+import org.jcrom.annotations.JcrPath;
+import org.jcrom.annotations.JcrProperty;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,39 +27,26 @@ public class Person {
 
     @JcrProperty
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     /**
      * Adresa bydl�te osoby
      */
     @JcrProperty
     private String address;
-
     /**
      * Krestn� jm�no osoby
      */
     @JcrProperty
     private String firstName;
-
     /**
      * Prijmen� osoby
      */
     @JcrProperty
     private String lastName;
-
     /**
      * Telefonn� c�slo
      */
     @JcrProperty
     private String phone;
-
     /**
      * Formul�re kter� osoba uchov�v�.
      */
@@ -67,6 +57,13 @@ public class Person {
         forms = new HashMap<Integer, PaperForm>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      * Z�sk� v�echny pap�rov� formul�re kter� osoba uchov�v�.
