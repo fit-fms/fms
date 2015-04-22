@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class FieldTest {
 
     protected Archetype makeArchetype(String name) {
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName(name);
 
         return archetype;
@@ -110,7 +110,7 @@ public class FieldTest {
     @Test
     public void testArchetypeFieldCommunication() {
         Field field = new Field();
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
 
         archetype.addOptionalField(field);
 

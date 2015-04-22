@@ -1,6 +1,7 @@
 package fms.business.service;
 
 import fms.business.archetype.Archetype;
+import fms.business.archetype.UnpublisdedArchertype;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ArchetypeServiceTest extends ServiceTest {
     public void testCreate() throws Exception {
         String name = "my_field_sname";
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName(name);
 
         archetypeService.createArchetype(archetype);
@@ -33,6 +34,7 @@ public class ArchetypeServiceTest extends ServiceTest {
         Archetype archetypeA = archetypeService.findByName(name);
 
         assertNotNull(archetypeA);
+        assertTrue(archetypeA instanceof UnpublisdedArchertype);
         assertEquals(archetype.getName(), archetypeA.getName());
     }
 
@@ -40,7 +42,7 @@ public class ArchetypeServiceTest extends ServiceTest {
     public void testRemove() throws Exception {
         String name = "my_field_sname";
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName(name);
 
         archetypeService.createArchetype(archetype);
@@ -55,7 +57,7 @@ public class ArchetypeServiceTest extends ServiceTest {
         String name = "my_field_name";
         String newName = "my_new_field_name";
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName(name);
 
         archetypeService.createArchetype(archetype);
@@ -78,13 +80,13 @@ public class ArchetypeServiceTest extends ServiceTest {
         String nameB = "B";
         String nameC = "C";
 
-        Archetype archetypeA = new Archetype();
+        Archetype archetypeA = new UnpublisdedArchertype();
         archetypeA.setName(nameA);
 
-        Archetype archetypeB = new Archetype();
+        Archetype archetypeB = new UnpublisdedArchertype();
         archetypeB.setName(nameB);
 
-        Archetype archetypeC = new Archetype();
+        Archetype archetypeC = new UnpublisdedArchertype();
         archetypeC.setName(nameC);
 
         archetypeService.createArchetype(archetypeA);

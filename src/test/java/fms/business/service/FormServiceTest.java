@@ -1,6 +1,7 @@
 package fms.business.service;
 
 import fms.business.archetype.Archetype;
+import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.form.Form;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class FormServiceTest extends ServiceTest {
     public void testCreateField() throws Exception {
         int id = 5;
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
@@ -49,7 +50,7 @@ public class FormServiceTest extends ServiceTest {
         int id = 5;
         int newId = id*3;
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
@@ -72,7 +73,7 @@ public class FormServiceTest extends ServiceTest {
     @Test
     public void testGetFields() throws Exception {
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 

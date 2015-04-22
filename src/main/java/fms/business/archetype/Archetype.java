@@ -1,25 +1,32 @@
 package fms.business.archetype;
 
 
+import org.jcrom.JcrEntity;
 import org.jcrom.annotations.*;
 
 import java.util.*;
 
 /**
  * Archetyp formul�re je kostra pro data. Udr�uje informace o jednotliv�ch pol�ck�ch pro s�mantick� zpracov�n� dat.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
-@JcrNode
-public class Archetype {
+@JcrNode(classNameProperty = "className")
+abstract public class Archetype implements JcrEntity {
 
     @JcrName
     private String jcrName = "fms_archetype";
 
     @JcrPath
     private String jcrPath;
+
+    @Override
+    public void setPath(String s) {
+        jcrPath = s;
+    }
+
+    @Override
+    public String getPath() {
+        return jcrPath;
+    }
 
     /**
      * Jmeno formulare
