@@ -1,7 +1,7 @@
 package fms.business.form;
 
 
-import java.net.InetAddress;
+import org.jcrom.annotations.JcrProperty;
 
 /**
  * U�ivatelem na PC vyplnen� formul�r, nevy�aduje predzpracov�n� pred schv�len�m.
@@ -12,10 +12,13 @@ public class DigitalForm extends Form {
     /**
      * ip adresa odes�latele formul�re
      */
-    private InetAddress ip;
+    @JcrProperty
+    private String ip;
+
     /**
      * Informace o prohl�eci ze kter�ho byl formul�r odesl�n
      */
+    @JcrProperty
     private String browser;
 
     public DigitalForm() {
@@ -26,7 +29,7 @@ public class DigitalForm extends Form {
     /**
      * ip adresa odes�latele formul�re
      */
-    public InetAddress getIp() {
+    public String getIp() {
         return ip;
     }
 
@@ -35,7 +38,7 @@ public class DigitalForm extends Form {
      *
      * @param ip
      */
-    public void setIp(InetAddress ip) {
+    public void setIp(String ip) {
         this.ip = ip;
     }
 

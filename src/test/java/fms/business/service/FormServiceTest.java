@@ -2,13 +2,16 @@ package fms.business.service;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.UnpublisdedArchertype;
+import fms.business.form.DigitalForm;
 import fms.business.form.Form;
 import fms.business.form.PaperForm;
 import fms.business.form.Scan;
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.PortableInterceptor.DISCARDING;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -110,6 +113,55 @@ public class FormServiceTest extends ServiceTest {
         formService.removeForm(formB);
         Map<Integer, Form> formsB = formService.getAllForms(archetype);
         assertEquals(--numOfForms, formsB.size());
+    }
+
+    @Test
+    public void testDigital() throws Exception {
+        Archetype archetype = new UnpublisdedArchertype();
+        archetype.setName("arname");
+        archetypeService.createArchetype(archetype);
+
+        int id = 11;
+        String browser = "Google Chrome Pelikan";
+        String ip = "255.255.255.-1";
+
+        DigitalForm form = new DigitalForm();
+        form.setId(id);
+        form.setArchetype(archetype);
+        form.setIp(ip);
+        form.setBrowser(browser);
+        formService.createForm(form);
+
+        Form digitalForm = formService.getFormById(archetype, id);
+        assertNotNull(digitalForm);
+        assertTrue(digitalForm instanceof DigitalForm);
+        assertEquals(ip, ((DigitalForm) digitalForm).getIp());
+        assertEquals(browser, ((DigitalForm)digitalForm).getBrowser());
+    }
+
+    @Test
+    public void testPaper() throws Exception {
+        Archetype archetype = new UnpublisdedArchertype();
+        archetype.setName("arname");
+        archetypeService.createArchetype(archetype);
+
+        Date filledAt = new Date();
+        Date signedAd = new Date();
+
+        int id = 369;
+        PaperForm form = new PaperForm();
+        form.setId(id);
+        form.setArchetype(archetype);
+        form.setFilledAt(filledAt);
+        form.setSignedAt(signedAd);
+//        form.setPerson(person);
+        formService.createForm(form);
+
+        Form formA = formService.getFormById(archetype, id);
+        assertNotNull(formA);
+        assertTrue(formA instanceof PaperForm);
+        assertEquals(filledAt, formA.getFilledAt());
+        assertEquals(signedAd, ((PaperForm)formA).getSignedAt());
     }
 
 //    TODO implement
