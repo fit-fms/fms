@@ -10,7 +10,7 @@
     <security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled" />
 
     <security:http use-expressions="true">
-        <security:intercept-url pattern="/**" access="permitAll" />
+        <security:intercept-url pattern="/" access="permitAll" />
         <security:form-login />
         <security:logout logout-success-url="/" delete-cookies="JSESSIONID"/>
         <security:remember-me />
