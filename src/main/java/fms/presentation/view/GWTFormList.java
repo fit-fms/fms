@@ -7,7 +7,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.core.client.EntryPoint;
 import org.springframework.http.HttpRequest;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by smolijar on 4/24/15.
@@ -39,7 +39,7 @@ public class GWTFormList {
      *
      * @param forms
      */
-    public Response RenderFormList(Map<Integer, Form> forms){
+    public Response RenderFormList(List<Form> forms){
         return null;
     }
 
