@@ -1,8 +1,10 @@
 package fms;
 
+import com.lyncode.jtwig.mvc.JtwigViewResolver;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -26,13 +29,15 @@ public class Application {
 
 
     @Configuration
-    protected static class ResourceView extends InternalResourceViewResolver {
+    protected static class ResourceView {
 
-        //Tohle muze byt naprosto spatne
-        public ResourceView() {
-            super();
-            setPrefix("/WEB-INF/pages/");
-            setSuffix(".jsp");
+        @Bean
+        public ViewResolver viewResolver() {
+            JtwigViewResolver viewResolver = new JtwigViewResolver();
+            viewResolver.setPrefix("/WEB-INF/views/");
+            viewResolver.setSuffix(".twig");
+            viewResolver.setCached(false);
+            return viewResolver;
         }
     }
 
