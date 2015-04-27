@@ -1,5 +1,6 @@
 package fms;
 
+import fms.jcr.InitDB;
 import org.jtwig.mvc.JtwigViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.AbstractCachingViewResolver;
 
 
+import javax.jcr.Session;
 import java.util.Collection;
 
 @Controller
 public class ApplicationController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private InitDB initDB;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap map) {
@@ -38,6 +43,19 @@ public class ApplicationController {
     public String clearCache(ModelMap map, JtwigViewResolver resolver) {
         resolver.clearCache();
         return "index";
+    }
+
+
+    @RequestMapping(value = "/initdb", method = RequestMethod.GET)
+    public String init(ModelMap map) throws Exception {
+
+        try {
+            initDB.init();
+            map.addAttribute("status", "podarilo");
+        } catch (Exception e) {
+            map.addAttribute("status", "<b>ne</b>podarilo   - " + e.toString());
+        }
+        return "init_db";
     }
 
 
