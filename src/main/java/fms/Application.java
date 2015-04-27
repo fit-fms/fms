@@ -1,6 +1,7 @@
 package fms;
 
-import com.lyncode.jtwig.mvc.JtwigViewResolver;
+import org.jtwig.Environment;
+import org.jtwig.mvc.JtwigViewResolver;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -12,14 +13,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.theme.FixedThemeResolver;
+import org.springframework.web.servlet.view.AbstractCachingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
 @ComponentScan
 @EnableAutoConfiguration
-@EnableWebMvc
 @EnableWebSecurity
 public class Application {
 
@@ -31,14 +34,26 @@ public class Application {
     @Configuration
     protected static class ResourceView {
 
+
+        private static JtwigViewResolver jtwigViewResolver;
+
         @Bean
-        public ViewResolver viewResolver() {
-            JtwigViewResolver viewResolver = new JtwigViewResolver();
-            viewResolver.setPrefix("/WEB-INF/views/");
-            viewResolver.setSuffix(".twig");
-            viewResolver.setCached(false);
-            return viewResolver;
+        public Environment environment() {
+            return  new Environment();
         }
+
+        @Bean
+        public JtwigViewResolver viewResolver() {
+            if (jtwigViewResolver == null) {
+                jtwigViewResolver = new JtwigViewResolver();
+                jtwigViewResolver.setPrefix("/WEB-INF/views/");
+                jtwigViewResolver.setSuffix(".twig");
+                jtwigViewResolver.setCache(false); //Nefunguje :(
+            }
+
+            return jtwigViewResolver;
+        }
+
     }
 
     @Configuration

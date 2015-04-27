@@ -16,6 +16,10 @@
 
     <repositories>
         <repository>
+            <id>jtwig-snapshot</id>
+            <url>http://dl.bintray.com/jtwig/maven</url>
+        </repository>
+        <repository>
             <id>spring-snapshots</id>
             <url>http://repo.spring.io/snapshot</url>
             <snapshots><enabled>true</enabled></snapshots>
@@ -133,9 +137,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.lyncode</groupId>
+            <groupId>org.jtwig</groupId>
             <artifactId>jtwig-spring</artifactId>
-            <version>3.1.1</version>
+            <version>4.0.0-beta-20150305223257</version>
         </dependency>
 
 

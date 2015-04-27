@@ -1,5 +1,6 @@
 package fms;
 
+import org.jtwig.mvc.JtwigViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.AbstractCachingViewResolver;
+
 
 import java.util.Collection;
 
@@ -20,8 +21,6 @@ import java.util.Collection;
 public class ApplicationController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private ViewResolver viewResolver;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap map) {
@@ -34,11 +33,13 @@ public class ApplicationController {
         return "index";
     }
 
-    @RequestMapping(value = "/clearchache", method = RequestMethod.GET)
-    public String clearCache(ModelMap map) {
-        ((AbstractCachingViewResolver)viewResolver).clearCache();
+    //Taky nefunguje
+    @RequestMapping(value = "/clearcache", method = RequestMethod.GET)
+    public String clearCache(ModelMap map, JtwigViewResolver resolver) {
+        resolver.clearCache();
         return "index";
     }
+
 
     @PreAuthorize("hasRole('admin')")
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
