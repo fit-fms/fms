@@ -1,36 +1,34 @@
 package fms.business.archetype;
 
+import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
-import fms.jcr.JcrObject;
-import org.jcrom.annotations.JcrName;
-import org.jcrom.annotations.JcrNode;
-import org.jcrom.annotations.JcrPath;
-import org.jcrom.annotations.JcrProperty;
+import org.jcrom.annotations.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Pol�cko formul�re kter� u�ivatel vypln�.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
+ * Policko formulare ktere uzivatel vyplni.
  */
-@JcrNode
-public class Field implements JcrObject {
+@JcrNode(classNameProperty = "className")
+public class Field {
 
-    /**
-     * Jm�no pol�cka pro statistiky a filtrov�n�
-     */
     @JcrName
-    private String name;
+    private String jcrName = "fms_field";
 
     @JcrPath
     private String jcrPath;
 
     /**
-     * Intern� popis pro spr�vce, vhodn� pro vyhled�v�n�
+     * Jmeno policka pro statistiky a filtrovani
+     */
+    @JcrProperty
+    private String name;
+
+    /**
+     * Interni popis pro spr�vce, vhodn� pro vyhled�v�n�
      */
     @JcrProperty
     private String privateDescription;
@@ -50,13 +48,14 @@ public class Field implements JcrObject {
     /**
      * Typ policka
      */
-
+    @JcrReference(byPath = true)
     private FieldType type;
 
     /**
      * Validatory policka
      */
-    private Map<String, Validator> validators;
+    @JcrReference(byPath = true)
+    private List<Validator> validators;
 
     /**
      * Archetypy ktere pouzivaji toto policko
@@ -65,7 +64,7 @@ public class Field implements JcrObject {
     private Map<String, Archetype> archetypes;
 
     public Field() {
-        this.validators = new HashMap<String, Validator>();
+        this.validators = new ArrayList<Validator>();
         this.archetypes = new HashMap<String, Archetype>();
     }
 
@@ -147,11 +146,15 @@ public class Field implements JcrObject {
     /**
      * @param data
      */
-    public boolean validate(String data) {
+    public boolean validate(String data, List<String> errors) {
         boolean status = true;
 
-        for (Map.Entry<String, Validator> entry : validators.entrySet()) {
-            if (!entry.getValue().validate(data)) {
+        if (type != null && !type.validate(data, errors)) {
+            return false;
+        }
+
+        for (Validator validator : validators) {
+            if (!validator.validate(data, errors)) {
                 status = false;
             }
         }
@@ -165,17 +168,17 @@ public class Field implements JcrObject {
      * @param validator
      */
     public void addValidator(Validator validator) {
-        this.validators.put(validator.getName(), validator);
+        this.validators.add(validator);
     }
 
     /**
      * @param validator
      */
     public void removeValidator(Validator validator) {
-        this.validators.remove(validator.getName());
+        this.validators.remove(validator);
     }
 
-    public Map<String, Validator> getValidators() {
+    public List<Validator> getValidators() {
         return validators;
     }
 
@@ -191,22 +194,18 @@ public class Field implements JcrObject {
     }
 
     @Override
-    public String getJcrName() {
-        return getName();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Field field = (Field) o;
+
+        return name.equals(field.name);
+
     }
 
     @Override
-    public void setJcrName(String jcrName) {
-        setName(jcrName);
-    }
-
-    @Override
-    public String getJcrPath() {
-        return this.jcrPath;
-    }
-
-    @Override
-    public void setJcrPath(String jcrPath) {
-        this.jcrPath = jcrPath;
+    public int hashCode() {
+        return name.hashCode();
     }
 }

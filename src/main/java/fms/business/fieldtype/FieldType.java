@@ -1,31 +1,27 @@
 package fms.business.fieldtype;
 
 import fms.business.archetype.Field;
-import org.jcrom.annotations.JcrName;
-import org.jcrom.annotations.JcrNode;
-import org.jcrom.annotations.JcrPath;
-import org.jcrom.annotations.JcrProperty;
+import org.jcrom.annotations.*;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Z�kladn� informace o pol�cku pro budouc� zpracov�n�.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
-@JcrNode
-public class FieldType {
+@JcrNode(classNameProperty = "className")
+abstract public class FieldType {
 
     /**
      * N�zev typu
      */
     @JcrName
-    private String name;
+    private String jcrName = "fms_field_type";
 
     @JcrPath
     private String jcrPath;
+
+    @JcrProperty
+    private String name;
 
     /**
      * Popis typu
@@ -33,15 +29,16 @@ public class FieldType {
     @JcrProperty
     private String description;
 
-    //@TODO
-    private Map<String, Field> fields;
+    @JcrReference(byPath = true)
+    //@TODO implement
+    private List<Field> fields;
 
     public FieldType() {
 
     }
 
 
-    public Map<String, Field> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
@@ -77,8 +74,22 @@ public class FieldType {
         this.description = description;
     }
 
-    public boolean validate() {
-        return false;
+    abstract public boolean validate(String data, List<String> errors);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FieldType fieldType = (FieldType) o;
+
+        return name.equals(fieldType.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
 }

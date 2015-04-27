@@ -1,6 +1,6 @@
 package fms.business.service;
 
-import fms.business.archetype.Validator;
+import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,24 +9,23 @@ import org.springframework.stereotype.Service;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.Session;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryManager;
+import javax.jcr.query.QueryResult;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Slu�ba pro uchov�v�n� valid�toru v datab�zi.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
  */
 @Service
 public class ValidatorService {
 
+    public static final String VALIDATOR_ROOT = "/validators";
+
     private Session session;
 
     private Jcrom jcrom;
-
-    private List<Validator> validators;
 
     @Autowired
     public ValidatorService(Session session, Jcrom jcrom) {
@@ -41,17 +40,24 @@ public class ValidatorService {
      * @param validator
      */
     public void createValidator(Validator validator) throws Exception {
-        Node validatorsNode = session.getNode("/validators");
+        Node validatorsNode = session.getNode(VALIDATOR_ROOT);
         jcrom.addNode(validatorsNode, validator);
 
         session.save();
     }
 
     public Validator getValidatorByName(String name) throws Exception {
-        Node validatorNode = session.getNode("/validators/" + name);
-        Validator validator = jcrom.fromNode(Validator.class, validatorNode);
+        QueryManager queryManager = session.getWorkspace().getQueryManager();
+        String queryStr = "/jcr:root" + VALIDATOR_ROOT + "/*[@name='" + name + "']";
+        Query query = queryManager.createQuery(queryStr, Query.XPATH);
+        QueryResult queryResult = query.execute();
 
-        return validator;
+        NodeIterator it = queryResult.getNodes();
+        if (!it.hasNext()) {
+            return null;
+        }
+
+        return jcrom.fromNode(Validator.class, it.nextNode());
     }
 
     /**
@@ -60,8 +66,9 @@ public class ValidatorService {
      * @param validator
      */
     public void updateValidator(Validator validator) throws Exception {
-        removeValidator(validator);
-        createValidator(validator);
+        Node validatorNode = session.getNode(jcrom.getPath(validator));
+        jcrom.updateNode(validatorNode, validator);
+        session.save();
     }
 
     /**
@@ -70,7 +77,7 @@ public class ValidatorService {
      * @param validator
      */
     public void removeValidator(Validator validator) throws Exception {
-        Node validatorNode = session.getNode("/validators/" + validator.getName());
+        Node validatorNode = session.getNode(jcrom.getPath(validator));
         validatorNode.remove();
         session.save();
     }
@@ -81,17 +88,15 @@ public class ValidatorService {
      * @param fieldType
      */
     public List<Validator> getValidatorsByFieldType(FieldType fieldType) throws Exception {
-        if (validators == null) {
-            validators = new ArrayList<Validator>();
-        }
-        else {
-            validators.clear();
-        }
+        List<Validator> validators = new ArrayList<Validator>();
 
-        NodeIterator it = session.getNode("/validators").getNodes();
+        if (fieldType == null) return validators;
+
+        NodeIterator it = session.getNode(VALIDATOR_ROOT).getNodes();
         while (it.hasNext()) {
-            Node vn = it.nextNode();
-            Validator v = jcrom.fromNode(Validator.class, vn);
+            Validator v = jcrom.fromNode(Validator.class, it.nextNode());
+            if (v.getFieldType() == null) continue;
+            if (!v.getFieldType().getName().equals(fieldType.getName())) continue;
             validators.add(v);
         }
 

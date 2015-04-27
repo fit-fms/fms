@@ -1,6 +1,8 @@
 package fms.business.fieldtype;
 
 
+import java.util.List;
+
 /**
  * Cas v r�mci dne, vhodn� pro opakuj�c� se ud�losti, napr�klad zac�tek vyucov�n�. (hodiny, minuty, sekundy)
  *
@@ -22,4 +24,8 @@ public class TimeField extends FieldType {
         return null;
     }
 
+    @Override
+    public boolean validate(String data, List<String> errors) {
+        return false;
+    }
 }

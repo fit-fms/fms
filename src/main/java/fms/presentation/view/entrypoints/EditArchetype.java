@@ -7,7 +7,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
-import fms.business.archetype.Template;
+import fms.business.archetype.PublishedArchetype;
+import fms.business.archetype.template.Template;
 import fms.business.service.ArchetypeService;
 import fms.business.service.FieldService;
 import fms.business.service.TemplateService;
@@ -18,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class EditArchetype implements EntryPoint {
 
-    private Archetype arch = new Archetype();
+    private Archetype arch = new PublishedArchetype();
 
     //services
     FieldService fieldService;

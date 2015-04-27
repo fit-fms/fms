@@ -3,31 +3,25 @@ package fms.business.form;
 import fms.business.archetype.Archetype;
 import org.jcrom.annotations.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Formul�r je vyplnen� instance Archetypu fomul�re.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
-@JcrNode
-public class Form {
+@JcrNode(classNameProperty = "className")
+abstract public class Form {
+
+    @JcrName
+    private String jcrName = "fms_form";
+
+    @JcrPath
+    private String jcrPath;
 
     /**
      * Identifikacn� c�slo
      */
     @JcrProperty
     private int id;
-
-    @JcrName
-    private String name;
-
-    @JcrPath
-    private String jcrPath;
 
     /**
      * Datum kdy byl formul�r vyplnen
@@ -53,25 +47,22 @@ public class Form {
     @JcrReference(byPath = true)
     private Archetype archetype;
 
-    /**
-     * Vyplnen� pol�cka
-     */
-    private Map<String, FilledField> filledFields;
+    @JcrChildNode
+    private List<FilledField> filledFields;
 
     public Form() {
-        this.filledFields = new HashMap<String, FilledField>();
+        this.filledFields = new ArrayList<FilledField>();
     }
 
     /**
      * Zvaliduje vsechny FilledFields.
      */
-    public boolean validate() {
+    public boolean validate(List<String> errors) {
 
         boolean status = true;
 
-
-        for (Map.Entry<String, FilledField> entry : filledFields.entrySet()) {
-            if (!entry.getValue().validate()) {
+        for (FilledField filledField : filledFields) {
+            if (!filledField.validate(errors)) {
                 status = false;
             }
         }
@@ -82,7 +73,7 @@ public class Form {
     /**
      * Z�sk� v�echny filled fields.
      */
-    public Map<String, FilledField> getFilledFields() {
+    public List<FilledField> getFilledFields() {
         return filledFields;
     }
 
@@ -92,7 +83,9 @@ public class Form {
      * @param field
      */
     public void addfilledfield(FilledField field) {
-        filledFields.put(field.getField().getName(), field);
+        Set<FilledField> foo = new HashSet<FilledField>(filledFields);
+        if (foo.contains(field)) return;
+        filledFields.add(field);
     }
 
     /**
@@ -101,7 +94,7 @@ public class Form {
      * @param field
      */
     public void removeFilledFIeld(FilledField field) {
-        filledFields.remove(field.getField().getName());
+        filledFields.remove(field);
     }
 
     /**
@@ -133,7 +126,6 @@ public class Form {
      * @param id
      */
     public void setId(int id) {
-        this.name = ((Integer)id).toString();
         this.id = id;
     }
 

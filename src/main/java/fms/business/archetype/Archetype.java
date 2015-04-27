@@ -1,29 +1,31 @@
 package fms.business.archetype;
 
 
-import fms.jcr.JcrObject;
+import fms.business.archetype.template.Template;
 import org.jcrom.annotations.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Archetyp formul�re je kostra pro data. Udr�uje informace o jednotliv�ch pol�ck�ch pro s�mantick� zpracov�n� dat.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
  */
-@JcrNode
-public class Archetype implements JcrObject {
+@JcrNode(classNameProperty = "className")
+abstract public class Archetype {
 
-    /**
-     * Jm�no formul�re
-     */
     @JcrName
-    private String name;
+    private String jcrName = "fms_archetype";
 
     @JcrPath
     private String jcrPath;
+
+    /**
+     * Jmeno formulare
+     */
+    @JcrProperty
+    private String name;
 
     /**
      * Intern� popis urcen� pro spr�vce
@@ -47,12 +49,12 @@ public class Archetype implements JcrObject {
      */
     private Map<String, Field> optionalFields;
 
-    @JcrReference(byPath=true)  //Protoze umi ulozit jen <String, Object>
+    @JcrReference(byPath = true)  //Protoze umi ulozit jen <String, Object>
     private List<Field> jcrOptionalFields;
 
     private Map<String, Field> requiredFields;
 
-    @JcrReference(byPath=true)
+    @JcrReference(byPath = true)
     private List<Field> jcrRequiredFields;
 
     public Archetype() {
@@ -70,25 +72,25 @@ public class Archetype implements JcrObject {
             requiredFields = new HashMap<String, Field>();
 
 
-            for ( Field f: jcrOptionalFields ) {
+            for (Field f : jcrOptionalFields) {
                 optionalFields.put(f.getName(), f);
             }
 
-            for ( Field f: jcrRequiredFields ) {
+            for (Field f : jcrRequiredFields) {
                 requiredFields.put(f.getName(), f);
             }
         }
     }
 
     /**
-     * Jm�no formul�re
+     * Jmeno formulare
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Jm�no formul�re
+     * Jmeno formulare
      *
      * @param name
      */
@@ -97,14 +99,14 @@ public class Archetype implements JcrObject {
     }
 
     /**
-     * Verejn� popis pou�it jako n�poveda
+     * Verejny popis pouzit jako napoveda
      */
     public String getPublicDescription() {
         return publicDescription;
     }
 
     /**
-     * Verejn� popis pou�it jako n�poveda
+     * Verejny popis pouzit jako napoveda
      *
      * @param description
      */
@@ -113,14 +115,14 @@ public class Archetype implements JcrObject {
     }
 
     /**
-     * Intern� popis urcen� pro spr�vce
+     * Interni popis urceny pro spravce
      */
     public String getPrivateDescription() {
         return privateDescription;
     }
 
     /**
-     * Intern� popis urcen� pro spr�vce
+     * Interni popis urceny pro spravce
      *
      * @param description
      */
@@ -208,25 +210,5 @@ public class Archetype implements JcrObject {
     public Map<String, Field> getOptionalFields() {
         createFields();
         return optionalFields;
-    }
-
-    @Override
-    public String getJcrName() {
-        return getName();
-    }
-
-    @Override
-    public void setJcrName(String jcrName) {
-        setName(jcrName);
-    }
-
-    @Override
-    public String getJcrPath() {
-        return jcrPath;
-    }
-
-    @Override
-    public void setJcrPath(String jcrPath) {
-        this.jcrPath = jcrPath;
     }
 }

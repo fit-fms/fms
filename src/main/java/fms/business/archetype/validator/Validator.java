@@ -1,38 +1,47 @@
-package fms.business.archetype;
+package fms.business.archetype.validator;
 
 import fms.business.fieldtype.FieldType;
+import org.jcrom.JcrEntity;
 import org.jcrom.annotations.*;
+
+import java.util.List;
 
 /**
  * Valid�tor kontroluje data podle typu pol�cka a predem dan�ch specifikac�. To umo�nuje udr�ovat validn� datab�zi dat. Napr�klad umo�n� nad libovoln�m typed dat vytvorit v�cet mo�n�ch hodnot(enum) se zachov�n�m vlastnost� typu pro vyhled�v�n�,  filtrov�n� a statistiky.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
  */
-@JcrNode
-public class Validator {
+@JcrNode(classNameProperty = "className")
+abstract public class Validator implements JcrEntity {
 
     /**
      * N�zev valid�toru
      */
     @JcrName
-    private String name;
+    private String jcrName = "fms_validator";
 
     @JcrPath
     private String jcrPath;
-
+    @JcrProperty
+    private String name;
     /**
      * Popis valid�toru
      */
     @JcrProperty
     private String description;
-
     @JcrReference(byPath = true)
     private FieldType fieldType;
 
     public Validator() {
 
+    }
+
+    @Override
+    public String getPath() {
+        return jcrPath;
+    }
+
+    @Override
+    public void setPath(String s) {
+        jcrPath = s;
     }
 
     public FieldType getFieldType() {
@@ -81,8 +90,24 @@ public class Validator {
     /**
      * @param data
      */
-    public boolean validate(String data) {
-        return false;
+    abstract public boolean validate(String data, List<String> errors);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Validator validator = (Validator) o;
+
+        if (!name.equals(validator.name)) return false;
+        return fieldType.equals(validator.fieldType);
+
     }
 
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + fieldType.hashCode();
+        return result;
+    }
 }

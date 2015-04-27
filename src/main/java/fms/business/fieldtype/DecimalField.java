@@ -1,6 +1,8 @@
 package fms.business.fieldtype;
 
 
+import java.util.List;
+
 /**
  * @author jinora
  * @version 1.0
@@ -20,4 +22,8 @@ public class DecimalField extends FieldType {
         return 0;
     }
 
+    @Override
+    public boolean validate(String data, List<String> errors) {
+        return false;
+    }
 }

@@ -1,5 +1,7 @@
 package fms.business.archetype;
 
+import fms.business.archetype.template.A4Landscape;
+import fms.business.archetype.template.Template;
 import org.junit.Test;
 
 import java.util.Map;
@@ -17,7 +19,7 @@ public class ArchetypeTest {
     }
 
     protected Template makeTemplate (String name) {
-        Template template = new Template();
+        Template template = new A4Landscape();
         template.setName(name);
 
         return template;
@@ -33,7 +35,7 @@ public class ArchetypeTest {
         Field fieldD = makeField("D");
 
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.addRequiredField(fieldA);
         archetype.addRequiredField(fieldB);
         archetype.addRequiredField(fieldC);
@@ -73,7 +75,7 @@ public class ArchetypeTest {
         Field fieldD = makeField("D");
 
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.addOptionalField(fieldA);
         archetype.addOptionalField(fieldB);
         archetype.addOptionalField(fieldC);
@@ -113,7 +115,7 @@ public class ArchetypeTest {
         Template fieldD = makeTemplate("D");
 
 
-        Archetype archetype = new Archetype();
+        Archetype archetype = new UnpublisdedArchertype();
         archetype.addTemplate(fieldA);
         archetype.addTemplate(fieldB);
         archetype.addTemplate(fieldC);

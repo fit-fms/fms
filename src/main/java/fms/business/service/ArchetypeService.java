@@ -1,7 +1,6 @@
 package fms.business.service;
 
 import fms.business.archetype.Archetype;
-import fms.business.archetype.Field;
 import org.jcrom.Jcrom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,96 +8,98 @@ import org.springframework.stereotype.Service;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.Session;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryManager;
+import javax.jcr.query.QueryResult;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Slu�ba pro uchov�v�n� archetypu v datab�zi.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
+ * Sluuba pro uchovavani archetypu v databazi.
  */
 @Service
 public class ArchetypeService {
 
+    public static final String ARCHETYPES_ROOT = "//archetypes";
+    Map<String, Archetype> archetypes = new HashMap<String, Archetype>();
     private Session session;
-
-    private FieldService fieldService;
-
     private Jcrom jcrom;
 
-    Map<String, Archetype> archetypes;
-
     @Autowired
-    public ArchetypeService(FieldService fieldService, Session session, Jcrom jcrom) {
-        this.fieldService = fieldService;
+    public ArchetypeService(Session session, Jcrom jcrom) {
         this.session = session;
         this.jcrom = jcrom;
     }
 
 
     /**
-     * Najde v datab�zi archetyp podle jm�na.
+     * Najde v databazi archetyp podle jmena.
      *
      * @param name
      */
     public Archetype findByName(String name) throws Exception {
-        Node archerypeNode = session.getNode("/archetypes/"+name);
-        Archetype archetype = jcrom.fromNode(Archetype.class, archerypeNode);
+        Node n = this.findNodeByName(name);
+        if (n == null) return null;
 
-        return archetype;
+        return jcrom.fromNode(Archetype.class, n);
+    }
+
+    protected Node findNodeByName(String name) throws Exception {
+        QueryManager queryManager = session.getWorkspace().getQueryManager();
+        String queryStr = "/jcr:root" + ARCHETYPES_ROOT + "/*[@name='" + name + "']";
+        Query query = queryManager.createQuery(queryStr, Query.XPATH);
+        QueryResult queryResult = query.execute();
+
+        NodeIterator it = queryResult.getNodes();
+        if (!it.hasNext()) {
+            return null;
+        }
+
+        return it.nextNode();
     }
 
     /**
-     * Odstran� archetyp z datab�ze.
+     * Odstrani archetyp z databaze.
      *
      * @param archetype
      */
     public void removeArchetype(Archetype archetype) throws Exception {
-        Node archetypeNode = session.getNode(archetype.getJcrPath());
+        Node archetypeNode = session.getNode(jcrom.getPath(archetype));
         archetypeNode.remove();
         session.save();
     }
 
     /**
-     * Prid� nov� archetyp do datab�ze.
+     * Prida novy archetyp do databaze.
      *
      * @param archetype
      */
     public void createArchetype(Archetype archetype) throws Exception {
-        Node archetypesNode = session.getNode("/archetypes");
-
+        Node archetypesNode = session.getNode(ARCHETYPES_ROOT);
         jcrom.addNode(archetypesNode, archetype);
         session.save();
     }
 
     /**
-     * Aktualizuje archetyp v datab�zi.
+     * Aktualizuje archetyp v databazi.
      *
      * @param archetype
      */
     public void updateArchetype(Archetype archetype) throws Exception {
-        removeArchetype(archetype);
-        createArchetype(archetype);
+        Node archetypeNode = session.getNode(jcrom.getPath(archetype));
+        jcrom.updateNode(archetypeNode, archetype);
+        session.save();
     }
 
     /**
-     * Z�sk� v�echny formul�re.
+     * Ziska vsechny formulare.
      */
     public Map<String, Archetype> getAllArchetypes() throws Exception {
+        archetypes.clear();
 
-        if (archetypes == null) {
-            archetypes = new HashMap<String, Archetype>();
-        }
-        else  {
-            archetypes.clear();
-        }
-
-        NodeIterator it = session.getNode("/archetypes").getNodes();
+        NodeIterator it = session.getNode(ARCHETYPES_ROOT).getNodes();
         while (it.hasNext()) {
-            Node n = it.nextNode();
-            Archetype a = jcrom.fromNode(Archetype.class, n);
+            Archetype a = jcrom.fromNode(Archetype.class, it.nextNode());
             archetypes.put(a.getName(), a);
         }
 

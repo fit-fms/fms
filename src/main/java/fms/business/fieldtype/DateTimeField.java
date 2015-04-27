@@ -2,6 +2,7 @@ package fms.business.fieldtype;
 
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Presn� datum a cas, vhodn� pro presn� ud�losti, napr�klad schuzka s investorem. (rok, mesic, den, hodina, minuta, sekunda)
@@ -24,4 +25,8 @@ public class DateTimeField extends FieldType {
         return null;
     }
 
+    @Override
+    public boolean validate(String data, List<String> errors) {
+        return false;
+    }
 }

@@ -1,34 +1,57 @@
 package fms.business.form;
 
 
+import org.jcrom.annotations.JcrName;
+import org.jcrom.annotations.JcrNode;
+import org.jcrom.annotations.JcrPath;
+import org.jcrom.annotations.JcrProperty;
+
 import java.util.Date;
 
 /**
  * Obr�zek formul�re naskenovan� do poc�tace.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:49 PM
  */
+@JcrNode
 public class Scan {
+
+    @JcrName
+    private String jcrName = "fms_scan";
+
+    @JcrPath
+    private String path;
+
+    @JcrProperty
+    private int id;
 
     /**
      * Datum nahr�n� skanu do IS.
      */
+    @JcrProperty
     private Date date;
+
     /**
      * Rozli�en� obr�zku
      */
+    @JcrProperty
     private String resolution;
+
     /**
      * Naskenovan� soubor.
      */
+    @JcrProperty
     private byte[] data;
 
     public Scan() {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      * Z�sk� rozli�en� obr�zku.
@@ -78,4 +101,19 @@ public class Scan {
         data = file;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Scan scan = (Scan) o;
+
+        return id == scan.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

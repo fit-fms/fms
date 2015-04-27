@@ -1,5 +1,6 @@
 package fms.business.service;
 
+import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +40,21 @@ public class FieldServiceTest extends ServiceTest {
         assertEquals(field.getName(), fieldA.getName());
     }
 
-    @Test(expected = javax.jcr.PathNotFoundException.class)
+    @Test
+    public void testRemove() throws Exception {
+        String name = "my_field_sname";
+
+        Field field = new Field();
+        field.setName(name);
+
+        fieldService.createField(field);
+        fieldService.removeField(field);
+
+        Field fieldNo = fieldService.getFieldByName(name);
+        assertNull(fieldNo);
+    }
+
+    @Test
     public void testUpdateField() throws Exception {
         String name = "my_field_name";
         String newName = "my_new_field_name";
@@ -55,8 +70,8 @@ public class FieldServiceTest extends ServiceTest {
         assertNotNull(fieldA);
         assertEquals(newName, fieldA.getName());
 
-        fieldService.getFieldByName(name);
-        assertFalse("Stary uzel byl nalezen.", true);
+        Field fieldNo = fieldService.getFieldByName(name);
+        assertNull(fieldNo);
     }
 
     @Test
