@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.AbstractCachingViewResolver;
 
 import java.util.Collection;
 
@@ -18,6 +20,8 @@ import java.util.Collection;
 public class ApplicationController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private ViewResolver viewResolver;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap map) {
@@ -27,6 +31,12 @@ public class ApplicationController {
                     (UserDetails) authentication.getPrincipal();
             map.addAttribute("userDetails", userDetails);
         }
+        return "index";
+    }
+
+    @RequestMapping(value = "/clearchache", method = RequestMethod.GET)
+    public String clearCache(ModelMap map) {
+        ((AbstractCachingViewResolver)viewResolver).clearCache();
         return "index";
     }
 
