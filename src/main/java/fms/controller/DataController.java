@@ -5,6 +5,7 @@
  */
 package fms.controller;
 
+import fms.business.form.DigitalForm;
 import fms.business.form.Form;
 import fms.business.service.ArchetypeService;
 import fms.business.service.FormService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
@@ -49,6 +51,17 @@ public class DataController {
             return "";
         }
         map.addAttribute("form", form);
-        return "";
+        return "editForm";
+    }
+    
+    @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.POST)
+    //public String submitForm(@ModelAttribute(value = "form") DigitalForm form, ModelMap map){
+    public String submitForm(@ModelAttribute(value = "field1") DigitalForm form, ModelMap map){
+        try {
+            formService.updateForm(form);
+        } catch (Exception ex) {
+            Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "showForm";
     }
 }

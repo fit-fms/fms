@@ -41,15 +41,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class FormController {
-    
-    
+       
     @Autowired
     private FormService formService;
     @Autowired
     private ArchetypeService archService;
     
     private Form form;
-    private String name;
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.GET)
     public String displayForm(@PathVariable("formUrl") String formUrl, ModelMap map){
