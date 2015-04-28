@@ -5,6 +5,10 @@
  */
 package fms.controller;
 
+import fms.business.form.DigitalForm;
+import fms.business.form.Form;
+import fms.business.service.ArchetypeService;
+import fms.business.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -18,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -26,8 +34,34 @@ import java.util.Collection;
 
 @Controller
 public class DataController {
-    @RequestMapping(value = "/data", method = RequestMethod.GET)
-    public String showData(ModelMap map){
-        return "";
+    
+    @Autowired
+    private FormService formService;
+    @Autowired
+    private ArchetypeService archService;
+    
+    @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.GET)
+    public String showData(@PathVariable("formArch") String arch, @PathVariable("formId") int formId, ModelMap map){
+        Form form;
+        try {
+            form = formService.getFormById(archService.findByName(arch), formId);
+        } catch (Exception ex) {
+            System.out.println("formular  neexistuje");
+            Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+        map.addAttribute("form", form);
+        return "editForm";
+    }
+    
+    @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.POST)
+    //public String submitForm(@ModelAttribute(value = "form") DigitalForm form, ModelMap map){
+    public String submitForm(@ModelAttribute(value = "field1") DigitalForm form, ModelMap map){
+        try {
+            formService.updateForm(form);
+        } catch (Exception ex) {
+            Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "showForm";
     }
 }
