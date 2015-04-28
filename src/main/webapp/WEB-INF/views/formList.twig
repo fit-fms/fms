@@ -1,0 +1,30 @@
+<h1>Seznam formularu</h1>
+
+<table>
+    <tr>
+        <th>Jmeno archetypu</th>
+        <th>id formulare</th>
+        <th>Schvaleni</th>
+        <th>Aktivni</th>
+    </tr>
+    {% for form in forms %}
+        <tr>
+            <td>{{ form.archetype.id }}</td>
+            <td>{{ form.id }}</td>
+            <td>
+                <label>
+                    <input type="radio" name="{{ form.id }}['approve']" value="0" /> neschvaleno
+                </label>
+                <label>
+                    <input type="radio" name="{{ form.id }}['approve']" value="1" /> chvaleno
+                </label>
+            </td>
+            <td>
+                <label>
+                    <input type="number" name="{{ form.id }}['person']" value="1" /> id osoby
+                </label>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
