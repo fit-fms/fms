@@ -1,5 +1,6 @@
 package fms.controller;
 
+import fms.business.fieldtype.DateField;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,10 @@ public class ViewTestController {
             e.printStackTrace();
         }
         map.addAttribute("date", date  );
+
+        DateField df = new DateField();
+        map.addAttribute("field", df  );
+
 
         return "test/field";
     }

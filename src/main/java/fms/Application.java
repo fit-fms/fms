@@ -1,5 +1,6 @@
 package fms;
 
+import fms.presentation.view.TwigCustomFunctions;
 import org.jtwig.Environment;
 import org.jtwig.mvc.JtwigViewResolver;
 import org.springframework.boot.*;
@@ -38,6 +39,11 @@ public class Application {
         private static JtwigViewResolver jtwigViewResolver;
 
         @Bean
+        public TwigCustomFunctions userFunctions () {
+            return new TwigCustomFunctions();
+        }
+
+        @Bean
         public Environment environment() {
             return  new Environment();
         }
@@ -49,10 +55,13 @@ public class Application {
                 jtwigViewResolver.setPrefix("/WEB-INF/views/");
                 jtwigViewResolver.setSuffix(".twig");
                 jtwigViewResolver.setCache(false); //Nefunguje :(
+                jtwigViewResolver.includeFunctions(userFunctions());
             }
 
             return jtwigViewResolver;
         }
+
+
 
     }
 
