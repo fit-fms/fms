@@ -4,8 +4,9 @@
 
 {{ forms.formMeta(form) }}
 
+<form method="post" action="">
 {% for filledField in form.filledFields %}
-
     {{ forms.filledField(filledField, true) }}
-
 {% endfor %}
+    <input type="submit" value="odeslat" />
+</form>

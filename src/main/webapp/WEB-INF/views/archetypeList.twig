@@ -1,5 +1,6 @@
 <h1>Seznam archetypu</h1>
 
+<form method="post" action="">
 <table>
     <tr>
         <th>Jmeno archetypu</th>
@@ -8,6 +9,7 @@
         <th>Verejny</th>
         <th>Aktivni</th>
     </tr>
+
 {% for arch in archetypes %}
     <tr>
         <td>{{ arch.name }}</td>
@@ -32,4 +34,5 @@
     </tr>
 {% endfor %}
 </table>
-
+    <input type="submit" value="odeslat" />
+</form>
