@@ -1,3 +1,5 @@
+{% import _self as forms %}
+
 {% macro input(name, value, type, size) %}
   <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
 {% endmacro %}
@@ -67,4 +69,46 @@
                {% endif %}
                value="{{ value | e }}" size="{{ size|default(10) }}" />
     </label>
+{% endmacro %}
+
+{% macro formMeta(form) %}
+    <table>
+        <tr>
+            <td>filled at:</td>
+            <td>{{ form.filledAt }}</td>
+        </tr>
+        <tr>
+            <td>approved at:</td>
+            <td>{{ form.approvedAt }}</td>
+        </tr>
+        <tr>
+            <td>approved by:</td>
+            <td>{{ form.admin }}</td>
+        </tr>
+    </table>
+{% endmacro %}
+
+{% macro fieldField(filledField, editable) %}
+    {% set type = filledField.field.fieldType |fieldtype %}
+    <div>
+    {% if type == "date" %}
+        {{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% endif %}
+    {% if type == "datetime" %}
+        {{ forms.datetime(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% endif %}
+    {% if type == "time" %}
+        {{ forms.time(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% endif %}
+    {% if type == "decimal" %}
+        {{ forms.decimal(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% endif %}
+    {% if type == "integer" %}
+        {{ forms.integer(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% endif %}
+    {% if type == "text" %}
+        {{ forms.text(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% endif %}
+    <p>{{ filledField.field.publicDescription }}</p>
+    </div>
 {% endmacro %}

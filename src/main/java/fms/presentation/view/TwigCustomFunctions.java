@@ -9,7 +9,6 @@ import org.jtwig.functions.annotations.Parameter;
  */
 public class TwigCustomFunctions {
 
-
     @JtwigFunction(name = "fieldtype")
     public String format(@Parameter FieldType field) {
         if( field instanceof DateField)

@@ -2,43 +2,8 @@
 
 <h1>{{ form.archetype.name }} {{ form.id }}</h1>
 
-<table>
-    <tr>
-        <td>filled at:</td>
-        <td>{{ form.filledAt }}</td>
-    </tr>
-    <tr>
-        <td>approved at:</td>
-        <td>{{ form.approvedAt }}</td>
-    </tr>
-    <tr>
-        <td>approved by:</td>
-        <td>{{ form.admin }}</td>
-    </tr>
-</table>
+{{ forms.formMeta(form) }}
 
 {% for filledField in form.filledFields %}
-
-    {% set type = filledField.field.fieldType |fieldtype %}
-
-    {% if type == "date" %}
-        {{ forms.date(filledField.field.name,  filledField.data, false, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "datetime" %}
-        {{ forms.datetime(filledField.field.name,  filledField.data, false, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "time" %}
-        {{ forms.time(filledField.field.name,  filledField.data, false, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "decimal" %}
-        {{ forms.decimal(filledField.field.name,  filledField.data, false, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "integer" %}
-        {{ forms.integer(filledField.field.name,  filledField.data, false, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "text" %}
-        {{ forms.text(filledField.field.name,  filledField.data, false, filledField.field.label ) }}
-    {% endif %}
-    <p>{{ filledField.field.publicDescription }}</p>
-
+    {{ forms.filledField(filledField, false) }}
 {% endfor %}
