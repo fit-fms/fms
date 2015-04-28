@@ -2,26 +2,69 @@
   <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
 {% endmacro %}
 
-{% macro text(name, value, size) %}
-    <input type="text" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+{% macro text(name, value, editable, label, size) %}
+    <label> {{ label |default("") |e }}
+        <input type="text" name="{{ name }}"
+               {% if (editable) %}{% else %}
+                    disabled
+               {% endif %}
+               value="{{ value|e }}" size="{{ size|default(20) }}" />
+    </label>
 {% endmacro %}
 
-{% macro date(name, value) %}
-    <input type="text" name="{{ name }}" value="{{ value |date("yyyy-MM-dd") }}" />
+{% macro date(name, value, editable, label) %}
+    <label> {{ label |default("") |e }}
+        <input type="date" name="{{ name }}"
+               {% if (editable) %}{% else %}
+                    disabled
+               {% endif %}
+               value="{{ value |date("yyyy-MM-dd") }}" />
+    </label>
 {% endmacro %}
 
-{% macro datetime(name, value) %}
-    <input type="text" name="{{ name }}" value="{{ value |date("yyyy-MM-dd HH:mm") }}" />
+{% macro datetime(name, value, editable, label) %}
+  {#  <label> {{ label |default("") |e }}
+        <input type="datetime-local" name="{{ name }}"
+               {% if (editable) %}{% else %}
+                    disabled
+               {% endif %}
+               value="{{ value |date("yyyy-MM-dd\THH:mm:ss") }}" />
+    </label>#}
+    <label> {{ label |default("") |e }}
+        <input type="text" name="{{ name }}"
+                {% if (editable) %}{% else %}
+                    disabled
+                {% endif %}
+               value="{{ value |date("yyyy-MM-dd HH:mm:ss") }}" />
+    </label>
 {% endmacro %}
 
-{% macro time(name, value) %}
-    <input type="text" name="{{ name }}" value="{{ value |date("HH:mm") }}"  />
+{% macro time(name, value, editable, label) %}
+    <label> {{ label |default("") |e }}
+        <input type="time" name="{{ name }}"
+               {% if (editable) %}{% else %}
+                    disabled
+               {% endif %}
+               value="{{ value |date("HH:mm:ss") }}"  />
+    </label>
 {% endmacro %}
 
-{% macro decimal(name, value, size) %}
-    <input type="number" name="{{ name }}" value="{{ value | e }}" size="{{ size|default(10) }}" />
+{% macro decimal(name, value, editable, label, size) %}
+    <label> {{ label |default("") |e }}
+        <input type="number" name="{{ name }}"
+               {% if (editable) %}{% else %}
+                    disabled
+               {% endif %}
+               value="{{ value | e }}" size="{{ size|default(10) }}" />
+    </label>
 {% endmacro %}
 
-{% macro integer(name, value, size) %}
-    <input type="number" name="{{ name }}" value="{{ value | e }}" size="{{ size|default(10) }}" />
+{% macro integer(name, value, editable, label, size) %}
+    <label> {{ label |default("") |e }}
+        <input type="number" name="{{ name }}"
+               {% if (editable) %}{% else %}
+                    disabled
+               {% endif %}
+               value="{{ value | e }}" size="{{ size|default(10) }}" />
+    </label>
 {% endmacro %}

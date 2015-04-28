@@ -4,23 +4,29 @@
 
 {% import "../macros/form.twig" as forms %}
 
-<h3>Genral input <br/><small>input(name, value, type, size = 20)</small></h3>
-<p>{{ forms.input('username', "", "number", "20") }}</p>
+{#<h3>Genral input (input)</h3>#}
+{#<p>{{ forms.input('username', "", "number", "20", "label") }}</p>#}
 
-<h3>Text input <br/><small>text(name, value, size = 20)</small></h3>
-<p>{{ forms.text('text', "implicit", "20") }}</p>
+<h3>Text input (text)</h3>
+<p>{{ forms.text('text', "implicit", true, "label", "20") }}</p>
+<p>{{ forms.text('textf', "implicit", false, "label", "20") }}</p>
 
-<h3>Date input <br/><small>date(name, value)</small></h3>
-<p>{{ forms.date('date',  date ) }}</p>
+<h3>Date input (date)</h3>
+<p>{{ forms.date('date',  date, true, "label" ) }}</p>
+<p>{{ forms.date('datef',  date, false, "label" ) }}</p>
 
-<h3>Datetime input <br/><small>datetime(name, value)</small></h3>
-<p>{{ forms.datetime('datetime',  date ) }}</p>
+<h3>Datetime input (datetime)</h3>
+<p>{{ forms.datetime('datetime',  date , true, "label") }}</p>
+<p>{{ forms.datetime('datetimef',  date , false, "label") }}</p>
 
-<h3>Time input <br/><small>time(name, value)</small></h3>
-<p>{{ forms.time('time',  date ) }}</p>
+<h3>Time input (time)</h3>
+<p>{{ forms.time('time',  date, true, "label" ) }}</p>
+<p>{{ forms.time('timef',  date, false, "label" ) }}</p>
 
-<h3>Decimal <br/><small>decimal(name, value, size = 10)</small></h3>
-<p>{{ forms.decimal('decimal',  15.78 ) }}</p>
+<h3>Decimal (decimal)</h3>
+<p>{{ forms.decimal('decimal',  15.78, true, "label" ) }}</p>
+<p>{{ forms.decimal('decimalf',  15.78, false, "label" ) }}</p>
 
-<h3>Int input <br/><small>integer(name, value, size = 10)</small></h3>
-<p>{{ forms.integer('integer',  5 ) }}</p>
+<h3>Int input (integer)</h3>
+<p>{{ forms.integer('integer',  5 , true, "label") }}</p>
+<p>{{ forms.integer('integerf',  5 , false, "label") }}</p>
