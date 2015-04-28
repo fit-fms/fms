@@ -32,6 +32,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 /**
  *
  * @author michal
@@ -46,6 +48,8 @@ public class FormController {
     @Autowired
     private ArchetypeService archService;
     
+    private Form form;
+    private String name;
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.GET)
     public String displayForm(@PathVariable("formUrl") String formUrl, ModelMap map){
@@ -56,37 +60,55 @@ public class FormController {
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
             return "index";           
         }
-        map.addAttribute("name", formUrl);
-        //map.addAttribute("archetype", arch);
-        //map.addAttribute("formObject", createForm(arch));//formObject by se mel shodovat s nazvem promenne v twigu
-        
-        //map.addAttribute("form", );
-        return "form";   
+        form = createForm(arch);
+        map.addAttribute("form", form);
+        return "showForm";   
     }
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.POST)
-    public String submitForm(@ModelAttribute("formObject") Form form, ModelMap map){
+    public String submitForm(@RequestBody String body, ModelMap map){
+        int i = -1, j = -1;
+        String s = "";
+        for(FilledField x : form.getFilledFields()){
+            s = x.getField().getName();
+            i = body.indexOf(s, i + 1);
+            j = body.indexOf('&', j + 1);
+            if( j == -1){
+                s = body.substring(i + s.length() + 1);
+                x.setData(s);
+                break;
+            }              
+            s = body.substring(i + s.length() + 1, j);
+            x.setData(s);
+        }
         try {
             formService.createForm(form);
         } catch (Exception ex) {
             System.out.println("chyba pri ukladani formulare");
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return "index";
+        return "showForm";
     }
     
     private Form createTest(){
         Form form = new DigitalForm();
         FilledField field = new FilledField();
-        field.setData("zkouska");
+        field.setData("zkouska1");
         Field field1 = new Field();
         FieldType type = new TextField();
-        
         field1.setType(type);
+        field1.setName("field1");
         field.setField(field1);
         form.addfilledfield(field);
         
+        field = new FilledField();
+        field1 = new Field();
+        type = new TextField();
+        field1.setType(type);
+        field1.setName("field2");
+        field.setData("zkouska2");
+        field.setField(field1);
+        form.addfilledfield(field);
         return form;
     }
     
@@ -102,4 +124,4 @@ public class FormController {
         return form;
     }
     
-}
+} 
