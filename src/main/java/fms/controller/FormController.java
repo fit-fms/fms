@@ -6,7 +6,11 @@
 package fms.controller;
 
 import fms.business.archetype.Archetype;
+import fms.business.archetype.Field;
+import fms.business.fieldtype.FieldType;
+import fms.business.fieldtype.TextField;
 import fms.business.form.DigitalForm;
+import fms.business.form.FilledField;
 import fms.business.form.Form;
 import fms.business.service.ArchetypeService;
 import fms.business.service.FormService;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,12 +56,12 @@ public class FormController {
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
             return "index";           
         }
-        map.addAttribute("archetype", arch);
-        map.addAttribute("formObject", new DigitalForm());//formObject by se mel shodovat s nazvem promenne v twigu
-        return "showForm";
+        map.addAttribute("name", formUrl);
+        //map.addAttribute("archetype", arch);
+        //map.addAttribute("formObject", createForm(arch));//formObject by se mel shodovat s nazvem promenne v twigu
         
-        
-        
+        //map.addAttribute("form", );
+        return "form";   
     }
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.POST)
@@ -67,7 +72,34 @@ public class FormController {
             System.out.println("chyba pri ukladani formulare");
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return "index";
+    }
+    
+    private Form createTest(){
+        Form form = new DigitalForm();
+        FilledField field = new FilledField();
+        field.setData("zkouska");
+        Field field1 = new Field();
+        FieldType type = new TextField();
+        
+        field1.setType(type);
+        field.setField(field1);
+        form.addfilledfield(field);
+        
+        return form;
+    }
+    
+    private Form createForm (Archetype arch){
+        Form form = new DigitalForm();
+        if(arch == null)
+            return new DigitalForm();
+        for(Map.Entry<String, Field> x : arch.getRequiredFields().entrySet()){
+        FilledField field = new FilledField();
+        field.setField(x.getValue());
+        form.addfilledfield(field);
+        }
+        return form;
     }
     
 }
