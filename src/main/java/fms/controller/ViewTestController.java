@@ -22,14 +22,7 @@ public class ViewTestController {
     @RequestMapping(value = "/test/field", method = RequestMethod.GET)
     public String ViewTest(ModelMap map){
 
-        String string = "08/16/2011";
-        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = format.parse(string);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+       Date date = new Date();
         map.addAttribute("date", date  );
 
         DateField df = new DateField();
