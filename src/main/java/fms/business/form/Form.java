@@ -21,7 +21,7 @@ abstract public class Form {
      * Identifikacn� c�slo
      */
     @JcrProperty
-    private int id;
+    private long id;
 
     /**
      * Datum kdy byl formul�r vyplnen
@@ -116,7 +116,7 @@ abstract public class Form {
     /**
      * Identifikacn� c�slo
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -126,6 +126,15 @@ abstract public class Form {
      * @param id
      */
     public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * Identifikacn� c�slo
+     *
+     * @param id
+     */
+    public void setId(long id) {
         this.id = id;
     }
 

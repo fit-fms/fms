@@ -38,7 +38,7 @@ public class PersonTest {
         assertEquals(person, formD.getPerson());
 
 
-        Map<Integer, PaperForm>  forms = person.getPaperForms();
+        Map<Long, PaperForm>  forms = person.getPaperForms();
         assertEquals(numOfForms, forms.size());
 
         //Remove and add
@@ -81,10 +81,10 @@ public class PersonTest {
         personB.addPaperForm(form);
         assertEquals(personB, form.getPerson());
 
-        Map<Integer, PaperForm> formsA = personA.getPaperForms();
+        Map<Long, PaperForm> formsA = personA.getPaperForms();
         assertEquals(0, formsA.size());
 
-        Map<Integer, PaperForm> formsB = personB.getPaperForms();
+        Map<Long, PaperForm> formsB = personB.getPaperForms();
         assertEquals(1, formsB.size());
     }
 }

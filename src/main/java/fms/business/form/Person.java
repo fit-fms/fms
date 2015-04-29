@@ -51,10 +51,10 @@ public class Person {
      * Formul�re kter� osoba uchov�v�.
      */
 //    @JcrReference
-    private Map<Integer, PaperForm> forms;
+    private Map<Long, PaperForm> forms;
 
     public Person() {
-        forms = new HashMap<Integer, PaperForm>();
+        forms = new HashMap<Long, PaperForm>();
     }
 
     public int getId() {
@@ -68,7 +68,7 @@ public class Person {
     /**
      * Z�sk� v�echny pap�rov� formul�re kter� osoba uchov�v�.
      */
-    public Map<Integer, PaperForm> getPaperForms() {
+    public Map<Long, PaperForm> getPaperForms() {
         return forms;
     }
 

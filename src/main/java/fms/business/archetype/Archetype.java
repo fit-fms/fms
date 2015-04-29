@@ -211,4 +211,20 @@ abstract public class Archetype {
         createFields();
         return optionalFields;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Archetype)) return false;
+
+        Archetype archetype = (Archetype) o;
+
+        return name.equals(archetype.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

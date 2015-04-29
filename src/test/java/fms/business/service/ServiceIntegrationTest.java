@@ -42,7 +42,6 @@ public class ServiceIntegrationTest extends ServiceTest {
     private final String validatorName = "Email validator";
     private final String invalidEmail = "This is not a @ valid email!";
     private final String validEmail = "hagrid@fit.cvut.cz";
-    private final int formId = 55;
 
     @Test
     public void createFieldType() throws Exception{
@@ -126,7 +125,6 @@ public class ServiceIntegrationTest extends ServiceTest {
         assertEquals(1, fields.size());
 
         Form form = new PaperForm();
-        form.setId(formId);
         form.setArchetype(archetype);
 
         FilledField filledField = new FilledField();
@@ -135,10 +133,10 @@ public class ServiceIntegrationTest extends ServiceTest {
         form.addfilledfield(filledField);
 
         formService.createForm(form);
-        retrieveForm();
+        retrieveForm(form.getId());
     }
 
-    public void retrieveForm() throws Exception {
+    public void retrieveForm(long formId) throws Exception {
         Archetype archetype = archetypeService.findByName(archetypeName);
         assertNotNull(archetype);
 
@@ -150,11 +148,11 @@ public class ServiceIntegrationTest extends ServiceTest {
         assertEquals(1, filledFields.size());
         assertEquals(invalidEmail, filledFields.get(0).getData());
 
-        validateForm(false);
-        fixForm();
+        validateForm(formId, false);
+        fixForm(formId);
     }
 
-    public void validateForm(boolean expected) throws Exception {
+    public void validateForm(long formId, boolean expected) throws Exception {
         Archetype archetype = archetypeService.findByName(archetypeName);
         assertNotNull(archetype);
 
@@ -167,7 +165,7 @@ public class ServiceIntegrationTest extends ServiceTest {
         assertEquals(expected, form.validate(null));
     }
 
-    public void fixForm() throws Exception {
+    public void fixForm(long formId) throws Exception {
         Archetype archetype = archetypeService.findByName(archetypeName);
         assertNotNull(archetype);
 
@@ -180,7 +178,7 @@ public class ServiceIntegrationTest extends ServiceTest {
         filledField.setData(validEmail);
         formService.updateForm(form);
 
-        validateForm(true);
+        validateForm(formId, true);
     }
 
 }
