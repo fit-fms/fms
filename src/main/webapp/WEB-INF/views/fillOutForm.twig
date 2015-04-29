@@ -11,6 +11,7 @@ TEMPLATE EXPECTS
 
     <h1> {{ archetype.name }} </h1>
 
+    <form method="POST">
     <h2>Optional fields</h2>
     {% for field in archetype.optionalFields %}
         {{ forms.field(field, true) }}
@@ -20,5 +21,8 @@ TEMPLATE EXPECTS
     {% for field in archetype.requiredFields %}
         {{ forms.field(field, true) }}
     {% endfor %}
+
+        <input type="submit" value="Save">
+    </form>
 
 {% endblock %}

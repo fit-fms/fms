@@ -16,7 +16,9 @@ import fms.business.form.Form;
 import fms.business.service.ArchetypeService;
 import fms.business.service.FormService;
 import fms.presentation.view.FormParser;
-import java.util.ArrayList;
+
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -29,9 +31,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,7 +67,7 @@ public class FormController {
             return "errors";           
         }
         map.addAttribute("archetype", arch);
-        return "showForm";   
+        return "fillOutForm";
     }
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.POST)
@@ -90,6 +89,9 @@ public class FormController {
             map.addAttribute("errors", errors);
             return "errors";
         }
+
+        form.setFilledAt(new Date());
+
         try {
             formService.createForm(form);
         } catch (Exception ex) {

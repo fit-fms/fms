@@ -25,8 +25,11 @@ public class InitDB {
     protected Session session;
 
     @Autowired
-    public InitDB(Session session) {
+    public InitDB(Session session, FieldTypeService fieldTypeService, FieldService fieldService, ArchetypeService archetypeService) {
         this.session = session;
+        this.fieldTypeService = fieldTypeService;
+        this.fieldService = fieldService;
+        this.archetypeService = archetypeService;
     }
 
     public void init() throws Exception {
@@ -41,6 +44,7 @@ public class InitDB {
         
         Field field  = new Field();
         field.setName("email");
+        field.setLabel("Your email:");
         field.setType(fieldType);
         fieldService.createField(field);
         

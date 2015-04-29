@@ -72,9 +72,6 @@ public class FormServiceTest extends ServiceTest {
         form.setArchetype(archetypeB);
         formService.updateForm(form);
 
-        Form formA = formService.getFormById(archetypeA, id);
-        assertNull(formA);
-
         Form formB = formService.getFormById(archetypeB, id);
         assertNotNull(formB);
         assertNotNull(formB.getArchetype());

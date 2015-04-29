@@ -60,13 +60,18 @@ public class FormParser {
     public Form fillOutForm(Map<String, String> map, Archetype archetype, List<String> errors) {
         Form form = new DigitalForm();
         form.setArchetype(archetype);
-        
+
+        boolean error = false;
         for (Map.Entry<String, Field> item : archetype.getRequiredFields().entrySet()) {
             String fieldname = item.getKey();
             Field field = item.getValue();
 
             //todo get from request
             String filled = map.get(field.getName());
+            if (filled == null) {
+                errors.add("Required field not found: " + field.getName());
+                error = true;
+            }
 
             FilledField filledField = new FilledField();
             filledField.setData(filled);
@@ -88,7 +93,7 @@ public class FormParser {
             form.addfilledfield(filledField);
 
         }
-        if (form.validate(errors) == false) {
+        if (form.validate(errors) == false || error) {
             return null;
         }
 

@@ -66,7 +66,7 @@ public class DataController {
             return "errors";
         }
         map.addAttribute("form", form);
-        return "editForm";
+        return "showForm";
     }
     
     

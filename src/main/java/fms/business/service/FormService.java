@@ -78,7 +78,7 @@ public class FormService {
         Node formNode = getFormNodeById(archetype, id);
 
         if (formNode == null) {
-            return null;
+            throw new Exception("Form not found"); //@FIXME custom exceptions
         }
 
         return jcrom.fromNode(Form.class, formNode);
