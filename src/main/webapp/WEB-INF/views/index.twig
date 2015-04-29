@@ -1,14 +1,12 @@
-<html>
-  <head>
-    <title>index</title>
-  </head>
-  <body>
+{#
+TEMPLATE EXPECTS
+#}
 
+{% extends "base.twig" %}
 
-    {% if name %}
-    <h1>Hello {{ name }}!</h1>
-    {% else %}
-    <h1>index edited edited!</h1>
-    {% endif %}
-  </body>
-</html>
+{% block title %}Index{% endblock %}
+{% block content %}
+
+  <p>Welcome to FMS</p>
+
+{% endblock %}

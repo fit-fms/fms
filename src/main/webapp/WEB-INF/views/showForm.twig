@@ -1,9 +1,20 @@
+{#
+TEMPLATE EXPECTS
+"form" = Form
+#}
+
+{% extends "base.twig" %}
 {% import "macros/form.twig" as forms %}
 
-<h1>{{ form.archetype.name }} {{ form.id }}</h1>
+{% block title %}Zobrazit formular {{ form.archetype.name }} {{ form.id }}{% endblock %}
+{% block content %}
 
-{{ forms.formMeta(form) }}
+    <h1>{{ form.archetype.name }} {{ form.id }}</h1>
 
-{% for filledField in form.filledFields %}
-    {{ forms.filledField(filledField, false) }}
-{% endfor %}
+    {{ forms.formMeta(form) }}
+
+    {% for filledField in form.filledFields %}
+        {{ forms.filledField(filledField, false) }}
+    {% endfor %}
+
+{% endblock %}

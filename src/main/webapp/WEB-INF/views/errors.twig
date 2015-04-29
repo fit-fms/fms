@@ -3,10 +3,16 @@ TEMPLATE EXPECTS
 "errors" = List<String> //List of string errors
 #}
 
-<h1>Following errors occured:</h1>
+{% extends "base.twig" %}
 
-<ul>
-{% for e in errors %}
-    <li>{{ e }}</li>
-{% endfor %}
-</ul>
+{% block title %}Index{% endblock %}
+{% block content %}
+
+    <h1>Following errors occured:</h1>
+
+    <ul>
+        {% for e in errors %}
+            <li>{{ e }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

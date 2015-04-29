@@ -1,38 +1,50 @@
-<h1>Seznam archetypu</h1>
+{#
+TEMPLATE EXPECTS
+"archetypes" = List<Archetypes> //List of Archetypes
+#}
 
-<form method="post" action="">
-<table>
-    <tr>
-        <th>Jmeno archetypu</th>
-        <th>Verejny popis</th>
-        <th>Privatni popis</th>
-        <th>Verejny</th>
-        <th>Aktivni</th>
-    </tr>
+{% extends "base.twig" %}
 
-{% for arch in archetypes %}
-    <tr>
-        <td>{{ arch.name }}</td>
-        <td>{{ arch.publicDescription }}</td>
-        <td>{{ arch.privateDescription }}</td>
-        <td>
-            <label>
-                <input type="radio" name="{{ arch.name }}['public']" value="1" /> verejny
-            </label>
-            <label>
-                <input type="radio" name="{{ arch.name }}['public']" value="0" /> privatni
-            </label>
-        </td>
-        <td>
-            <label>
-                <input type="radio" name="{{ arch.name }}['active']" value="1" /> aktivni
-            </label>
-            <label>
-                <input type="radio" name="{{ arch.name }}['active']" value="0" /> neaktivni
-            </label>
-        </td>
-    </tr>
-{% endfor %}
-</table>
-    <input type="submit" value="odeslat" />
-</form>
+{% block title %}Seznam Archetypu{% endblock %}
+{% block content %}
+
+    <h1>Seznam archetypu</h1>
+
+    <form method="post" action="">
+        <table>
+            <tr>
+                <th>Jmeno archetypu</th>
+                <th>Verejny popis</th>
+                <th>Privatni popis</th>
+                <th>Verejny</th>
+                <th>Aktivni</th>
+            </tr>
+
+            {% for arch in archetypes %}
+                <tr>
+                    <td>{{ arch.name }}</td>
+                    <td>{{ arch.publicDescription }}</td>
+                    <td>{{ arch.privateDescription }}</td>
+                    <td>
+                        <label>
+                            <input type="radio" name="{{ arch.name }}['public']" value="1" /> verejny
+                        </label>
+                        <label>
+                            <input type="radio" name="{{ arch.name }}['public']" value="0" /> privatni
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="{{ arch.name }}['active']" value="1" /> aktivni
+                        </label>
+                        <label>
+                            <input type="radio" name="{{ arch.name }}['active']" value="0" /> neaktivni
+                        </label>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="odeslat" />
+    </form>
+
+{% endblock %}
