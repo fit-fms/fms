@@ -88,27 +88,49 @@
     </table>
 {% endmacro %}
 
+
 {% macro fieldField(filledField, editable) %}
     {% set type = filledField.field.fieldType |fieldtype %}
     <div>
+        >{{ type }}<, >{{ field.name }}<, >{{ field.label }}<
     {% if type == "date" %}
         {{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "datetime" %}
+    {% elseif type == "datetime" %}
         {{ forms.datetime(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "time" %}
+    {% elseif type == "time" %}
         {{ forms.time(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "decimal" %}
+    {% elseif type == "decimal" %}
         {{ forms.decimal(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "integer" %}
+    {% elseif type == "integer" %}
         {{ forms.integer(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
-    {% endif %}
-    {% if type == "text" %}
+    {% elseif type == "text" %}
         {{ forms.text(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+    {% else %}
+        <b>WRONG TYPE >{{ type }}< </b>
     {% endif %}
     <p>{{ filledField.field.publicDescription }}</p>
+    </div>
+{% endmacro %}
+
+{% macro field(field, editable) %}
+    {% set type = field |fieldtype %}
+    <div>
+        >{{ type }}<, >{{ field.name }}<, >{{ field.label }}<
+        {% if type == "date" %}
+            {{ forms.date(field.name, "", editable, field.label ) }}
+        {% elseif type == "datetime" %}
+            {{ forms.datetime(field.name, "", editable, field.label ) }}
+        {% elseif type == "time" %}
+            {{ forms.time(field.name, "", editable, field.label ) }}
+        {% elseif type == "decimal" %}
+            {{ forms.decimal(field.name, "", editable, field.label ) }}
+        {% elseif type == "integer" %}
+            {{ forms.integer(field.name, "", editable, field.label ) }}
+        {% elseif type == "text" %}
+            {{ forms.text(field.name, "", editable, field.label ) }}
+        {% else %}
+            <b>WRONG TYPE >{{ type }}< </b>
+        {% endif %}
+        <p>{{ field.publicDescription }}</p>
     </div>
 {% endmacro %}
