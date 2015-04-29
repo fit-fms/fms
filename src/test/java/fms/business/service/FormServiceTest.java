@@ -32,18 +32,18 @@ public class FormServiceTest extends ServiceTest {
     private ArchetypeService archetypeService;
 
     @Test
-    public void testCreateField() throws Exception {
-        int id = 5;
+    public void testCreateForm() throws Exception {
+        long id;
 
         Archetype archetype = new UnpublisdedArchertype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
         Form form = new PaperForm();
-        form.setId(id);
         form.setArchetype(archetype);
 
         formService.createForm(form);
+        id = form.getId();
 
         Form formA = formService.getFormById(archetype, id);
 
@@ -53,65 +53,68 @@ public class FormServiceTest extends ServiceTest {
     }
 
     @Test
-    public void testUpdateField() throws Exception {
-        int id = 5;
-        int newId = id*3;
+    public void testUpdateForm() throws Exception {
+        long id;
 
-        Archetype archetype = new UnpublisdedArchertype();
-        archetype.setName("arname");
-        archetypeService.createArchetype(archetype);
+        Archetype archetypeA = new UnpublisdedArchertype();
+        archetypeA.setName("arname");
+        archetypeService.createArchetype(archetypeA);
+
+        Archetype archetypeB = new UnpublisdedArchertype();
+        archetypeB.setName("Arch B");
+        archetypeService.createArchetype(archetypeB);
 
         Form form = new PaperForm();
-        form.setId(id);
-        form.setArchetype(archetype);
-
+        form.setArchetype(archetypeA);
         formService.createForm(form);
-        form.setId(newId);
+        id = form.getId();
+
+        form.setArchetype(archetypeB);
         formService.updateForm(form);
 
-        Form fieldA = formService.getFormById(archetype, newId);
-        assertNotNull(fieldA);
-        assertEquals(newId, fieldA.getId());
-
-        Form formNo = formService.getFormById(archetype, id);
-        assertNull(formNo);
+        Form formB = formService.getFormById(archetypeB, id);
+        assertNotNull(formB);
+        assertNotNull(formB.getArchetype());
+        assertEquals(archetypeB, formB.getArchetype());
     }
 
     @Test
-    public void testGetFields() throws Exception {
+    public void testGetForms() throws Exception {
 
         Archetype archetype = new UnpublisdedArchertype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
         int numOfForms = 3;
-        int idA = 3;
-        int idB = idA*5;
-        int idC = idB*2;
+        long idA;
+        long idB;
+        long idC;
 
         Form formA = new PaperForm();
-        formA.setId(idA);
         formA.setArchetype(archetype);
 
         Form formB = new PaperForm();
-        formB.setId(idB);
         formB.setArchetype(archetype);
 
         Form formC = new PaperForm();
-        formC.setId(idC);
         formC.setArchetype(archetype);
 
         formService.createForm(formA);
+        idA = formA.getId();
+
         formService.createForm(formB);
+        idB = formB.getId();
+
         formService.createForm(formC);
+        idC = formC.getId();
 
 
-        Map<Integer, Form> forms = formService.getAllForms(archetype);
+        Map<Long, Form> forms = formService.getAllForms(archetype);
         assertEquals(numOfForms, forms.size());
 
 
         formService.removeForm(formB);
-        Map<Integer, Form> formsB = formService.getAllForms(archetype);
+        Map<Long, Form> formsB = formService.getAllForms(archetype);
         assertEquals(--numOfForms, formsB.size());
     }
 
@@ -121,16 +124,16 @@ public class FormServiceTest extends ServiceTest {
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
-        int id = 11;
+        long id;
         String browser = "Google Chrome Pelikan";
         String ip = "255.255.255.-1";
 
         DigitalForm form = new DigitalForm();
-        form.setId(id);
         form.setArchetype(archetype);
         form.setIp(ip);
         form.setBrowser(browser);
         formService.createForm(form);
+        id = form.getId();
 
         Form digitalForm = formService.getFormById(archetype, id);
         assertNotNull(digitalForm);
@@ -148,14 +151,14 @@ public class FormServiceTest extends ServiceTest {
         Date filledAt = new Date();
         Date signedAd = new Date();
 
-        int id = 369;
+        long id;
         PaperForm form = new PaperForm();
-        form.setId(id);
         form.setArchetype(archetype);
         form.setFilledAt(filledAt);
         form.setSignedAt(signedAd);
 //        form.setPerson(person);
         formService.createForm(form);
+        id = form.getId();
 
         Form formA = formService.getFormById(archetype, id);
         assertNotNull(formA);

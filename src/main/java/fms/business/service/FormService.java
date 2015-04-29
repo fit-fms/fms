@@ -40,9 +40,9 @@ public class FormService {
      *
      * @param form
      */
-    public void createForm(Form form) throws Exception {
+    public synchronized void createForm(Form form) throws Exception {
         Node archetypeNode = session.getNode(jcrom.getPath(form.getArchetype()));
-        if (archetypeNode == null) return;
+        if (archetypeNode == null) throw new Exception("Form without archetype");
 
         Node formsNode;
         if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
@@ -50,6 +50,9 @@ public class FormService {
         } else {
             formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
         }
+
+        long id = getAllFormNodes(form.getArchetype()).getSize();
+        form.setId(id);
 
         jcrom.addNode(formsNode, form);
         session.save();
@@ -71,17 +74,17 @@ public class FormService {
      *
      * @param id
      */
-    public Form getFormById(Archetype archetype, int id) throws Exception {
+    public Form getFormById(Archetype archetype, long id) throws Exception {
         Node formNode = getFormNodeById(archetype, id);
 
         if (formNode == null) {
-            return null;
+            throw new Exception("Form not found"); //@FIXME custom exceptions
         }
 
         return jcrom.fromNode(Form.class, formNode);
     }
 
-    public Node getFormNodeById(Archetype archetype, int id) throws Exception {
+    public Node getFormNodeById(Archetype archetype, long id) throws Exception {
         Node archetypeNode = session.getNode(jcrom.getPath(archetype));
 
         Node formsNode;
@@ -104,12 +107,7 @@ public class FormService {
         return formNode;
     }
 
-    /**
-     * Z�sk� v�echny formul�re z datab�ze.
-     */
-    public Map<Integer, Form> getAllForms(Archetype archetype) throws Exception {
-        Map<Integer, Form> allForms = new HashMap<Integer, Form>();
-
+    protected NodeIterator getAllFormNodes(Archetype archetype) throws Exception {
         Node archetypeNode = session.getNode(jcrom.getPath(archetype));
         Node formsNode;
         if (!archetypeNode.hasNode(ARCHETYPE_FORMS)) {
@@ -118,7 +116,16 @@ public class FormService {
             formsNode = archetypeNode.getNode(ARCHETYPE_FORMS);
         }
 
-        NodeIterator it = formsNode.getNodes();
+        return formsNode.getNodes();
+    }
+
+    /**
+     * Z�sk� v�echny formul�re z datab�ze.
+     */
+    public Map<Long, Form> getAllForms(Archetype archetype) throws Exception {
+        Map<Long, Form> allForms = new HashMap<Long, Form>();
+
+        NodeIterator it = getAllFormNodes(archetype);
         while (it.hasNext()) {
             Form f = jcrom.fromNode(Form.class, it.nextNode());
             allForms.put(f.getId(), f);
