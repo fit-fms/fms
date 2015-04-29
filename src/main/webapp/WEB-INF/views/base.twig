@@ -4,12 +4,12 @@
 <html>
 <head>
     {% block head %}
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="{{ asset 'bootstrap/css/bootstrap.min.css' }}" />
         <title>{% block title %}{% endblock %} - FMS</title>
     {% endblock %}
 </head>
 <body>
-<h1>BASE heading</h1>
+<h1>BASE heading</h1><button class="btn btn-primary">bootstraptest</button>
 <div id="content">{% block content %}{% endblock %}</div>
 <div id="footer">
     {% block footer %}

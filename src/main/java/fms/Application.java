@@ -3,6 +3,8 @@ package fms;
 import fms.presentation.view.TwigCustomFunctions;
 import org.jtwig.Environment;
 import org.jtwig.mvc.JtwigViewResolver;
+import org.jtwig.services.api.assets.AssetResolver;
+import org.jtwig.services.impl.assets.BaseAssetResolver;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -61,7 +63,12 @@ public class Application {
             return jtwigViewResolver;
         }
 
-
+        @Bean
+        public AssetResolver assetResolver () {
+            BaseAssetResolver assetResolver = new BaseAssetResolver();
+            assetResolver.setPrefix("/WEB-INF/public/");
+            return assetResolver;
+        }
 
     }
 
