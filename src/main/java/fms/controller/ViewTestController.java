@@ -1,6 +1,10 @@
 package fms.controller;
 
+import fms.business.archetype.Archetype;
+import fms.business.archetype.Field;
+import fms.business.archetype.PublishedArchetype;
 import fms.business.fieldtype.DateField;
+import fms.business.fieldtype.FieldType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +28,18 @@ public class ViewTestController {
     public String FieldTypeTest(ModelMap map){
 
        Date date = new Date();
-        map.addAttribute("date", date  );
+        map.addAttribute("date", date);
 
-        DateField df = new DateField();
-        map.addAttribute("field", df  );
+        FieldType df = new DateField();
+        Field f = new Field();
+        df.setName("DATEFIELDNAME");
+        df.setDescription("DF descr");
+        f.setType(df);
+        f.setLabel("fieldlabel");
+        f.setName("fieldname");
+        f.setPrivateDescription("prvdesc");
+        f.setPublicDescription("pubdesc");
+        map.addAttribute("field", f  );
 
 
         return "test/field";
@@ -44,6 +56,33 @@ public class ViewTestController {
         map.addAttribute("errors", errors  );
 
         return "errors";
+    }
+
+    @RequestMapping(value = "/test/fillOut", method = RequestMethod.GET)
+    public String fillOutTest(ModelMap map){
+
+
+        Archetype arch = new PublishedArchetype();
+        FieldType ft = new DateField();
+        ft.setName("FieldTypeName");
+
+        Field rf = new Field();
+        rf.setType(ft);
+        rf.setName("rf");
+        rf.setLabel("rflab");
+
+        Field of = new Field();
+        of.setType(ft);
+        of.setName("of");
+        of.setLabel("ofl");
+
+        arch.addRequiredField(rf);
+        arch.addOptionalField(of);
+        arch.setName("archName");
+
+        map.addAttribute("archetype", arch );
+
+        return "fillOutForm";
     }
 
 }

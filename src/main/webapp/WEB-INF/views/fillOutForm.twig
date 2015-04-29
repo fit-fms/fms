@@ -1,0 +1,24 @@
+{#
+TEMPLATE EXPECTS
+"archetype" = Archetype //archetype of the form u want to fill
+#}
+
+{% extends "base.twig" %}
+{#{% import "macros/form.twig" as forms %}#}
+
+{% block title %}Vyplni formular {% endblock %}
+{% block content %}
+
+    <h1> {{ archetype.name }} </h1>
+
+    <h2>Optional fields</h2>
+    {% for field in archetype.optionalFields %}
+        {{ forms.field(field, true) }}
+    {% endfor %}
+
+    <h2>Required fields</h2>
+    {% for field in archetype.requiredFields %}
+        {{ forms.field(field, true) }}
+    {% endfor %}
+
+{% endblock %}

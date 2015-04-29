@@ -1,0 +1,19 @@
+{% import "macros/form.twig" as forms %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link rel="stylesheet" href="style.css" />
+        <title>{% block title %}{% endblock %} - FMS</title>
+    {% endblock %}
+</head>
+<body>
+<h1>BASE heading</h1>
+<div id="content">{% block content %}{% endblock %}</div>
+<div id="footer">
+    {% block footer %}
+    {% endblock %}
+</div>
+</body>
+</html>

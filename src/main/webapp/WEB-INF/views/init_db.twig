@@ -1,12 +1,13 @@
-<html>
-<head>
-    <title>index</title>
-</head>
-<body>
+{#
+TEMPLATE EXPECTS
+"status" = String
+#}
 
-<p>
-    Inicializovat databazi se {{ status }}
-</p>
+{% extends "base.twig" %}
 
-</body>
-</html>
+{% block title %}Init DB{% endblock %}
+{% block content %}
+
+    <p>Inicializovat databazi se {{ status }}</p>
+
+{% endblock %}

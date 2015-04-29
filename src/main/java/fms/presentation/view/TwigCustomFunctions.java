@@ -1,6 +1,8 @@
 package fms.presentation.view;
 
+import fms.business.archetype.Field;
 import fms.business.fieldtype.*;
+import fms.business.form.FilledField;
 import org.jtwig.functions.annotations.JtwigFunction;
 import org.jtwig.functions.annotations.Parameter;
 
@@ -10,6 +12,13 @@ import org.jtwig.functions.annotations.Parameter;
 public class TwigCustomFunctions {
 
     @JtwigFunction(name = "fieldtype")
+    public String format(@Parameter Object field) throws Exception {
+        if( field instanceof FilledField)
+            return format(((FilledField) field).getField().getType());
+        if( field instanceof Field)
+            return format(((Field) field).getType());
+        throw new Exception("jTwig function - unnown type : " + field.getClass().getSimpleName() );
+    }
     public String format(@Parameter FieldType field) {
         if( field instanceof DateField)
             return "date";
