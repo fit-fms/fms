@@ -14,6 +14,8 @@ import fms.business.form.FilledField;
 import fms.business.form.Form;
 import fms.business.service.ArchetypeService;
 import fms.business.service.FormService;
+import fms.presentation.view.FormParser;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,8 +49,11 @@ public class FormController {
     private FormService formService;
     @Autowired
     private ArchetypeService archService;
+    @Autowired
+    private FormParser parser;
     
     private Form form;
+    
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.GET)
     public String displayForm(@PathVariable("formUrl") String formUrl, ModelMap map){
@@ -64,26 +70,26 @@ public class FormController {
     }
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.POST)
-    public String submitForm(@RequestBody String body, ModelMap map){
-        int i = -1, j = -1;
-        String s = "";
-        for(FilledField x : form.getFilledFields()){
-            s = x.getField().getName();
-            i = body.indexOf(s, i + 1);
-            j = body.indexOf('&', j + 1);
-            if( j == -1){
-                s = body.substring(i + s.length() + 1);
-                x.setData(s);
-                break;
-            }              
-            s = body.substring(i + s.length() + 1, j);
-            x.setData(s);
+    public String submitForm(@RequestParam Map<String, String> params, @PathVariable("formUrl") String formUrl, ModelMap map){
+        Archetype arch;
+        
+        try {
+            arch = archService.findByName(formUrl);
+        } catch (Exception ex) {            
+            Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+            return "showForm";
+        }
+        List<String> errors = new ArrayList();
+        Form form = parser.fillOutForm(params, arch, errors);
+        if(form == null){
+            Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, params);
+            return "showForm";
         }
         try {
             formService.createForm(form);
         } catch (Exception ex) {
-            System.out.println("chyba pri ukladani formulare");
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+            return "showForm";
         }
         return "showForm";
     }

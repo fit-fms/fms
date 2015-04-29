@@ -55,7 +55,6 @@ public class DataController {
     }
     
     @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.POST)
-    //public String submitForm(@ModelAttribute(value = "form") DigitalForm form, ModelMap map){
     public String submitForm(@ModelAttribute(value = "field1") DigitalForm form, ModelMap map){
         try {
             formService.updateForm(form);

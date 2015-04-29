@@ -11,24 +11,21 @@ import org.springframework.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jaroslav molík
  * @version 1.0
  * @created 23-4-2015 21:04:54
  */
-public class GWTForm {
 
-
-
-    public void finalize() throws Throwable {
-
-    }
+@Component
+public class FormParser {
 
     /**
      * Konstuktor
      */
-    public GWTForm(){
+    public FormParser() {
 
     }
 
@@ -39,7 +36,7 @@ public class GWTForm {
      * @param form
      * @param archetype
      */
-    public Form approveForm(HttpRequest request, Form form, Archetype archetype){
+    public Form approveForm(Map<String, String> mapt, Form form, Archetype archetype, List<String> errors) {
         return null;
     }
 
@@ -50,7 +47,7 @@ public class GWTForm {
      * @param form
      * @param archetype
      */
-    public Form editForm(HttpRequest request, Form form, Archetype archetype){
+    public Form editForm(Map<String, String> map, Form form, Archetype archetype, List<String> errors) {
         return null;
     }
 
@@ -60,51 +57,41 @@ public class GWTForm {
      * @param request
      * @param archetype
      */
-    public Form fillOutForm(HttpRequest request, Archetype archetype){
+    public Form fillOutForm(Map<String, String> map, Archetype archetype, List<String> errors) {
         Form form = new DigitalForm();
-
-        for( Map.Entry<String, Field> item : archetype.getRequiredFields().entrySet() ) {
+        form.setArchetype(archetype);
+        
+        for (Map.Entry<String, Field> item : archetype.getRequiredFields().entrySet()) {
             String fieldname = item.getKey();
             Field field = item.getValue();
 
             //todo get from request
-            String filled = "";
+            String filled = map.get(field.getName());
 
-            if( false ){ //todo if filled is set
-                FilledField filledField = new FilledField();
-                filledField.setData(filled);
-                filledField.setField(field);
-                form.addfilledfield(filledField);
-            }
+            FilledField filledField = new FilledField();
+            filledField.setData(filled);
+            filledField.setField(field);
+            form.addfilledfield(filledField);
+
         }
 
-        for( Map.Entry<String, Field> item : archetype.getOptionalFields().entrySet() ) {
+        for (Map.Entry<String, Field> item : archetype.getOptionalFields().entrySet()) {
             String fieldname = item.getKey();
             Field field = item.getValue();
 
             //todo get from request
-            String filled = "";
+            String filled = map.get(field.getName());
 
-            if( false ){ //todo if filled is set
-                FilledField filledField = new FilledField();
-                filledField.setData(filled);
-                filledField.setField(field);
-                form.addfilledfield(filledField);
-            }
+            FilledField filledField = new FilledField();
+            filledField.setData(filled);
+            filledField.setField(field);
+            form.addfilledfield(filledField);
+
         }
-        List<String> err = new ArrayList<String>();
-        if( form.validate(err) == false )
+        if (form.validate(errors) == false) {
             return null;
+        }
 
         return form;
     }
-//
-//    /**
-//     *
-//     * @param form
-//     */
-//    public Response renderForm(Form form){
-//        return null;
-//    }
-
 }
