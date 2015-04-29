@@ -7,6 +7,7 @@ package fms.controller;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
+import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.fieldtype.FieldType;
 import fms.business.fieldtype.TextField;
 import fms.business.form.DigitalForm;
@@ -52,80 +53,56 @@ public class FormController {
     @Autowired
     private FormParser parser;
     
-    private Form form;
-    
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.GET)
-    public String displayForm(@PathVariable("formUrl") String formUrl, ModelMap map){
+    public String displayForm(@PathVariable("formUrl") String formUrl, ModelMap map){//@TODO prepsat nazvy
         Archetype arch;
+        
         try {
             arch = archService.findByName(formUrl);
         } catch (Exception ex) {
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
-            return "index";           
+            List<String> errors = new ArrayList();
+            errors.add("archetyp se nenasel");
+            map.addAttribute("errors", errors);
+            return "errors";           
         }
-        form = createForm(arch);
-        map.addAttribute("form", form);
+        map.addAttribute("archetype", arch);
         return "showForm";   
     }
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.POST)
     public String submitForm(@RequestParam Map<String, String> params, @PathVariable("formUrl") String formUrl, ModelMap map){
         Archetype arch;
-        
+        List<String> errors = new ArrayList();
         try {
             arch = archService.findByName(formUrl);
         } catch (Exception ex) {            
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
-            return "showForm";
+            errors.add("archetyp se nenasel");
+            map.addAttribute("errors", errors);
+            return "errors";
         }
-        List<String> errors = new ArrayList();
+        
         Form form = parser.fillOutForm(params, arch, errors);
         if(form == null){
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, params);
-            return "showForm";
+            map.addAttribute("errors", errors);
+            return "errors";
         }
         try {
             formService.createForm(form);
         } catch (Exception ex) {
             Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
-            return "showForm";
+            errors.add("formular se nepodarilo odeslat");
+            map.addAttribute("errors", errors);
+            return "errors";
+            
         }
+        
+        map.addAttribute("form", form);
         return "showForm";
     }
     
-    private Form createTest(){
-        Form form = new DigitalForm();
-        FilledField field = new FilledField();
-        field.setData("zkouska1");
-        Field field1 = new Field();
-        FieldType type = new TextField();
-        field1.setType(type);
-        field1.setName("field1");
-        field.setField(field1);
-        form.addfilledfield(field);
-        
-        field = new FilledField();
-        field1 = new Field();
-        type = new TextField();
-        field1.setType(type);
-        field1.setName("field2");
-        field.setData("zkouska2");
-        field.setField(field1);
-        form.addfilledfield(field);
-        return form;
-    }
-    
-    private Form createForm (Archetype arch){
-        Form form = new DigitalForm();
-        if(arch == null)
-            return new DigitalForm();
-        for(Map.Entry<String, Field> x : arch.getRequiredFields().entrySet()){
-        FilledField field = new FilledField();
-        field.setField(x.getValue());
-        form.addfilledfield(field);
-        }
-        return form;
-    }
-    
+ 
 } 

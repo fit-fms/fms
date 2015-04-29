@@ -5,10 +5,12 @@
  */
 package fms.controller;
 
+import fms.business.archetype.Archetype;
 import fms.business.form.DigitalForm;
 import fms.business.form.Form;
 import fms.business.service.ArchetypeService;
 import fms.business.service.FormService;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,24 +46,28 @@ public class DataController {
     @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.GET)
     public String showData(@PathVariable("formArch") String arch, @PathVariable("formId") int formId, ModelMap map){
         Form form;
+        Archetype archetype;
+        List<String> errors = new ArrayList();
         try {
-            form = formService.getFormById(archService.findByName(arch), formId);
+            archetype = archService.findByName(arch);
         } catch (Exception ex) {
-            System.out.println("formular  neexistuje");
+            Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+            
+            errors.add("archetyp se nenasel");
+            map.addAttribute("errors", errors);
+            return "errors";           
+        }
+        try {
+            form = formService.getFormById(archetype, formId);
+        } catch (Exception ex) {
             Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
+            errors.add("formular se nenasel");  
+            map.addAttribute("errors", errors);
+            return "errors";
         }
         map.addAttribute("form", form);
         return "editForm";
     }
     
-    @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.POST)
-    public String submitForm(@ModelAttribute(value = "field1") DigitalForm form, ModelMap map){
-        try {
-            formService.updateForm(form);
-        } catch (Exception ex) {
-            Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "showForm";
-    }
+    
 }

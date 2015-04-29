@@ -1,5 +1,10 @@
 package fms.jcr;
 
+import fms.business.archetype.Archetype;
+import fms.business.archetype.Field;
+import fms.business.archetype.UnpublisdedArchertype;
+import fms.business.fieldtype.FieldType;
+import fms.business.fieldtype.TextField;
 import fms.business.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +16,11 @@ import javax.jcr.Session;
 
 @Component
 public class InitDB {
-
+    
+    private FieldTypeService fieldTypeService;
+    private FieldService fieldService;
+    private ArchetypeService archetypeService;
+    
 
     protected Session session;
 
@@ -26,6 +35,20 @@ public class InitDB {
     }
 
     public void initData() throws Exception {
+        FieldType fieldType = new TextField();
+        fieldType.setName("text");
+        fieldTypeService.createFieldType(fieldType);
+        
+        Field field  = new Field();
+        field.setName("email");
+        field.setType(fieldType);
+        fieldService.createField(field);
+        
+        Archetype archetype = new UnpublisdedArchertype();
+        archetype.setName("emailArchetype");
+        archetype.addOptionalField(field);
+        archetypeService.createArchetype(archetype);
+        
         session.save();
     }
 
