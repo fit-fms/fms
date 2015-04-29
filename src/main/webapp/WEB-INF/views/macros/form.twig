@@ -1,5 +1,3 @@
-{% import _self as forms %}
-
 {% macro input(name, value, type, size) %}
   <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
 {% endmacro %}
@@ -20,7 +18,12 @@
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
-               value="{{ value |date("yyyy-MM-dd") }}" />
+               {% if value != null %} {# |default("now") nefunguje#}
+                    value="{{ value |date("yyyy-MM-dd") }}"
+               {% else %}
+                    value=""
+               {% endif %}
+        />
     </label>
 {% endmacro %}
 
@@ -37,7 +40,12 @@
                 {% if (editable) %}{% else %}
                     disabled
                 {% endif %}
-               value="{{ value |date("yyyy-MM-dd HH:mm:ss") }}" />
+                {% if value != null %}
+                 value="{{ value |date("yyyy-MM-dd HH:mm:ss") }}"
+                {% else %}
+                  value=""
+                {% endif %}
+        />
     </label>
 {% endmacro %}
 
@@ -47,7 +55,12 @@
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
-               value="{{ value |date("HH:mm:ss") }}"  />
+               {% if value != null %}
+                value="{{ value |date("HH:mm:ss") }}"
+               {% else %}
+                value=""
+               {% endif %}
+        />
     </label>
 {% endmacro %}
 
@@ -90,9 +103,9 @@
 
 
 {% macro fieldField(filledField, editable) %}
+    {% import _self as forms %}
     {% set type = filledField.field.fieldType |fieldtype %}
     <div>
-        >{{ type }}<, >{{ field.name }}<, >{{ field.label }}<
     {% if type == "date" %}
         {{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "datetime" %}
@@ -113,21 +126,21 @@
 {% endmacro %}
 
 {% macro field(field, editable) %}
+    {% import _self as forms %}
     {% set type = field |fieldtype %}
     <div>
-        >{{ type }}<, >{{ field.name }}<, >{{ field.label }}<
         {% if type == "date" %}
-            {{ forms.date(field.name, "", editable, field.label ) }}
+            {{ forms.date(field.name, null, editable, field.label ) }}
         {% elseif type == "datetime" %}
-            {{ forms.datetime(field.name, "", editable, field.label ) }}
+            {{ forms.datetime(field.name, null, editable, field.label ) }}
         {% elseif type == "time" %}
-            {{ forms.time(field.name, "", editable, field.label ) }}
+            {{ forms.time(field.name, null, editable, field.label ) }}
         {% elseif type == "decimal" %}
-            {{ forms.decimal(field.name, "", editable, field.label ) }}
+            {{ forms.decimal(field.name, null, editable, field.label ) }}
         {% elseif type == "integer" %}
-            {{ forms.integer(field.name, "", editable, field.label ) }}
+            {{ forms.integer(field.name, null, editable, field.label ) }}
         {% elseif type == "text" %}
-            {{ forms.text(field.name, "", editable, field.label ) }}
+            {{ forms.text(field.name, null, editable, field.label ) }}
         {% else %}
             <b>WRONG TYPE >{{ type }}< </b>
         {% endif %}
