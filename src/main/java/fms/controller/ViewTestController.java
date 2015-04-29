@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -20,16 +21,9 @@ import java.util.Locale;
 public class ViewTestController {
 
     @RequestMapping(value = "/test/field", method = RequestMethod.GET)
-    public String ViewTest(ModelMap map){
+    public String FieldTypeTest(ModelMap map){
 
-        String string = "08/16/2011";
-        DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
-        Date date = null;
-        try {
-            date = format.parse(string);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+       Date date = new Date();
         map.addAttribute("date", date  );
 
         DateField df = new DateField();
@@ -37,6 +31,19 @@ public class ViewTestController {
 
 
         return "test/field";
+    }
+
+    @RequestMapping(value = "/test/errors", method = RequestMethod.GET)
+    public String ErrorsTest(ModelMap map){
+
+
+        ArrayList<String> errors = new ArrayList<String>();
+        for( int i = 0; i < 10; i++ )
+            errors.add("Error NO."+i);
+
+        map.addAttribute("errors", errors  );
+
+        return "errors";
     }
 
 }
