@@ -5,6 +5,7 @@ import fms.business.archetype.Field;
 import fms.business.archetype.PublishedArchetype;
 import fms.business.fieldtype.DateField;
 import fms.business.fieldtype.FieldType;
+import fms.business.form.FilledField;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,8 +40,12 @@ public class ViewTestController {
         f.setName("fieldname");
         f.setPrivateDescription("prvdesc");
         f.setPublicDescription("pubdesc");
-        map.addAttribute("field", f  );
+        map.addAttribute("field", f);
 
+        FilledField ff = new FilledField();
+        ff.setField(f);
+        ff.setData("asd");
+        map.addAttribute("ff", ff);
 
         return "test/field";
     }

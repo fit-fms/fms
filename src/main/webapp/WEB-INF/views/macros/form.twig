@@ -1,10 +1,10 @@
 {% macro input(name, value, type, size) %}
-  <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
+  <input class="form-control" type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
 {% endmacro %}
 
 {% macro text(name, value, editable, label, size) %}
     <label> {{ label |default("") |e }}
-        <input type="text" name="{{ name }}"
+        <input class="form-control" type="text" name="{{ name }}"
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
@@ -14,7 +14,7 @@
 
 {% macro date(name, value, editable, label) %}
     <label> {{ label |default("") |e }}
-        <input type="date" name="{{ name }}"
+        <input class="form-control" type="date" name="{{ name }}"
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
@@ -29,14 +29,14 @@
 
 {% macro datetime(name, value, editable, label) %}
   {#  <label> {{ label |default("") |e }}
-        <input type="datetime-local" name="{{ name }}"
+        <input class="form-control" type="datetime-local" name="{{ name }}"
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
                value="{{ value |date("yyyy-MM-dd\THH:mm:ss") }}" />
     </label>#}
     <label> {{ label |default("") |e }}
-        <input type="text" name="{{ name }}"
+        <input class="form-control" type="text" name="{{ name }}"
                 {% if (editable) %}{% else %}
                     disabled
                 {% endif %}
@@ -51,7 +51,7 @@
 
 {% macro time(name, value, editable, label) %}
     <label> {{ label |default("") |e }}
-        <input type="time" name="{{ name }}"
+        <input class="form-control" type="time" name="{{ name }}"
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
@@ -66,7 +66,7 @@
 
 {% macro decimal(name, value, editable, label, size) %}
     <label> {{ label |default("") |e }}
-        <input type="number" name="{{ name }}"
+        <input class="form-control" type="number" name="{{ name }}"
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
@@ -76,7 +76,7 @@
 
 {% macro integer(name, value, editable, label, size) %}
     <label> {{ label |default("") |e }}
-        <input type="number" name="{{ name }}"
+        <input class="form-control" type="number" name="{{ name }}"
                {% if (editable) %}{% else %}
                     disabled
                {% endif %}
@@ -85,26 +85,26 @@
 {% endmacro %}
 
 {% macro formMeta(form) %}
-    <table>
+    <table  class="table table-striped">
         <tr>
-            <td>filled at:</td>
-            <td>{{ form.filledAt }}</td>
+            <th>filled at:</th>
+            <td>{% if form.filledAt != null %}{{ form.filledAt | date("yyyy-MM-dd HH:mm:ss") }}{% else %}-{% endif %}</td>
         </tr>
         <tr>
-            <td>approved at:</td>
-            <td>{{ form.approvedAt }}</td>
+            <th>approved at:</th>
+            <td>{% if form.approvedAt != null %}{{ form.approvedAt | date("yyyy-MM-dd HH:mm:ss") }}{% else %}-{% endif %}</td>
         </tr>
         <tr>
-            <td>approved by:</td>
+            <th>approved by:</th>
             <td>{{ form.admin }}</td>
         </tr>
     </table>
 {% endmacro %}
 
 
-{% macro fieldField(filledField, editable) %}
+{% macro filledField(filledField, editable) %}
     {% import _self as forms %}
-    {% set type = filledField.field.fieldType |fieldtype %}
+    {% set type = filledField |fieldtype %}
     <div>
     {% if type == "date" %}
         {{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
