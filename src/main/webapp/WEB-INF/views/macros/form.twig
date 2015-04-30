@@ -85,17 +85,17 @@
 {% endmacro %}
 
 {% macro formMeta(form) %}
-    <table>
+    <table  class="table table-striped">
         <tr>
-            <td>filled at:</td>
-            <td>{{ form.filledAt }}</td>
+            <th>filled at:</th>
+            <td>{% if form.filledAt != null %}{{ form.filledAt | date("yyyy-MM-dd HH:mm:ss") }}{% else %}-{% endif %}</td>
         </tr>
         <tr>
-            <td>approved at:</td>
-            <td>{{ form.approvedAt }}</td>
+            <th>approved at:</th>
+            <td>{% if form.approvedAt != null %}{{ form.approvedAt | date("yyyy-MM-dd HH:mm:ss") }}{% else %}-{% endif %}</td>
         </tr>
         <tr>
-            <td>approved by:</td>
+            <th>approved by:</th>
             <td>{{ form.admin }}</td>
         </tr>
     </table>

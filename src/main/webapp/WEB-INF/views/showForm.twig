@@ -9,9 +9,9 @@ TEMPLATE EXPECTS
 {% block content %}
 
     <h1>{{ form.archetype.name }} {{ form.id }}</h1>
-
+    <h2>Meta</h2>
     {{ forms.formMeta(form) }}
-
+    <h2>Data</h2>
     {% for filledField in form.filledFields %}
         {{ forms.filledField(filledField, false) }}
     {% endfor %}
