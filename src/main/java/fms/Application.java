@@ -63,13 +63,6 @@ public class Application {
             return jtwigViewResolver;
         }
 
-        @Bean
-        public AssetResolver assetResolver () {
-            BaseAssetResolver assetResolver = new BaseAssetResolver();
-            assetResolver.setPrefix("/WEB-INF/public/");
-            return assetResolver;
-        }
-
     }
 
     @Configuration

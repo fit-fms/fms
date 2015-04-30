@@ -4,7 +4,7 @@
 <html>
 <head>
     {% block head %}
-        <link rel="stylesheet" type="text/css" href="{{ asset 'bootstrap/css/bootstrap.min.css' }}" />
+        {% include 'assets/css.twig' %}
         <title>{% block title %}{% endblock %} - FMS</title>
     {% endblock %}
 </head>
@@ -15,5 +15,6 @@
     {% block footer %}
     {% endblock %}
 </div>
+{% include 'assets/js.twig' %}
 </body>
 </html>
