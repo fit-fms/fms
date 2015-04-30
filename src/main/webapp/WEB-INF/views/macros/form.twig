@@ -107,17 +107,17 @@
     {% set type = filledField |fieldtype %}
     <div>
     {% if type == "date" %}
-        d{{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        {{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "datetime" %}
-        dt{{ forms.datetime(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        {{ forms.datetime(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "time" %}
-        t{{ forms.time(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        {{ forms.time(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "decimal" %}
-        dec{{ forms.decimal(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        {{ forms.decimal(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "integer" %}
-        i{{ forms.integer(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        {{ forms.integer(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "text" %}
-        tx{{ forms.text(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        {{ forms.text(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% else %}
         <b>WRONG TYPE >{{ type }}< </b>
     {% endif %}
