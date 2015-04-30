@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,8 +52,7 @@ public class DataController {
         try {
             archetype = archService.findByName(arch);
         } catch (Exception ex) {
-            Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
-            
+            Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);          
             errors.add("archetyp se nenasel");
             map.addAttribute("errors", errors);
             return "errors";           
@@ -67,6 +67,54 @@ public class DataController {
         }
         map.addAttribute("form", form);
         return "showForm";
+    }
+    
+    @RequestMapping(value = "/arch", method = RequestMethod.GET)
+    public String displayArchList(ModelMap map){
+        Map<String, Archetype> arch;
+        try {
+           arch = archService.getAllArchetypes();
+        } catch (Exception ex) {
+            Logger.getLogger(ArchetypeController.class.getName()).log(Level.SEVERE, null, ex);
+            List<String> errors = new ArrayList();
+            errors.add("nepodarilo se ziskat seznam Archetypu");
+            map.addAttribute("errors", errors);
+            return "errors";
+        }
+        
+        List<Archetype> list = new ArrayList<Archetype>(arch.values());
+        map.addAttribute("archetypes", list);
+        return "archetypeList";
+    }
+    
+    
+    @RequestMapping(value = "/formlist/{archName}", method = RequestMethod.GET)
+    public String showFormList(@PathVariable("archName") String arch, ModelMap map){
+        Archetype archetype;
+        List<String> errors = new ArrayList();
+        try {
+            archetype = archService.findByName(arch);
+        } catch (Exception ex) {
+            Logger.getLogger(ArchetypeController.class.getName()).log(Level.SEVERE, null, ex);          
+            errors.add("archetyp se nenasel");
+            map.addAttribute("errors", errors);
+            return "errors";           
+        }
+        
+        Map<Long, Form> formMap;
+        try {
+            formMap = formService.getAllForms(archetype);
+        } catch (Exception ex) {
+            Logger.getLogger(DataController.class.getName()).log(Level.SEVERE, null, ex);
+            errors.add("chyba pri ziskavani formularu");  
+            map.addAttribute("errors", errors);
+            return "errors";
+        }
+        
+        List<Form> list = new ArrayList<Form>(formMap.values());
+        map.addAttribute("archetype", archetype);             
+        map.addAttribute("forms", list);
+        return "showArchetype";
     }
     
     
