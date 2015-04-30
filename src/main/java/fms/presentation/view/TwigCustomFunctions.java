@@ -23,7 +23,8 @@ public class TwigCustomFunctions {
             return format(((FilledField) field).getField().getType());
         if( field instanceof Field)
             return format(((Field) field).getType());
-        throw new Exception("jTwig function - unnown type : " + field.getClass().getSimpleName() );
+        return "jTwig function - unnown type : " + field.getClass().getSimpleName();
+        //throw new Exception("jTwig function - unnown type : " + field.getClass().getSimpleName() );
     }
     public String format(@Parameter FieldType field) {
         if( field instanceof DateField)

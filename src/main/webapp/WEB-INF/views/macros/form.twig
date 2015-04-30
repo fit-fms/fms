@@ -102,22 +102,22 @@
 {% endmacro %}
 
 
-{% macro fieldField(filledField, editable) %}
+{% macro filledField(filledField, editable) %}
     {% import _self as forms %}
-    {% set type = filledField.field.fieldType |fieldtype %}
+    {% set type = filledField |fieldtype %}
     <div>
     {% if type == "date" %}
-        {{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        d{{ forms.date(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "datetime" %}
-        {{ forms.datetime(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        dt{{ forms.datetime(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "time" %}
-        {{ forms.time(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        t{{ forms.time(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "decimal" %}
-        {{ forms.decimal(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        dec{{ forms.decimal(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "integer" %}
-        {{ forms.integer(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        i{{ forms.integer(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% elseif type == "text" %}
-        {{ forms.text(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
+        tx{{ forms.text(filledField.field.name,  filledField.data, editable, filledField.field.label ) }}
     {% else %}
         <b>WRONG TYPE >{{ type }}< </b>
     {% endif %}
