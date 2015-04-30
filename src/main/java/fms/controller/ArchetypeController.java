@@ -7,7 +7,7 @@ package fms.controller;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
-import fms.business.archetype.UnpublisdedArchertype;
+import fms.business.archetype.Archetype;
 import fms.business.fieldtype.FieldType;
 import fms.business.fieldtype.TextField;
 import fms.business.form.DigitalForm;
