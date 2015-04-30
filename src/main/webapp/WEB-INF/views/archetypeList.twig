@@ -10,14 +10,15 @@ TEMPLATE EXPECTS
 
     <h1>Seznam archetypu</h1>
 
-    <form method="post" action="">
-        <table>
+    {#<form method="post" action="">#}
+        <table class="table table-striped">
             <tr>
                 <th>Jmeno archetypu</th>
                 <th>Verejny popis</th>
                 <th>Privatni popis</th>
-                <th>Verejny</th>
-                <th>Aktivni</th>
+               {# <th>Verejny</th>
+                <th>Aktivni</th>#}
+                <th colspan="2">Akce</th>
             </tr>
 
             {% for arch in archetypes %}
@@ -25,7 +26,7 @@ TEMPLATE EXPECTS
                     <td>{{ arch.name }}</td>
                     <td>{{ arch.publicDescription }}</td>
                     <td>{{ arch.privateDescription }}</td>
-                    <td>
+                    {#<td>
                         <label>
                             <input type="radio" name="{{ arch.name }}['public']" value="1" /> verejny
                         </label>
@@ -40,11 +41,13 @@ TEMPLATE EXPECTS
                         <label>
                             <input type="radio" name="{{ arch.name }}['active']" value="0" /> neaktivni
                         </label>
-                    </td>
+                    </td>#}
+                    <td><a href="form/{{ arch.name }}">Vyplnit</a></td>
+                    <td><a href="#">Zobrazit vyplnene formulare TODO</a></td>
                 </tr>
             {% endfor %}
         </table>
-        <input type="submit" value="odeslat" />
-    </form>
+        {#<input type="submit" value="odeslat" />#}
+    {#</form>#}
 
 {% endblock %}
