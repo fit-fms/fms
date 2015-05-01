@@ -1,9 +1,7 @@
 package fms.business.service;
 
 import fms.business.form.Form;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.jcr.Session;
 import java.util.Map;
 
 /**
@@ -13,32 +11,20 @@ import java.util.Map;
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
  */
-public class FormSearchService {
-
-    @Autowired
-    private Session session;
-
-    public FormSearchService() {
-
-    }
-
+public interface FormSearchService {
 
     /**
      * Najde formul�re podle po�adavku.
      *
      * @param condition
      */
-    public Map<Integer, Form> findByConditions(SearchCondition condition) {
-        return null;
-    }
+    public Map<Integer, Form> findByConditions(SearchCondition condition);
 
     /**
      * Zjist� pocet formul�ru vyhovuj�c�ch po�adavkum.
      *
      * @param condition
      */
-    public int findCountByConditions(SearchCondition condition) {
-        return 0;
-    }
+    public int findCountByConditions(SearchCondition condition);
 
 }
