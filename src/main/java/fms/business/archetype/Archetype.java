@@ -13,7 +13,11 @@ import java.util.Map;
  * Archetyp formul�re je kostra pro data. Udr�uje informace o jednotliv�ch pol�ck�ch pro s�mantick� zpracov�n� dat.
  */
 @JcrNode(classNameProperty = "className")
-abstract public class Archetype {
+public class Archetype {
+
+    public static final String UNPUBLISHED = "UNPUBLISHED";
+    public static final String PUBLISHED = "PUBLISHED";
+    public static final String FINISHED = "FINISHED";
 
     @JcrName
     private String jcrName = "fms_archetype";
@@ -26,6 +30,13 @@ abstract public class Archetype {
      */
     @JcrProperty
     private String name;
+
+
+    /**
+     * Status
+     */
+    @JcrProperty
+    private String state;
 
     /**
      * Intern� popis urcen� pro spr�vce
@@ -58,6 +69,7 @@ abstract public class Archetype {
     private List<Field> jcrRequiredFields;
 
     public Archetype() {
+        state = UNPUBLISHED;
         jcrOptionalFields = new ArrayList<Field>();
         jcrRequiredFields = new ArrayList<Field>();
         templates = new HashMap<String, Template>();
@@ -96,6 +108,14 @@ abstract public class Archetype {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     /**

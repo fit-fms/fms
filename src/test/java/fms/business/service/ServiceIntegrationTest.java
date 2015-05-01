@@ -3,7 +3,6 @@ package fms.business.service;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
-import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.archetype.validator.EmailValidator;
 import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
@@ -107,7 +106,7 @@ public class ServiceIntegrationTest extends ServiceTest {
         Field field = fieldService.getFieldByName(fieldName);
         assertNotNull(field);
 
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName(archetypeName);
         archetype.addOptionalField(field);
         archetypeService.createArchetype(archetype);

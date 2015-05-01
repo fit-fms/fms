@@ -19,9 +19,7 @@ public class JcromFactory implements FactoryBean<Jcrom> {
             instance.map(fms.business.archetype.Field.class);
             instance.map(fms.business.archetype.template.A4Landscape.class);
             instance.map(fms.business.archetype.validator.EmailValidator.class);
-            instance.map(fms.business.archetype.UnpublisdedArchertype.class);
-            instance.map(fms.business.archetype.PublishedArchetype.class);
-            instance.map(fms.business.archetype.FinishedArchetype.class);
+            instance.map(fms.business.archetype.Archetype.class);
             instance.map(fms.business.fieldtype.DateField.class);
             instance.map(fms.business.fieldtype.DateTimeField.class);
             instance.map(fms.business.fieldtype.DecimalField.class);

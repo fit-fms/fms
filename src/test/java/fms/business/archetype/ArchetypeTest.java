@@ -35,7 +35,7 @@ public class ArchetypeTest {
         Field fieldD = makeField("D");
 
 
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.addRequiredField(fieldA);
         archetype.addRequiredField(fieldB);
         archetype.addRequiredField(fieldC);
@@ -75,7 +75,7 @@ public class ArchetypeTest {
         Field fieldD = makeField("D");
 
 
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.addOptionalField(fieldA);
         archetype.addOptionalField(fieldB);
         archetype.addOptionalField(fieldC);
@@ -115,7 +115,7 @@ public class ArchetypeTest {
         Template fieldD = makeTemplate("D");
 
 
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.addTemplate(fieldA);
         archetype.addTemplate(fieldB);
         archetype.addTemplate(fieldC);

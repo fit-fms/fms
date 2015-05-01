@@ -2,14 +2,11 @@ package fms.jcr;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
-import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.fieldtype.FieldType;
 import fms.business.fieldtype.TextField;
 import fms.business.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.jcr.Node;
 import javax.jcr.Session;
@@ -48,7 +45,7 @@ public class InitDB {
         field.setType(fieldType);
         fieldService.createField(field);
         
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName("emailArchetype");
         archetype.addOptionalField(field);
         archetypeService.createArchetype(archetype);
