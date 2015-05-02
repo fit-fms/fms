@@ -58,6 +58,7 @@ public class InitDB {
         
         Archetype archetype = new Archetype();
         archetype.setName("emailArchetype");
+        archetype.setPublicDescription("Newsletter subscription.");
         archetype.addOptionalField(field);
         archetypeService.createArchetype(archetype);
         

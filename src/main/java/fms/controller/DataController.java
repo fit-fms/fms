@@ -91,7 +91,7 @@ public class DataController {
     @RequestMapping(value = "/formlist/{archName}", method = RequestMethod.GET)
     public String showFormList(@PathVariable("archName") String arch, ModelMap map){
         Archetype archetype;
-        List<String> errors = new ArrayList();
+        List<String> errors = new ArrayList<String>();
         try {
             archetype = archService.findByName(arch);
         } catch (Exception ex) {
@@ -110,10 +110,9 @@ public class DataController {
             map.addAttribute("errors", errors);
             return "errors";
         }
-        
-        List<Form> list = new ArrayList<Form>(formMap.values());
+
         map.addAttribute("archetype", archetype);             
-        map.addAttribute("forms", list);
+        map.addAttribute("forms", formMap.values());
         return "showArchetype";
     }
     

@@ -14,12 +14,14 @@ TEMPLATE EXPECTS
     <form method="post" action="">
 
         <table>
-            <tr>
-                <th>Jmeno archetypu</th>
-                <th>id formulare</th>
-                <th>Schvaleni</th>
-                <th>Aktivni</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Jmeno archetypu</th>
+                    <th>id formulare</th>
+                    <th>Schvaleni</th>
+                    <th>Aktivni</th>
+                </tr>
+            </thead>
             {% for form in forms %}
                 <tr>
                     <td>{{ form.archetype.id }}</td>
