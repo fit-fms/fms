@@ -1,14 +1,12 @@
 package fms.business.service;
 
 import fms.business.archetype.Archetype;
-import fms.business.archetype.UnpublisdedArchertype;
 import fms.business.form.DigitalForm;
 import fms.business.form.Form;
 import fms.business.form.PaperForm;
 import fms.business.form.Scan;
 import org.junit.Before;
 import org.junit.Test;
-import org.omg.PortableInterceptor.DISCARDING;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -35,7 +33,7 @@ public class FormServiceTest extends ServiceTest {
     public void testCreateForm() throws Exception {
         long id;
 
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
@@ -56,11 +54,11 @@ public class FormServiceTest extends ServiceTest {
     public void testUpdateForm() throws Exception {
         long id;
 
-        Archetype archetypeA = new UnpublisdedArchertype();
+        Archetype archetypeA = new Archetype();
         archetypeA.setName("arname");
         archetypeService.createArchetype(archetypeA);
 
-        Archetype archetypeB = new UnpublisdedArchertype();
+        Archetype archetypeB = new Archetype();
         archetypeB.setName("Arch B");
         archetypeService.createArchetype(archetypeB);
 
@@ -81,7 +79,7 @@ public class FormServiceTest extends ServiceTest {
     @Test
     public void testGetForms() throws Exception {
 
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
@@ -120,7 +118,7 @@ public class FormServiceTest extends ServiceTest {
 
     @Test
     public void testDigital() throws Exception {
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
@@ -144,7 +142,7 @@ public class FormServiceTest extends ServiceTest {
 
     @Test
     public void testPaper() throws Exception {
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 
@@ -170,7 +168,7 @@ public class FormServiceTest extends ServiceTest {
 //    TODO implement
 //    @Test
     public void testScans() throws Exception {
-        Archetype archetype = new UnpublisdedArchertype();
+        Archetype archetype = new Archetype();
         archetype.setName("arname");
         archetypeService.createArchetype(archetype);
 

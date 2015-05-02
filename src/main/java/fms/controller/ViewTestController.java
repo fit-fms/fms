@@ -2,7 +2,6 @@ package fms.controller;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
-import fms.business.archetype.PublishedArchetype;
 import fms.business.fieldtype.DateField;
 import fms.business.fieldtype.FieldType;
 import fms.business.form.FilledField;
@@ -11,12 +10,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by smolijar on 4/28/15.
@@ -67,7 +62,7 @@ public class ViewTestController {
     public String fillOutTest(ModelMap map){
 
 
-        Archetype arch = new PublishedArchetype();
+        Archetype arch = new Archetype();
         FieldType ft = new DateField();
         ft.setName("FieldTypeName");
 

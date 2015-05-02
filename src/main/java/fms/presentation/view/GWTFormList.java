@@ -1,6 +1,6 @@
 //package fms.presentation.view;
 //
-//import fms.business.service.SearchCondition;
+//import fms.business.service.JcrSearchCondition;
 //import fms.business.form.Form;
 //import fms.business.archetype.Archetype;
 //import com.google.gwt.http.client.Response;
@@ -29,7 +29,7 @@
 //     * @param entry
 //     * @param archetype
 //     */
-//    public SearchCondition constructCondition(HttpRequest  reqeust, EntryPoint entry, Archetype archetype){
+//    public JcrSearchCondition constructCondition(HttpRequest  reqeust, EntryPoint entry, Archetype archetype){
 //        return null;
 //    }
 //
