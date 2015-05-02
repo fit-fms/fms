@@ -2,6 +2,8 @@ package fms.jcr;
 
 import fms.business.archetype.Archetype;
 import fms.business.archetype.Field;
+import fms.business.archetype.validator.EmailValidator;
+import fms.business.archetype.validator.Validator;
 import fms.business.fieldtype.FieldType;
 import fms.business.fieldtype.TextField;
 import fms.business.service.*;
@@ -16,6 +18,7 @@ import javax.jcr.Session;
 public class InitDB {
     
     private FieldTypeService fieldTypeService;
+    private ValidatorService validatorService;
     private FieldService fieldService;
     private ArchetypeService archetypeService;
     
@@ -23,9 +26,10 @@ public class InitDB {
     protected Session session;
 
     @Autowired
-    public InitDB(Session session, FieldTypeService fieldTypeService, FieldService fieldService, ArchetypeService archetypeService) {
+    public InitDB(Session session, FieldTypeService fieldTypeService, FieldService fieldService, ArchetypeService archetypeService, ValidatorService validatorService) {
         this.session = session;
         this.fieldTypeService = fieldTypeService;
+        this.validatorService = validatorService;
         this.fieldService = fieldService;
         this.archetypeService = archetypeService;
     }
@@ -39,15 +43,22 @@ public class InitDB {
         FieldType fieldType = new TextField();
         fieldType.setName("text");
         fieldTypeService.createFieldType(fieldType);
+
+        Validator validator = new EmailValidator();
+        validator.setName("Email validator");
+        validator.setFieldType(fieldType);
+        validatorService.createValidator(validator);
         
         Field field  = new Field();
         field.setName("email");
         field.setLabel("Your email:");
         field.setType(fieldType);
+        field.addValidator(validator);
         fieldService.createField(field);
         
         Archetype archetype = new Archetype();
         archetype.setName("emailArchetype");
+        archetype.setPublicDescription("Newsletter subscription.");
         archetype.addOptionalField(field);
         archetypeService.createArchetype(archetype);
         

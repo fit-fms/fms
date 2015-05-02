@@ -12,14 +12,16 @@ TEMPLATE EXPECTS
 
     {#<form method="post" action="">#}
         <table class="table table-striped">
-            <tr>
-                <th>Jmeno archetypu</th>
-                <th>Verejny popis</th>
-                <th>Privatni popis</th>
-               {# <th>Verejny</th>
-                <th>Aktivni</th>#}
-                <th colspan="2">Akce</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Jmeno archetypu</th>
+                    <th>Verejny popis</th>
+                    <th>Privatni popis</th>
+                   {# <th>Verejny</th>
+                    <th>Aktivni</th>#}
+                    <th colspan="2">Akce</th>
+                </tr>
+            </thead>
 
             {% for arch in archetypes %}
                 <tr>
