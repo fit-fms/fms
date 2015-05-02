@@ -15,17 +15,32 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by root on 4/28/15.
  */
+
+/**
+ * Custom set of functions for jTwig template
+ */
 public class TwigCustomFunctions {
 
+    /**
+     * Finds a propriate type of field (to render the right input type in form)
+     * @param field field to get fieldtype from (Field or FilledField)
+     * @return type of field as a String
+     * @throws Exception if field is none of known classes
+     */
     @JtwigFunction(name = "fieldtype")
     public String format(@Parameter Object field) throws Exception {
         if( field instanceof FilledField)
             return format(((FilledField) field).getField().getType());
         if( field instanceof Field)
             return format(((Field) field).getType());
-        return "jTwig function - unnown type : " + field.getClass().getSimpleName();
-        //throw new Exception("jTwig function - unnown type : " + field.getClass().getSimpleName() );
+        throw new Exception("jTwig function - unnown type : " + field.getClass().getSimpleName() );
     }
+
+    /**
+     * Find fieldtype for given field. Called by another format function.
+     * @param field given field
+     * @return fieldtype as a String
+     */
     public String format(@Parameter FieldType field) {
         if( field instanceof DateField)
             return "date";

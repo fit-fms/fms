@@ -19,6 +19,9 @@ import org.springframework.stereotype.Component;
  * @created 23-4-2015 21:04:54
  */
 
+/**
+ * Parses http request regarding forms
+ */
 @Component
 public class FormParser {
 
@@ -30,32 +33,35 @@ public class FormParser {
     }
 
     /**
-     * Zpracuje HTTP request a vytvori domenove objekty
-     *
-     * @param request
-     * @param form
-     * @param archetype
+     * Processes http request to approve form
+     * @param map Request to parse
+     * @param form Form to approve
+     * @param archetype Form's Archetype
+     * @param errors Error list
+     * @return Apporved form
      */
-    public Form approveForm(Map<String, String> mapt, Form form, Archetype archetype, List<String> errors) {
+    public Form approveForm(Map<String, String> map, Form form, Archetype archetype, List<String> errors) {
         return null;
     }
 
     /**
-     * Zpracuje HTTP request a vytvori domenove objekty
-     *
-     * @param request
-     * @param form
-     * @param archetype
+     * Processes http request to edit form
+     * @param map Request to parse
+     * @param form Form to edit
+     * @param archetype Form's Archetype
+     * @param errors Error list
+     * @return Edited form
      */
     public Form editForm(Map<String, String> map, Form form, Archetype archetype, List<String> errors) {
         return null;
     }
 
     /**
-     * Zpracuje HTTP request a vytvori domenove objekty
-     *
-     * @param request
-     * @param archetype
+     * Processes http request to fill out form
+     * @param map Request to parse
+     * @param archetype Form's Archetype
+     * @param errors Error list
+     * @return Created form
      */
     public Form fillOutForm(Map<String, String> map, Archetype archetype, List<String> errors) {
         Form form = new DigitalForm();
