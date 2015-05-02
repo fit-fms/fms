@@ -44,6 +44,7 @@
     <properties>
         <spring.version>4.2.0.BUILD-SNAPSHOT</spring.version>
         <spring_security.version>4.0.1.RELEASE</spring_security.version>
+        <javadoc_plugin.version>2.10.3</javadoc_plugin.version>
     </properties>
 
     <dependencies>
@@ -147,6 +148,12 @@
             <version>4.0.0-beta-20150305223257</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${javadoc_plugin.version}</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -182,4 +189,19 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc_plugin.version}</version>
+                <configuration>
+                    <stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+                    <show>public</show>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
