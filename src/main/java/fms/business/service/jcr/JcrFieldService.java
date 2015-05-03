@@ -16,13 +16,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Slu�ba pro uchov�v�n� archetypu v datab�zi.
+ * @inheritDoc
  */
 @Service
 public class JcrFieldService implements FieldService {
 
+    /**
+     * Path to fields root
+     */
     public static final String FIELDS_ROOT = "/fields";
-    Map<String, Field> fields = new HashMap<String, Field>();
+
+    private Map<String, Field> fields = new HashMap<String, Field>();
     private Session session;
     private Jcrom jcrom;
     ;
@@ -35,9 +39,7 @@ public class JcrFieldService implements FieldService {
 
 
     /**
-     * Z�sk� pol�cko podle jm�na.
-     *
-     * @param name
+     * @inheritDoc
      */
     @Override
     public Field getFieldByName(String name) throws Exception {
@@ -55,9 +57,7 @@ public class JcrFieldService implements FieldService {
     }
 
     /**
-     * Vytvor� nov� pol�cko v datab�zi.
-     *
-     * @param field
+     * @inheritDoc
      */
     @Override
     public Field createField(Field field) throws Exception {
@@ -70,9 +70,7 @@ public class JcrFieldService implements FieldService {
     }
 
     /**
-     * Aktualizuje pol�cko v datab�zi.
-     *
-     * @param field
+     * @inheritDoc
      */
     @Override
     public void updateField(Field field) throws Exception {
@@ -82,9 +80,7 @@ public class JcrFieldService implements FieldService {
     }
 
     /**
-     * Odstran� pol�cko z datab�ze.
-     *
-     * @param field
+     * @inheritDoc
      */
     @Override
     public void removeField(Field field) throws Exception {
@@ -94,7 +90,7 @@ public class JcrFieldService implements FieldService {
     }
 
     /**
-     * Z�sk� v�echna pol�cka z datab�ze.
+     * @inheritDoc
      */
     @Override
     public Map<String, Field> getAllFields() throws Exception {

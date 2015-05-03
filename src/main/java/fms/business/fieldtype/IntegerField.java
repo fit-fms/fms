@@ -22,6 +22,9 @@ public class IntegerField extends FieldType {
         return 0;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public boolean validate(String data, List<String> errors) {
         return false;

@@ -1,3 +1,6 @@
+/**
+ * Implementation of service interfaces via JCR
+ */
 package fms.business.service.jcr;
 
 import fms.business.archetype.Archetype;
@@ -16,13 +19,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Sluuba pro uchovavani archetypu v databazi.
+ * @inheritDoc
  */
 @Service
 public class JcrArchetypeService implements ArchetypeService {
 
+    /**
+     * Path to archetypes root
+     */
     public static final String ARCHETYPES_ROOT = "//archetypes";
-    Map<String, Archetype> archetypes = new HashMap<String, Archetype>();
+
+    private Map<String, Archetype> archetypes = new HashMap<String, Archetype>();
     private Session session;
     private Jcrom jcrom;
 
@@ -34,9 +41,7 @@ public class JcrArchetypeService implements ArchetypeService {
 
 
     /**
-     * Najde v databazi archetyp podle jmena.
-     *
-     * @param name
+     * @inheritDoc
      */
     @Override
     public Archetype findByName(String name) throws Exception {
@@ -61,9 +66,7 @@ public class JcrArchetypeService implements ArchetypeService {
     }
 
     /**
-     * Odstrani archetyp z databaze.
-     *
-     * @param archetype
+     * @inheritDoc
      */
     @Override
     public void removeArchetype(Archetype archetype) throws Exception {
@@ -73,9 +76,7 @@ public class JcrArchetypeService implements ArchetypeService {
     }
 
     /**
-     * Prida novy archetyp do databaze.
-     *
-     * @param archetype
+     * @inheritDoc
      */
     @Override
     public void createArchetype(Archetype archetype) throws Exception {
@@ -85,9 +86,7 @@ public class JcrArchetypeService implements ArchetypeService {
     }
 
     /**
-     * Aktualizuje archetyp v databazi.
-     *
-     * @param archetype
+     * @inheritDoc
      */
     @Override
     public void updateArchetype(Archetype archetype) throws Exception {
@@ -97,7 +96,7 @@ public class JcrArchetypeService implements ArchetypeService {
     }
 
     /**
-     * Ziska vsechny formulare.
+     * @inheritDoc
      */
     @Override
     public Map<String, Archetype> getAllArchetypes() throws Exception {

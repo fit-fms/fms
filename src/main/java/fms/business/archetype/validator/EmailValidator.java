@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * Validates string as email
+ */
 public class EmailValidator extends Validator {
 
     //Source: http://www.mkyong.com/regular-expressions/how-to-validate-email-address-with-regular-expression/
@@ -20,6 +22,9 @@ public class EmailValidator extends Validator {
         pattern = Pattern.compile(EMAIL_PATTERN);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public boolean validate(String data, List<String> errors) {
         Matcher matcher = pattern.matcher(data);

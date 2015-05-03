@@ -14,11 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Slu�ba pro uchov�v�n� formul�ru v datab�zi.
- *
- * @author jinora
- * @version 1.0
- * @created 15-Apr-2015 12:39:48 PM
+ * @inheritDoc
  */
 @Service
 public class JcrFormService implements FormService {
@@ -37,9 +33,7 @@ public class JcrFormService implements FormService {
 
 
     /**
-     * Vytvor� nov� formul�r v datab�zi.
-     *
-     * @param form
+     * @inheritDoc
      */
     @Override
     public synchronized void createForm(Form form) throws Exception {
@@ -61,9 +55,7 @@ public class JcrFormService implements FormService {
     }
 
     /**
-     * Odstran� formul�r z datab�ze.
-     *
-     * @param form
+     * @inheritDoc
      */
     @Override
     public void removeForm(Form form) throws Exception {
@@ -73,9 +65,7 @@ public class JcrFormService implements FormService {
     }
 
     /**
-     * Najde formul�r podle ID.
-     *
-     * @param id
+     * @inheritDoc
      */
     @Override
     public Form getFormById(Archetype archetype, long id) throws Exception {
@@ -88,8 +78,7 @@ public class JcrFormService implements FormService {
         return jcrom.fromNode(Form.class, formNode);
     }
 
-    @Override
-    public Node getFormNodeById(Archetype archetype, long id) throws Exception {
+    private Node getFormNodeById(Archetype archetype, long id) throws Exception {
         Node archetypeNode = session.getNode(jcrom.getPath(archetype));
 
         Node formsNode;
@@ -125,7 +114,7 @@ public class JcrFormService implements FormService {
     }
 
     /**
-     * Z�sk� v�echny formul�re z datab�ze.
+     * @inheritDoc
      */
     @Override
     public Map<Long, Form> getAllForms(Archetype archetype) throws Exception {
@@ -141,9 +130,7 @@ public class JcrFormService implements FormService {
     }
 
     /**
-     * Aktualizuje formul�r v datab�zi.
-     *
-     * @param form
+     * @inheritDoc
      */
     @Override
     public void updateForm(Form form) throws Exception {

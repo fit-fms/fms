@@ -15,8 +15,19 @@ import java.util.Map;
 @JcrNode(classNameProperty = "className")
 public class Archetype {
 
+    /**
+     * Archetyp ktery neni urcen verejnosti. Nelze vyplnit.
+     */
     public static final String UNPUBLISHED = "UNPUBLISHED";
+
+    /**
+     * Archetyp ktery je urcen verejnosti. Lze vyplnit.
+     */
     public static final String PUBLISHED = "PUBLISHED";
+
+    /**
+     * Archetyp jehoz vyplnovani bylo ukonceno.
+     */
     public static final String FINISHED = "FINISHED";
 
     @JcrName
@@ -95,7 +106,7 @@ public class Archetype {
     }
 
     /**
-     * Jmeno formulare
+     * @return Nazev archetypu
      */
     public String getName() {
         return name;
@@ -104,22 +115,28 @@ public class Archetype {
     /**
      * Jmeno formulare
      *
-     * @param name
+     * @param name Nazev archetypu
      */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return Status archetypu
+     */
     public String getState() {
         return state;
     }
 
+    /**
+     * @param state Status archetypu
+     */
     public void setState(String state) {
         this.state = state;
     }
 
     /**
-     * Verejny popis pouzit jako napoveda
+     * @return  Verejny popis pouzit jako napoveda
      */
     public String getPublicDescription() {
         return publicDescription;
@@ -176,7 +193,7 @@ public class Archetype {
     }
 
     /**
-     * Prida field
+     * Prida mozny field
      *
      * @param field
      */
@@ -188,6 +205,8 @@ public class Archetype {
     }
 
     /**
+     * Prida vynuceny field
+     *
      * @param field
      */
     public void addRequiredField(Field field) {
@@ -198,6 +217,8 @@ public class Archetype {
     }
 
     /**
+     * Odebere vynuceny field
+     *
      * @param field
      */
     public void removeRequiredField(Field field) {
@@ -207,13 +228,18 @@ public class Archetype {
         jcrRequiredFields.remove(field);
     }
 
+    /**
+     * Ziska vynucene fieldy
+     *
+     * @return
+     */
     public Map<String, Field> getRequiredFields() {
         createFields();
         return requiredFields;
     }
 
     /**
-     * Odebere field
+     * Odebere mozny field
      *
      * @param field
      */

@@ -16,9 +16,15 @@ import javax.jcr.query.QueryResult;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @inheritDoc
+ */
 @Service
 public class JcrPersonService implements PersonService {
 
+    /**
+     * Path to persons root
+     */
     public static final String PERSON_ROOT = "/persons";
 
     private Session session;
@@ -31,6 +37,9 @@ public class JcrPersonService implements PersonService {
         this.jcrom = jcrom;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void createPerson(Person person) throws Exception {
         Node personsNode = session.getNode(PERSON_ROOT);
@@ -39,7 +48,7 @@ public class JcrPersonService implements PersonService {
         session.save();
     }
 
-    public Node findPersonNodeById(int id) throws Exception {
+    protected Node findPersonNodeById(int id) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
         String queryStr = "/jcr:root" + PERSON_ROOT + "/*[@id='" + id + "']";
         Query query = queryManager.createQuery(queryStr, Query.XPATH);
@@ -53,6 +62,9 @@ public class JcrPersonService implements PersonService {
         return it.nextNode();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public Person findPersonById(int id) throws Exception {
         Node personNode = findPersonNodeById(id);
@@ -60,6 +72,9 @@ public class JcrPersonService implements PersonService {
         return jcrom.fromNode(Person.class, personNode);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public Admin findAdminById(int id) throws Exception {
         Person p = findPersonById(id);
@@ -69,6 +84,9 @@ public class JcrPersonService implements PersonService {
         return null;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void removePerson(Person person) throws Exception {
         Node personNode = session.getNode(jcrom.getPath(person));
@@ -76,12 +94,18 @@ public class JcrPersonService implements PersonService {
         session.save();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void updatePerson(Person person) throws Exception {
         removePerson(person);
         createPerson(person);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public List<Person> getAllPersons() throws Exception {
         List<Person> persons = new ArrayList<Person>();
@@ -95,6 +119,9 @@ public class JcrPersonService implements PersonService {
         return persons;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public List<Admin> getAllAdmins() throws Exception {
         List<Admin> persons = new ArrayList<Admin>();

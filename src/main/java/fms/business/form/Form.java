@@ -154,6 +154,11 @@ abstract public class Form {
         this.filledAt = filledAt;
     }
 
+    /**
+     * Indikator jestli byl formular vyplnen
+     *
+     * @return
+     */
     public boolean isFilled() {
         return filledAt != null;
     }
@@ -174,6 +179,11 @@ abstract public class Form {
         this.approvedAt = approvedAt;
     }
 
+    /**
+     * Indikator jestli byl formular schvalen
+     *
+     * @return
+     */
     public boolean isApproved() {
         return approvedAt != null;
     }

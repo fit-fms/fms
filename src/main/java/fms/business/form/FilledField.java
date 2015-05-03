@@ -6,6 +6,8 @@ import org.jcrom.annotations.*;
 import java.util.List;
 
 /**
+ * Vyplnene policko
+ *
  * @author jinora
  * @version 1.0
  * @created 15-Apr-2015 12:39:48 PM
