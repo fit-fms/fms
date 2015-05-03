@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 /**
- *
+ * Class allows to fill one form
  * @author michal
  */
 
@@ -52,9 +52,14 @@ public class ArchetypeController {
     @Autowired
     private FormParser parser;
     
-    
+    /**
+     * This method will display form to fill
+     * @param formUrl name of archetype
+     * @param map ModelMap of view
+     * @return name of view which will be displayed
+     */
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.GET)
-    public String displayArchetype(@PathVariable("formUrl") String formUrl, ModelMap map){//@TODO prepsat nazvy
+    public String displayArchetype(@PathVariable("formUrl") String formUrl, ModelMap map){
         Archetype arch;
         
         try {
@@ -69,6 +74,14 @@ public class ArchetypeController {
         map.addAttribute("archetype", arch);
         return "fillOutForm";
     }
+    
+    /**
+     * This method save filled form to DB
+     * @param params Map of filled fields, key is name of field, value is filled text
+     * @param formUrl name of archetype
+     * @param map ModelMap of view
+     * @return name of view which will be displayed
+     */
     
     @RequestMapping(value = "/form/{formUrl}", method = RequestMethod.POST)
     public String submitForm(@RequestParam Map<String, String> params, @PathVariable("formUrl") String formUrl, ModelMap map){

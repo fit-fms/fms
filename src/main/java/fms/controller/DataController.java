@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- *
+ * Class allows to display data which are stored in DB
  * @author michal
  */
 
@@ -43,6 +43,14 @@ public class DataController {
     private FormService formService;
     @Autowired
     private ArchetypeService archService;
+    
+    /**
+     * Method displays one filled form stored in DB
+     * @param arch name of Archetype
+     * @param formId ID of form
+     * @param map ModelMap of view
+     * @return name of view which will be displayed
+     */
     
     @RequestMapping(value = "/form/{formArch}/{formId}", method = RequestMethod.GET)
     public String showData(@PathVariable("formArch") String arch, @PathVariable("formId") int formId, ModelMap map){
@@ -69,6 +77,12 @@ public class DataController {
         return "showForm";
     }
     
+    /**
+     * Method displays list of all Archetypes saved in DB
+     * @param map ModelMap of view
+     * @return name of view which will be displayed
+     */
+    
     @RequestMapping(value = "/arch", method = RequestMethod.GET)
     public String displayArchList(ModelMap map){
         Map<String, Archetype> arch;
@@ -87,6 +101,12 @@ public class DataController {
         return "archetypeList";
     }
     
+    /**
+     * Method displays all filled forms which are tied to one Archetype
+     * @param arch name of Archetype
+     * @param map ModelMap of view
+     * @return name of view which will be displayed
+     */
     
     @RequestMapping(value = "/formlist/{archName}", method = RequestMethod.GET)
     public String showFormList(@PathVariable("archName") String arch, ModelMap map){
