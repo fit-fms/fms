@@ -15,9 +15,15 @@ import javax.jcr.query.QueryResult;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @inheritDoc
+ */
 @Service
 public class JcrFieldTypeService implements FieldTypeService {
 
+    /**
+     * Path to FieldTypes root
+     */
     public static final String FIELD_TYPE_ROOT = "/fieldTypes";
 
     private Session session;
@@ -32,6 +38,9 @@ public class JcrFieldTypeService implements FieldTypeService {
         this.jcrom = jcrom;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void createFieldType(FieldType fieldType) throws Exception {
         Node fieldTypes = session.getNode(FIELD_TYPE_ROOT);
@@ -39,6 +48,9 @@ public class JcrFieldTypeService implements FieldTypeService {
         session.save();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void removeFieldType(FieldType fieldType) throws Exception {
         Node fieldTypeNode = session.getNode(jcrom.getPath(fieldType));
@@ -46,6 +58,9 @@ public class JcrFieldTypeService implements FieldTypeService {
         session.save();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public FieldType getByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
@@ -61,6 +76,9 @@ public class JcrFieldTypeService implements FieldTypeService {
         return jcrom.fromNode(FieldType.class, it.nextNode());
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void updateFieldType(FieldType fieldType) throws Exception {
         Node fieldTypeNode = session.getNode(jcrom.getPath(fieldType));
@@ -68,6 +86,9 @@ public class JcrFieldTypeService implements FieldTypeService {
         session.save();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public List<FieldType> getFieldTypes() throws Exception {
         fieldTypes.clear();

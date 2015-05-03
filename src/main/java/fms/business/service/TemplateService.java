@@ -17,6 +17,12 @@ public interface TemplateService {
      */
     public void createTemplate(Template template) throws Exception;
 
+    /**
+     * Najde templatu podle jmena
+     * @param name jmeno templaty
+     * @return
+     * @throws Exception
+     */
     public Template getTemplateByName(String name) throws Exception;
 
     /**

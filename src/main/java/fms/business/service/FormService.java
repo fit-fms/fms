@@ -37,8 +37,6 @@ public interface FormService {
      */
     public Form getFormById(Archetype archetype, long id) throws Exception;
 
-    public Node getFormNodeById(Archetype archetype, long id) throws Exception;
-
     /**
      * Z�sk� v�echny formul�re z datab�ze.
      */

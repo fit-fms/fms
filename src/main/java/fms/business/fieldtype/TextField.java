@@ -24,6 +24,9 @@ public class TextField extends FieldType {
         return data.trim();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public boolean validate(String data, List<String> errors) {
         return true;

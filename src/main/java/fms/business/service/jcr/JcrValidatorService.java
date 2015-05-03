@@ -17,11 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Slu�ba pro uchov�v�n� valid�toru v datab�zi.
+ * @inheritDoc
  */
 @Service
 public class JcrValidatorService implements ValidatorService {
 
+    /**
+     * Path to validators root
+     */
     public static final String VALIDATOR_ROOT = "/validators";
 
     private Session session;
@@ -36,9 +39,7 @@ public class JcrValidatorService implements ValidatorService {
 
 
     /**
-     * Vytvor� valid�tor v datab�zi.
-     *
-     * @param validator
+     * @inheritDoc
      */
     @Override
     public void createValidator(Validator validator) throws Exception {
@@ -48,6 +49,9 @@ public class JcrValidatorService implements ValidatorService {
         session.save();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public Validator getValidatorByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
@@ -64,9 +68,7 @@ public class JcrValidatorService implements ValidatorService {
     }
 
     /**
-     * Aktualizuje valid�tor v datab�zi.
-     *
-     * @param validator
+     * @inheritDoc
      */
     @Override
     public void updateValidator(Validator validator) throws Exception {
@@ -76,9 +78,7 @@ public class JcrValidatorService implements ValidatorService {
     }
 
     /**
-     * odstran� valid�tor z datab�ze.
-     *
-     * @param validator
+     * @inheritDoc
      */
     @Override
     public void removeValidator(Validator validator) throws Exception {
@@ -88,9 +88,7 @@ public class JcrValidatorService implements ValidatorService {
     }
 
     /**
-     * Z�sk� v�echny valid�tory schopn� validovat dan� typ.
-     *
-     * @param fieldType
+     * @inheritDoc
      */
     @Override
     public List<Validator> getValidatorsByFieldType(FieldType fieldType) throws Exception {

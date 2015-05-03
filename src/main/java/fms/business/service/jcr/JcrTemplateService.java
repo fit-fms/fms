@@ -16,11 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Slu�ba pro uchov�v�n� formul�ru v datab�zi.
+ * @inheritDoc
  */
 @Service
 public class JcrTemplateService implements TemplateService {
 
+    /**
+     * Path to templates root
+     */
     public static final String TEMPLATES_ROOT = "/templates";
 
     private Session session;
@@ -37,9 +40,7 @@ public class JcrTemplateService implements TemplateService {
 
 
     /**
-     * Vytvor� novou templatu v datab�zi.
-     *
-     * @param template
+     * @inheritDoc
      */
     @Override
     public void createTemplate(Template template) throws Exception {
@@ -48,6 +49,9 @@ public class JcrTemplateService implements TemplateService {
         session.save();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public Template getTemplateByName(String name) throws Exception {
         QueryManager queryManager = session.getWorkspace().getQueryManager();
@@ -64,9 +68,7 @@ public class JcrTemplateService implements TemplateService {
     }
 
     /**
-     * Aktualizuje templatu v datab�zi.
-     *
-     * @param template
+     * @inheritDoc
      */
     @Override
     public void updateTemplate(Template template) throws Exception {
@@ -76,9 +78,7 @@ public class JcrTemplateService implements TemplateService {
     }
 
     /**
-     * Odstran� templatu z datab�ze.
-     *
-     * @param template
+     * @inheritDoc
      */
     @Override
     public void removeTemplate(Template template) throws Exception {
@@ -88,9 +88,7 @@ public class JcrTemplateService implements TemplateService {
     }
 
     /**
-     * Z�sk� v�echny templaty v datab�zi pro archetyp.
-     *
-     * @param archwetypName
+     * @inheritDoc
      */
     @Override
     public List<Template> getAllTemplates(String archwetypName) throws Exception {

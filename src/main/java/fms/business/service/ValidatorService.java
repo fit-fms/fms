@@ -17,6 +17,12 @@ public interface ValidatorService {
      */
     public void createValidator(Validator validator) throws Exception;
 
+    /**
+     * Najde validator podle jmena
+     * @param name jmeno validatoru
+     * @return
+     * @throws Exception
+     */
     public Validator getValidatorByName(String name) throws Exception;
 
     /**

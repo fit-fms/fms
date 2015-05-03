@@ -38,12 +38,18 @@ abstract public class FieldType {
     }
 
 
+    /**
+     * Ziska vsechna policka tohoto typu
+     *
+     * @return Fields of this type
+     */
     public List<Field> getFields() {
         return fields;
     }
 
     /**
      * N�zev typu
+     * @return jmeno typu
      */
     public String getName() {
         return name;
@@ -52,7 +58,7 @@ abstract public class FieldType {
     /**
      * N�zev typu
      *
-     * @param name
+     * @param name jmeno typu
      */
     public void setName(String name) {
         this.name = name;
@@ -60,6 +66,7 @@ abstract public class FieldType {
 
     /**
      * Popis typu
+     * @return Popis typu
      */
     public String getDescription() {
         return description;
@@ -68,12 +75,19 @@ abstract public class FieldType {
     /**
      * Popis typu
      *
-     * @param description
+     * @param description popis typu
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Validate string
+     *
+     * @param data   String to be validate
+     * @param errors List to add errors to
+     * @return success of validation
+     */
     abstract public boolean validate(String data, List<String> errors);
 
     @Override
