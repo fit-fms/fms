@@ -1,7 +1,7 @@
 {#
 TEMPLATE EXPECTS
 "archetype" = Archetype
-"forms" = List<Form> // formulare archetypu
+"formlist" = List<Form> // formulare archetypu
 #}
 
 {% extends "base.twig" %}
@@ -18,8 +18,8 @@ TEMPLATE EXPECTS
                 <th>Filled at</th>
             </tr>
         </thead>
-        {% if forms != null %}
-            {% for form in forms %}
+        {% if formlist != null %}
+            {% for form in formlist %}
                 <tr>
                     <td><a href="/form/{{ archetype.name }}/{{ form.id }}">{{ form.id }}</a></td>
                     <td>{{ form.filledAt | date("yyyy-MM-dd HH:mm:ss") }}</td>

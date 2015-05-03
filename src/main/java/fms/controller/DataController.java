@@ -112,7 +112,7 @@ public class DataController {
         }
 
         map.addAttribute("archetype", archetype);             
-        map.addAttribute("forms", formMap.values());
+        map.addAttribute("formlist", formMap.values());
         return "showArchetype";
     }
     
